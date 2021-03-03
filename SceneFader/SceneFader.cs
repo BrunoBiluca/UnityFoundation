@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using Assets.UnityFoundation.TimeUtils;
 
 namespace Assets.UnityFoundation.SceneFader {
     public class SceneFader : MonoBehaviour {
@@ -33,14 +34,14 @@ namespace Assets.UnityFoundation.SceneFader {
         IEnumerator FadeInAnimation(string levelName) {
             fadeCanvas.SetActive(true);
             fadeAnim.Play(SceneFaderAnimations.fadeIn);
-            yield return StartCoroutine(MyCoroutine.WaitForRealSeconds(0.7f));
+            yield return StartCoroutine(WaittingCoroutine.RealSeconds(0.7f));
             SceneManager.LoadScene(levelName);
             FadeOut();
         }
 
         IEnumerator FadeOutAnimation() {
             fadeAnim.Play(SceneFaderAnimations.fadeOut);
-            yield return StartCoroutine(MyCoroutine.WaitForRealSeconds(1.0f));
+            yield return StartCoroutine(WaittingCoroutine.RealSeconds(1.0f));
             fadeCanvas.SetActive(false);
         }
 
