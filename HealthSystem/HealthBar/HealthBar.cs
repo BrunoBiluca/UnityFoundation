@@ -25,11 +25,6 @@ namespace Assets.UnityFoundation.HealthSystem {
         [SerializeField]
         private Color lowBarColor = new Color32(200, 33, 40, 255);
 
-        private void Awake() {
-            InitializeComponents();
-            Setup(1);
-        }
-
         public void Setup(float maxValue) {
             InitializeComponents();
             maxBarValue = maxValue;
