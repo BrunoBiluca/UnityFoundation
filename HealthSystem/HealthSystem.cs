@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.HealthSystem {
@@ -8,6 +9,11 @@ namespace Assets.UnityFoundation.HealthSystem {
 
         private float baseHealth;
         public float CurrentHealth { get; private set; }
+        public EventHandler OnDied;
+
+        public void Awake() {
+            healthBar = transform.Find("healthBar").GetComponent<HealthBar>();
+        }
 
         public void Setup(float baseHealth) {
             this.baseHealth = baseHealth;
@@ -24,7 +30,10 @@ namespace Assets.UnityFoundation.HealthSystem {
                 healthBar.SetSize(CurrentHealth);
             }
 
-            if(CurrentHealth <= 0f) Destroy(gameObject);
+            if(CurrentHealth <= 0f) {
+                OnDied?.Invoke(this, EventArgs.Empty);
+                Destroy(gameObject);
+            }
         }
     }
 }

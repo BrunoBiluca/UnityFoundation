@@ -26,15 +26,23 @@ namespace Assets.UnityFoundation.HealthSystem {
         private Color lowBarColor = new Color32(200, 33, 40, 255);
 
         private void Awake() {
-            bar = transform.Find("bar");
-            barSprite = bar.Find("barSprite").GetComponent<SpriteRenderer>();
-            barSprite.color = fullBarColor;
+            InitializeComponents();
             Setup(1);
         }
 
         public void Setup(float maxValue) {
+            InitializeComponents();
             maxBarValue = maxValue;
             SetFull(true);
+        }
+
+        private void InitializeComponents() {
+            if(bar != null) return;
+            bar = transform.Find("bar");
+
+            if(barSprite != null) return;
+            barSprite = bar.Find("barSprite").GetComponent<SpriteRenderer>();
+            barSprite.color = fullBarColor;
         }
 
         internal void SetFull(bool immediately = false) {
