@@ -32,7 +32,6 @@ public class EdgeScrolling : MonoBehaviour {
     }
 
     private float XPosition() {
-        Debug.Log($"{Input.mousePosition.x} {Screen.width - edgeOffset}");
         if(Input.mousePosition.x > Screen.width - edgeOffset) {
             return movimentSpeed;
         }
