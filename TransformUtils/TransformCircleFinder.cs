@@ -67,7 +67,8 @@ namespace Assets.UnityFoundation.TransformUtils {
         }
 
         private void OnDestroy() {
-            lookForTargetsTimer.Close();
+            if(lookForTargetsTimer != null)
+                lookForTargetsTimer.Close();
         }
     }
 }
