@@ -19,8 +19,12 @@ public class EdgeScrolling : MonoBehaviour {
         set { movimentSpeed = value; }
     }
 
+    public bool enable = true;
+
     void Update() {
-        MoveCamera();
+        if(enable) {
+            MoveCamera();
+        }
     }
 
     private void MoveCamera() {
