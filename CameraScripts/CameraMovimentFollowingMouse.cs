@@ -1,7 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.CameraUtils {
+namespace Assets.UnityFoundation.CameraScripts {
     public class CameraMovimentFollowingMouse : MonoBehaviour {
 
         [SerializeField]

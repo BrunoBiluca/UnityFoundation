@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.CameraUtils {
+namespace Assets.UnityFoundation.CameraScripts {
     public static class CameraUtils {
         private static Camera mainCamera;
 
