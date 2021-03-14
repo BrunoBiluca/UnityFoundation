@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace Assets.UnityFoundation.HealthSystem {
-    public class HealthBar : MonoBehaviour {
+    public class HealthBar : MonoBehaviour, IHealthBar {
 
         private Transform bar;
         private SpriteRenderer barSprite;
@@ -47,6 +47,10 @@ namespace Assets.UnityFoundation.HealthSystem {
         public float GetSize() => barSize;
 
         public void Subtract(float value) => SetSize(barSize - value);
+
+        public void SetSize(float size) {
+            SetSize(size, false);
+        }
 
         public void SetSize(float size, bool immediately = false) {
             barSize = size;
