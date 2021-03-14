@@ -32,7 +32,7 @@ namespace Assets.UnityFoundation.UI.Indicators {
         private void Update() {
             transformFinder.Target
                 .Some(target => UpdateIndicator(target))
-                .None(() => image.SetActive(false));
+                .OrElse(() => image.SetActive(false));
         }
 
         private void UpdateIndicator(Transform target) {

@@ -1,7 +1,6 @@
-using Assets.GameManagers;
 using Assets.UnityFoundation.DebugHelper;
+using Assets.UnityFoundation.GameManagers;
 using Assets.UnityFoundation.TimeUtils;
-using LanguageExt;
 using System;
 using UnityEngine;
 
@@ -17,9 +16,9 @@ namespace Assets.UnityFoundation.TransformUtils {
         protected Transform referenceTransform;
 
         protected Transform target;
-        public Option<Transform> Target {
+        public Optional<Transform> Target {
             get {
-                return target != null ? Option<Transform>.Some(target) : Option<Transform>.None;
+                return target != null ? Optional<Transform>.Some(target) : Optional<Transform>.None();
             }
         }
 
@@ -45,7 +44,7 @@ namespace Assets.UnityFoundation.TransformUtils {
         }
 
         void Update() {
-            if(GameManager.Instance.DebugMode) {
+            if(BaseGameManager.Instance.DebugMode) {
                 DebugDraw.DrawCircle(transform.position, lookRangeRadius, Color.green);
             }
         }
