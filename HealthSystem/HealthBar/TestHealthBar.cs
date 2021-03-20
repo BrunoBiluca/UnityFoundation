@@ -15,7 +15,7 @@ namespace Assets.UnityFoundation.HealthSystem {
         [SerializeField] public InputField barSizeInput;
 
         void Start() {
-            healthBar.SetSize(0.3f);
+            healthBar.SetCurrentHealth(0.3f);
 
             barSizeInput.onEndEdit.AddListener((inputText) => {
                 try {

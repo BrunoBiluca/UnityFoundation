@@ -59,7 +59,7 @@ namespace Assets.UnityFoundation.HealthSystem {
             CurrentHealth -= amount;
 
             if(healthBar != null) {
-                healthBar.SetSize(CurrentHealth);
+                healthBar.SetCurrentHealth(CurrentHealth);
             }
 
             if(CurrentHealth <= 0f) {
@@ -80,7 +80,7 @@ namespace Assets.UnityFoundation.HealthSystem {
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0, baseHealth);
 
             if(healthBar != null) {
-                healthBar.SetSize(CurrentHealth);
+                healthBar.SetCurrentHealth(CurrentHealth);
             }
 
             if(CurrentHealth == baseHealth) {
@@ -92,7 +92,7 @@ namespace Assets.UnityFoundation.HealthSystem {
             CurrentHealth = baseHealth;
 
             if(healthBar != null) {
-                healthBar.SetSize(CurrentHealth);
+                healthBar.SetCurrentHealth(CurrentHealth);
             }
 
             OnFullyHeal?.Invoke(this, EventArgs.Empty);

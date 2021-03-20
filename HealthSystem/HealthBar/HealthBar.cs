@@ -46,9 +46,9 @@ namespace Assets.UnityFoundation.HealthSystem {
 
         public float GetSize() => barSize;
 
-        public void Subtract(float value) => SetSize(barSize - value);
+        public void Subtract(float value) => SetCurrentHealth(barSize - value);
 
-        public void SetSize(float size) {
+        public void SetCurrentHealth(float size) {
             SetSize(size, false);
         }
 
