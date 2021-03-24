@@ -7,9 +7,10 @@ namespace Assets.UnityFoundation.GameManagers {
 
         private static BaseGameManager instance;
         public static BaseGameManager Instance {
-            get { 
+            get {
                 if(instance == null) {
                     instance = new GameObject("BaseGameManager").AddComponent<BaseGameManager>();
+                    instance.DebugMode = true;
                 }
                 return instance;
             }
@@ -18,7 +19,14 @@ namespace Assets.UnityFoundation.GameManagers {
 
         [SerializeField]
         private bool debugMode;
-        public bool DebugMode { get; private set; }
+        public bool DebugMode {
+            get {
+                return debugMode;
+            }
+            private set {
+                debugMode = value;
+            }
+        }
 
         public void Awake() {
             Instance = this;
