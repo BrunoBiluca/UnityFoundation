@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,9 +29,14 @@ namespace Assets.UnityFoundation.GameManagers {
             }
         }
 
-        public void Awake() {
+        private void Awake() {
             Instance = this;
+
+            OnAwake();
         }
 
+        protected virtual void OnAwake() {
+            throw new NotImplementedException();
+        }
     }
 }
