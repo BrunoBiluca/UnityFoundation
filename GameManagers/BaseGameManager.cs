@@ -35,8 +35,6 @@ namespace Assets.UnityFoundation.GameManagers {
             OnAwake();
         }
 
-        protected virtual void OnAwake() {
-            throw new NotImplementedException();
-        }
+        protected virtual void OnAwake() {}
     }
 }

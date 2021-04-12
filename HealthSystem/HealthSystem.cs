@@ -8,17 +8,15 @@ namespace Assets.UnityFoundation.HealthSystem {
         // para elementos que possui um component IHealthBar
         [SerializeField]
         private GameObject healthBarComponent;
-
         private IHealthBar healthBar;
 
-        [SerializeField]
-        private float baseHealth;
+        [SerializeField] private float baseHealth;
 
-        [SerializeField]
-        private bool destroyHealthBarOnDied = false;
+        [SerializeField] private bool destroyHealthBarOnDied = false;
 
-        [SerializeField]
-        private float currentHealth;
+        [SerializeField] private bool destroyOnDied = true;
+
+        [SerializeField] private float currentHealth;
         public float CurrentHealth { 
             get { return currentHealth; }
             private set { currentHealth = value; } 
@@ -66,7 +64,7 @@ namespace Assets.UnityFoundation.HealthSystem {
                 OnDied?.Invoke(this, EventArgs.Empty);
 
                 if(destroyHealthBarOnDied) Destroy(healthBarComponent);
-                Destroy(gameObject);
+                if(destroyOnDied) Destroy(gameObject);
                 return;
             }
 
