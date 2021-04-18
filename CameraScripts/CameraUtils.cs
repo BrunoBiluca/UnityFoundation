@@ -13,5 +13,11 @@ namespace Assets.UnityFoundation.CameraScripts {
             worldPosition.z = 0f;
             return worldPosition;
         }
+
+        public static Vector3 GetMousePosition(Camera camera) {
+            var worldPosition = camera.ScreenToWorldPoint(Input.mousePosition);
+            worldPosition.z = 0f;
+            return worldPosition;
+        }
     }
 }

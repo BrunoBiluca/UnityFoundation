@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.Mathematics;
-using UnityEditor.UI;
 using UnityEngine;
 
 public class GridMode {
