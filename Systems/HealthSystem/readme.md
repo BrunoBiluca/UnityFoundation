@@ -1,0 +1,1 @@
+![](../../Docs/health_bars.png)

@@ -4,7 +4,7 @@ using Assets.UnityFoundation.TimeUtils;
 using System;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.TransformUtils {
+namespace Assets.UnityFoundation.Code {
     public class TransformCircleFinder : MonoBehaviour {
 
         [SerializeField]

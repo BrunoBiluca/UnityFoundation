@@ -1,8 +1,8 @@
-using Assets.UnityFoundation.TransformUtils;
+using Assets.UnityFoundation.Code;
 using System;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.TransformUtils {
+namespace Assets.UnityFoundation.Code {
     public class ClosestTransformCircleFinder : TransformCircleFinder {
 
         protected override void Find() {

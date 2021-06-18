@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.UnityFoundation.TransformUtils {
+namespace Assets.UnityFoundation.Code {
     public static class PositionUtils {
         public static Vector3 GetRandomPosition(float range) {
             return new Vector3(
