@@ -39,4 +39,21 @@ public class Optional<T> {
         action();
         return value;
     }
+
+    public T OrElse(T defaultValue)
+    {
+        if(IsPresent) return value;
+
+        return defaultValue;
+    }
+
+    /// <summary>
+    /// Return the value of the optional.
+    /// </summary>
+    /// <remarks>Check using IsPresent first to avoid null behaviour.</remarks>
+    /// <returns></returns>
+    public T Get()
+    {
+        return value;
+    }
 }
