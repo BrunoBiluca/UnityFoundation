@@ -36,10 +36,15 @@ public class TimerV2
         } 
     }
 
+    public bool IsRunning { get {
+            return timerBehaviour != null && timerBehaviour.IsRunning;
+        } 
+    }
+
     private TimerMonoBehaviour timerBehaviour;
     private string name;
     private readonly float amount;
-    private bool runOnce;
+    private bool isLoop;
     private readonly Action callback;
 
     /// <summary>
@@ -51,7 +56,8 @@ public class TimerV2
     {
         this.amount = amount;
         this.callback = callback;
-        runOnce = true;
+
+        isLoop = true;
     }
 
     public TimerV2 SetName(string name)
@@ -62,13 +68,13 @@ public class TimerV2
 
     public TimerV2 RunOnce()
     {
-        runOnce = true;
+        isLoop = false;
         return this;
     }
 
     public TimerV2 Loop()
     {
-        runOnce = false;
+        isLoop = true;
         return this;
     }
 
@@ -80,7 +86,7 @@ public class TimerV2
         if(timerBehaviour == null)
             InstantiateTimer();
 
-        timerBehaviour.Setup(amount, callback, runOnce);
+        timerBehaviour.Setup(amount, callback, isLoop);
 
         return this;
     }
@@ -89,6 +95,16 @@ public class TimerV2
     /// Stop running the timer
     /// </summary>
     public void Stop()
+    {
+        timerBehaviour.Deactivate();
+    }
+
+    public void Resume()
+    {
+        timerBehaviour.Activate();
+    }
+
+    public void Close()
     {
         if(timerBehaviour == null) return;
         timerBehaviour.Close();

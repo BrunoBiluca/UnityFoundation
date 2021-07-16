@@ -1,32 +1,49 @@
 using Assets.UnityFoundation.EditorInspector;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TimerMonoBehaviour : MonoBehaviour
 {
-    [SerializeField]
-    private bool runOnce;
+    [SerializeField] private bool loop;
+    [SerializeField] private bool selfDestroyAfterComplete;
+    [SerializeField] private float timerMax;
 
     [SerializeField]
-    private float timerMax;
-
-    [SerializeField]
-    [ReadOnlyInspector]
+    [ShowOnly]
     private float timer;
     public float Timer {
         get { return timer; }
         set { timer = value; }
     }
+
+    public bool IsRunning => gameObject.activeInHierarchy;
+
     private Action callback;
 
-    public void Setup(float amount, Action callback, bool runOnce = true)
+    public void Setup(float amount, Action callback, bool loop = true)
     {
         timer = 0f;
         timerMax = amount;
         this.callback = callback;
-        this.runOnce = runOnce;
+        this.loop = loop;
+
+        gameObject.SetActive(true);
+    }
+
+    public void Activate()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void Deactivate()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void Close()
+    {
+        if(gameObject == null) return;
+        Destroy(gameObject);
     }
 
     private void Update()
@@ -39,17 +56,11 @@ public class TimerMonoBehaviour : MonoBehaviour
         try
         {
             callback();
-            if(runOnce) Close();
+            if(!loop) Deactivate();
         }
         catch(MissingReferenceException)
         {
             Close();
         }
-    }
-
-    public void Close()
-    {
-        if(gameObject == null) return;
-        Destroy(gameObject);
     }
 }
