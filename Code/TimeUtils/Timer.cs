@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.TimeUtils {
+    [Obsolete("This class is deprecated, use TimerV2 instead.")]
     public class Timer {
         private class TimerMonoBehaviour : MonoBehaviour {
             [SerializeField]
