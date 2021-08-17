@@ -26,6 +26,8 @@ namespace Assets.UnityFoundation.Systems.DialogueSystem.Editor
 
             Debug.Log($"Importing file: {path}");
 
+            if(string.IsNullOrEmpty(path)) return;
+
             dialogue.Clear();
             foreach(var row in ReadCsv(path))
             {
@@ -57,21 +59,16 @@ namespace Assets.UnityFoundation.Systems.DialogueSystem.Editor
 
                 dialogue.DialogueNodes.Add(newDialogueNode.name, newDialogueNode);
 
-                var fullPath = Directory.GetParent(path).FullName.Replace("\\", "/");
-                var relativePath = "Assets" + fullPath.Replace(Application.dataPath, "");
-
-                var speaker = AssetDatabase.LoadAssetAtPath<SpearkerSO>(
-                    $"{relativePath}/{row.SpearkerName}.asset"
-                );
+                var speaker = AssetDatabase.LoadAssetAtPath<SpearkerSO>($"{row.SpearkerName}");
                 if(speaker != null)
                 {
-                    Debug.Log($"Imported speaker on path: {relativePath}/{row.SpearkerName}.asset");
+                    Debug.Log($"Imported speaker on path: {row.SpearkerName}");
                     newDialogueNode.Spearker = speaker;
                 }
                 else
                 {
                     Debug.Log(
-                        $"Failed import speaker: {relativePath}/{row.SpearkerName}.asset."
+                        $"Failed import speaker: {row.SpearkerName}."
                         + $" Please put the SpeakerSO asset in the same folder."
                     );
                 }
@@ -122,7 +119,22 @@ namespace Assets.UnityFoundation.Systems.DialogueSystem.Editor
             csv.WriteRecords(
                 dialogue
                     .DialogueNodesValues
-                    .Select(node => new DialogueCsvRow(dialogue, node))
+                    .Select(node => {
+                        var row = new DialogueCsvRow(dialogue, node);
+
+                        var spearkerPath = AssetDatabase.GetAssetPath(node.Spearker);
+                        if(spearkerPath != null)
+                        {
+                            Debug.Log($"Export speaker on path: {spearkerPath}");
+                            row.SpearkerName = spearkerPath;
+                        }
+                        else
+                        {
+                            Debug.Log($"Couldn't find speaker {row.SpearkerName} file");
+                        }
+
+                        return row;
+                    })
             );
         }
     }

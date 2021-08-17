@@ -6,7 +6,7 @@ namespace Assets.UnityFoundation.Systems.DialogueSystem.Editor
 {
     public class ChangeDialogueNodeAction : IDialogueEditorAction
     {
-        public static ChangeDialogueNodeAction create(DialogueNode node)
+        public static ChangeDialogueNodeAction Create(DialogueNode node)
         {
             return new ChangeDialogueNodeAction(node);
         }
