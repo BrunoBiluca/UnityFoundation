@@ -69,6 +69,40 @@ namespace Assets.UnityFoundation.DialogueSystem
             }
         }
 
+        public IEnumerable<DialogueNode> GetNextDialogueNodesRecursively(DialogueNode node)
+        {
+            var nodes = new List<DialogueNode>();
+
+            var notSearchedNodes = new Stack<DialogueNode>();
+            notSearchedNodes.Push(node);
+
+            do
+            {
+                var searchingNode = notSearchedNodes.Pop();
+                foreach(var newNode in GetNextDialogueNodes(searchingNode))
+                {
+                    if(nodes.Contains(newNode))
+                        continue;
+
+                    notSearchedNodes.Push(newNode);
+                }
+                nodes.Add(searchingNode);
+            } while(notSearchedNodes.Count > 0);
+
+            nodes.RemoveAt(0);
+
+            return nodes.AsEnumerable();
+        }
+
+        private bool IsCycleWithParent(DialogueNode node, DialogueNode testingNode)
+        {
+            var parents = GetPreviousDialogueNodesRecursively(node);
+
+            return parents.Any(
+                parentNode => testingNode.NextDialogueNodes.Contains(parentNode.name)
+            );
+        }
+
         public IEnumerable<DialogueNode> GetPreviousDialogueNodes(DialogueNode node)
         {
             if(node.PreviousDialogueNodes == null) yield return null;
@@ -80,6 +114,31 @@ namespace Assets.UnityFoundation.DialogueSystem
                     yield return dialogueNode;
                 }
             }
+        }
+
+        public IEnumerable<DialogueNode> GetPreviousDialogueNodesRecursively(DialogueNode node)
+        {
+            var nodes = new List<DialogueNode>();
+
+            var notSearchedNodes = new Stack<DialogueNode>();
+            notSearchedNodes.Push(node);
+
+            do
+            {
+                var searchingNode = notSearchedNodes.Pop();
+                foreach(var newNode in GetPreviousDialogueNodes(searchingNode))
+                {
+                    if(nodes.Contains(newNode))
+                        continue;
+
+                    notSearchedNodes.Push(newNode);
+                }
+                nodes.Add(searchingNode);
+            } while(notSearchedNodes.Count > 0);
+
+            nodes.RemoveAt(0);
+
+            return nodes.AsEnumerable();
         }
 
         public bool IsStartLine(DialogueNode node)

@@ -1,4 +1,5 @@
 using Assets.UnityFoundation.DialogueSystem;
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace Assets.UnityFoundation.Systems.DialogueSystem.Editor
         private Optional<string> newText;
         private Optional<SpearkerSO> newSpeaker;
         private Optional<Vector2> newPosition;
+        private Optional<Vector2> addPosition;
         private DialogueEditor editor;
 
         public ChangeDialogueNodeAction(DialogueNode node)
@@ -24,6 +26,13 @@ namespace Assets.UnityFoundation.Systems.DialogueSystem.Editor
             newText = Optional<string>.None();
             newSpeaker = Optional<SpearkerSO>.None();
             newPosition = Optional<Vector2>.None();
+            addPosition = Optional<Vector2>.None();
+        }
+
+        public ChangeDialogueNodeAction AddPosition(Vector2 offset)
+        {
+            addPosition = Optional<Vector2>.Some(offset);
+            return this;
         }
 
         public ChangeDialogueNodeAction SetText(string newText)
@@ -56,6 +65,8 @@ namespace Assets.UnityFoundation.Systems.DialogueSystem.Editor
             newText.Some(text => node.Text = text);
             newSpeaker.Some(speaker => node.Spearker = speaker);
             newPosition.Some(position => node.Position = position);
+
+            addPosition.Some(offset => node.Position += offset);
 
             EditorUtility.SetDirty(node);
 

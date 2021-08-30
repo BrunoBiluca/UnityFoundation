@@ -1,4 +1,5 @@
 using Assets.UnityFoundation.DialogueSystem;
+using Assets.UnityFoundation.Systems.DialogueSystem.Editor.Events;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -37,7 +38,7 @@ namespace Assets.UnityFoundation.Systems.DialogueSystem.Editor
         }
 
         private DialogueEditorFactory guiFactory;
-        private DialogueEditorContextMenu contextMenu;
+        public DialogueEditorContextMenu contextMenu;
         private DialogueEditorStyles styles;
 
         private DialogueRepository dialogueRepository;
@@ -45,11 +46,11 @@ namespace Assets.UnityFoundation.Systems.DialogueSystem.Editor
         public DialogueSO SelectedDialogue => selectedDialogue;
         private DialogueSO selectedDialogue;
 
-        private Vector2 draggingOffset;
-        private Optional<DialogueNode> draggingNode = Optional<DialogueNode>.None();
+        public Vector2 draggingOffset;
+        public Optional<DialogueNode> draggingNode = Optional<DialogueNode>.None();
 
-        private Vector2 lastMousePosition;
-        private bool multiSelection;
+        public Vector2 lastMousePosition;
+        public bool multiSelection;
 
         public LinkingNodeContainer LinkingNodes { get; } = new LinkingNodeContainer();
         public Vector2 ScrollviewPosition { get; set; }
@@ -99,93 +100,33 @@ namespace Assets.UnityFoundation.Systems.DialogueSystem.Editor
             new DialogueNodeAreaComponent(this, guiFactory, styles, dialogueRepository)
                 .Render();
 
-            new ToolsAreaComponent(guiFactory, dialogueCsvHandler).Render();
+            new ToolsAreaComponent(this, guiFactory, dialogueCsvHandler)
+                .Render();
 
             ProcessActions();
         }
 
         private void ProcessEvents()
         {
-            if(Event.current.type == EventType.KeyDown)
-            {
-                if(Event.current.keyCode == KeyCode.RightShift
-                    || Event.current.keyCode == KeyCode.LeftShift)
-                {
-                    multiSelection = true;
-                }
-            }
+            var editorEvents = new List<DialogueEditorEvent>() {
+                new UpdateMousePositionEvent(this),
+                new ToggleMultiSelectionEvent(this),
+                new OpenContextMenuEvent(this),
 
-            if(Event.current.type == EventType.KeyUp)
-            {
-                if(Event.current.keyCode == KeyCode.RightShift
-                    || Event.current.keyCode == KeyCode.LeftShift)
-                {
-                    multiSelection = false;
-                }
-            }
+                new OnSelectDialogueNodeEvent(this),
+                new OnDeselectDialogueNodeEvent(this),
 
-            if(Event.current.type == EventType.MouseDown)
-            {
-                var mousePosition = Event.current.mousePosition + ScrollviewPosition;
-                draggingNode = GetDialogueNodeBy(mousePosition);
-                draggingNode
-                    .Some(dialogueNode => {
-                        draggingOffset = dialogueNode.Rect.position - mousePosition;
-                        Selection.activeObject = dialogueNode;
-                    })
-                    .OrElse(() =>
-                        Selection.activeObject = selectedDialogue
-                    );
+                new PriorityHandleEvent(this)
+                    .AddEvent(new DragDialogueNodeEvent(this))
+                    .AddEvent(new MoveCanvasEvent(this))
+            };
 
-                lastMousePosition = Event.current.mousePosition;
-            }
+            editorEvents.ForEach(editorEvent => {
+                if(!editorEvent.IsActive(Event.current))
+                    return;
 
-            if(Event.current.type == EventType.MouseUp)
-            {
-                draggingNode = Optional<DialogueNode>.None();
-                return;
-            }
-
-            if(draggingNode.IsPresent)
-            {
-                draggingNode.Some(dialogueNode => {
-                    if(Event.current.type != EventType.MouseDrag)
-                        return;
-
-                    var mousePosition = Event.current.mousePosition + ScrollviewPosition;
-                    Actions.Add(
-                        ChangeDialogueNodeAction
-                            .Create(dialogueNode)
-                            .SetPosition(mousePosition + draggingOffset)
-                    );
-                });
-                return;
-            }
-
-            if(Event.current.type == EventType.MouseDrag)
-            {
-                ScrollviewPosition += lastMousePosition - Event.current.mousePosition;
-                lastMousePosition = Event.current.mousePosition;
-                GUI.changed = true;
-            }
-
-            if(Event.current.type == EventType.ContextClick)
-            {
-                var mousePosition = Event.current.mousePosition + ScrollviewPosition;
-                GetDialogueNodeBy(mousePosition)
-                    .Some(node => contextMenu.ShowNodeContextMenu(node))
-                    .OrElse(() => contextMenu.Show());
-            }
-        }
-
-        private Optional<DialogueNode> GetDialogueNodeBy(Vector2 mousePosition)
-        {
-            var node = selectedDialogue.DialogueNodesValues
-                .LastOrDefault(node => node.Rect.Contains(mousePosition));
-
-            if(node == null) return Optional<DialogueNode>.None();
-
-            return Optional<DialogueNode>.Some(node);
+                editorEvent.Handle();
+            });
         }
 
         private void ProcessActions()
