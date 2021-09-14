@@ -6,6 +6,12 @@ using UnityEngine;
 namespace Assets.UnityFoundation.Code {
     public static class TransformUtils {
 
+        public static bool IsInRange(Transform target, Transform pursuer, float range)
+        {
+            float distance = (target.transform.position - pursuer.position).sqrMagnitude;
+            return distance < Mathf.Pow(range, 2);
+        }
+
         public static void RemoveChildObjects(Transform parent) {
             var children = new List<GameObject>();
 
