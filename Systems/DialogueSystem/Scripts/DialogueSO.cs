@@ -1,7 +1,10 @@
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using Assets.UnityFoundation.EditorInspector;
 
@@ -42,7 +45,9 @@ namespace Assets.UnityFoundation.DialogueSystem
 
             foreach(var node in dialogueNodes.Values)
             {
+#if UNITY_EDITOR
                 AssetDatabase.RemoveObjectFromAsset(node);
+#endif
             }
 
             dialogueNodes = new DialogueDictionary();
@@ -158,6 +163,7 @@ namespace Assets.UnityFoundation.DialogueSystem
 
         public void OnBeforeSerialize()
         {
+#if UNITY_EDITOR
             if(string.IsNullOrEmpty(AssetDatabase.GetAssetPath(this)))
                 return;
 
@@ -168,11 +174,11 @@ namespace Assets.UnityFoundation.DialogueSystem
 
                 AssetDatabase.AddObjectToAsset(node.Value, this);
             }
+#endif
         }
 
         public void OnAfterDeserialize()
         {
         }
     }
-
 }
