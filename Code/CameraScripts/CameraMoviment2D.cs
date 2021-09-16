@@ -1,21 +1,29 @@
 using Cinemachine;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.CameraScripts {
-    public class CameraMovimentFollowingMouse : MonoBehaviour {
+namespace Assets.UnityFoundation.CameraScripts
+{
+    public class CameraMoviment2D : MonoBehaviour
+    {
 
-        [SerializeField]
         private CinemachineVirtualCamera virtualCamera;
 
         private float orthographicSize;
         private float targetOrthographicSize;
 
-        void Start() {
+        private void Awake()
+        {
+            virtualCamera = GetComponent<CinemachineVirtualCamera>();
+        }
+
+        void Start()
+        {
             orthographicSize = virtualCamera.m_Lens.OrthographicSize;
             targetOrthographicSize = orthographicSize;
         }
 
-        void Update() {
+        void Update()
+        {
             var xAxis = Input.GetAxisRaw("Horizontal");
             var yAxis = Input.GetAxisRaw("Vertical");
 
