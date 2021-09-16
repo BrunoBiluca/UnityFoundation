@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public static class PhysicsUtils
 {
     private static Camera mainCamera;
+
     public static bool Raycast(Vector2 position, out RaycastHit hit, LayerMask layerMask)
     {
         if(mainCamera == null) mainCamera = Camera.main;
@@ -25,10 +24,17 @@ public static class PhysicsUtils
             target = default;
             return false;
         }
-            
+
         if(!hit.collider.TryGetComponent(out target))
             return false;
 
         return true;
     }
+
+    public static bool RaycastMousePosition(out RaycastHit target, LayerMask layerMask)
+    {
+        var position = Mouse.current.position.ReadValue();
+        return Raycast(position, out target, layerMask);
+    }
+
 }
