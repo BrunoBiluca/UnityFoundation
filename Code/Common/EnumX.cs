@@ -8,7 +8,8 @@ public abstract class EnumX<T> where T : EnumX<T>
 {
     protected int index;
     protected string name;
-    protected static readonly Dictionary<int, EnumX<T>> values = new Dictionary<int, EnumX<T>>();
+    protected static readonly Dictionary<int, EnumX<T>> values 
+        = new Dictionary<int, EnumX<T>>();
 
     protected EnumX(int index, string name)
     {
@@ -32,5 +33,11 @@ public abstract class EnumX<T> where T : EnumX<T>
             item => name.Equals(item.name, StringComparison.CurrentCultureIgnoreCase)
         );
 
-    public EnumX<T> Get(int foo) => foo;
+    public T Next()
+    {
+        var nextIndex = index + 1;
+        if(nextIndex == values.Count) nextIndex = 0;
+        
+        return (T) values[nextIndex];
+    }
 }

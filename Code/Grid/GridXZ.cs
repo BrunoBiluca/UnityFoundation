@@ -1,0 +1,117 @@
+﻿using System;
+using Unity.Mathematics;
+using UnityEngine;
+
+namespace Assets.UnityFoundation.Code.Grid
+{
+    public class GridXZ<TValue> : IGrid<TValue>
+    {
+        protected readonly int width;
+        protected readonly int height;
+        protected readonly int cellSize;
+        protected readonly GridPosition<TValue>[,] gridArray;
+
+        public int Width => width;
+        public int Height => height;
+        public int CellSize => cellSize;
+        public GridPosition<TValue>[,] GridArray => gridArray;
+
+        public GridXZ(
+            int width,
+            int height,
+            int cellSize
+        )
+        {
+            this.width = width;
+            this.height = height;
+            this.cellSize = cellSize;
+
+            gridArray = new GridPosition<TValue>[width, height];
+            for(int x = 0; x < width; x++)
+                for(int z = 0; z < height; z++)
+                    gridArray[x, z] = new GridPosition<TValue>(x, z);
+        }
+
+        public int2 GetGridPostion(Vector3 position)
+        {
+            return new int2(
+                (int)Math.Floor(position.x / cellSize),
+                (int)Math.Floor(position.z / cellSize)
+            );
+        }
+
+        public Vector3 GetWorldPosition(int x, int y)
+        {
+            var z = y;
+            return new Vector3(x, 0, z) * CellSize;
+        }
+
+        public bool IsInsideGrid(int x, int y)
+        {
+            return x >= 0 && x < width
+                && y >= 0 && y < height;
+        }
+
+        public bool IsOccupied(int x, int y)
+        {
+            if(!IsInsideGrid(x, y))
+                return true;
+
+            if(gridArray[x, y].Value != null)
+                return true;
+
+            return false;
+        }
+
+        public virtual bool TrySetGridValue(Vector3 position, TValue value)
+        {
+            var gridPosition = GetGridPostion(position);
+
+            if(!IsInsideGrid(gridPosition.x, gridPosition.y))
+                return false;
+
+            gridArray[gridPosition.x, gridPosition.y].Value = value;
+            return true;
+        }
+
+        public virtual bool TrySetGridValue(int x, int y, TValue value)
+        {
+            if(!IsInsideGrid(x, y))
+                return false;
+
+            gridArray[x, y].Value = value;
+            return true;
+        }
+
+        public virtual bool ClearGridValue(Vector3 position)
+        {
+            var gridPosition = GetGridPostion(position);
+
+            if(!IsInsideGrid(gridPosition.x, gridPosition.y))
+                return false;
+
+            gridArray[gridPosition.x, gridPosition.y].Value = default;
+            return true;
+        }
+
+        public virtual bool ClearGridValue(TValue value)
+        {
+            for(int x = 0; x < Width; x++)
+            {
+                for(int y = 0; y < Height; y++)
+                {
+                    if(gridArray[x, y].Value == null)
+                        continue;
+                    if(!gridArray[x, y].Value.Equals(value))
+                        continue;
+
+                    gridArray[x, y].Value = default;
+                }
+            }
+                
+
+            return true;
+        }
+
+    }
+}
