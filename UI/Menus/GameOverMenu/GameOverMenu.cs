@@ -6,25 +6,38 @@ using UnityEngine.UI;
 
 public class GameOverMenu : MonoBehaviour
 {
+    private Transform menu;
     private TextMeshProUGUI winnerText;
     private Button actionButton;
+    protected virtual void OnAwake() { }
+    protected virtual void OnStart() { }
 
     private void Awake()
     {
-        winnerText = transform
-            .Find("menu")
+        menu = transform.Find("menu");
+
+        winnerText = menu
             .Find("winner_text")
             .GetComponent<TextMeshProUGUI>();
 
-        actionButton = transform
-            .Find("menu")
+        actionButton = menu
             .Find("action_button")
             .GetComponent<Button>();
 
         Hide();
+
+        OnAwake();
     }
 
-    public GameOverMenu Setup(string actionButtonName, UnityAction actionButtonBehaviour)
+    private void Start()
+    {
+        OnStart();
+    }
+
+    public virtual GameOverMenu Setup(
+        string actionButtonName, 
+        UnityAction actionButtonBehaviour
+    )
     {
         actionButton.transform
             .Find("text")
@@ -39,14 +52,14 @@ public class GameOverMenu : MonoBehaviour
         return this;
     }
 
-    public void Show(string displayText)
+    public virtual void Show(string displayText)
     {
         winnerText.text = displayText;
-        gameObject.SetActive(true);
+        menu.gameObject.SetActive(true);
     }
 
-    public void Hide()
+    public virtual void Hide()
     {
-        gameObject.SetActive(false);
+        menu.gameObject.SetActive(false);
     }
 }
