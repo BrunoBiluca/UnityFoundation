@@ -8,6 +8,7 @@ namespace Assets.UnityFoundation.Code.Grid
 {
     class GridXZDebug<TValue> : IGrid<TValue>
     {
+        private Transform parent;
         public readonly GridXZ<TValue> grid;
         private readonly TextMeshPro[,] gridTextArray;
 
@@ -74,15 +75,10 @@ namespace Assets.UnityFoundation.Code.Grid
 
         public void Display()
         {
-            for(int x = 0; x < grid.GridArray.GetLength(0); x++)
-            {
-                for(int z = 0; z < grid.GridArray.GetLength(1); z++)
-                {
-                    if(gridTextArray[x, z] != null)
-                        UnityEngine.Object.Destroy(gridTextArray[x, z]);
-                }
-            }
+            if(parent == null)
+                parent = new GameObject("debug_grid_xz").transform;
 
+            TransformUtils.RemoveChildObjects(parent);
 
             for(int x = 0; x < grid.GridArray.GetLength(0); x++)
             {
@@ -91,7 +87,8 @@ namespace Assets.UnityFoundation.Code.Grid
                     gridTextArray[x, z] = DebugDraw.DrawWordTextCell(
                         grid.GridArray[x, z].ToString(),
                         GetWorldPosition(x, z),
-                        new Vector3(grid.CellSize, 0.5f, grid.CellSize)
+                        new Vector3(grid.CellSize, 0.5f, grid.CellSize),
+                        parent
                     );
                     Debug.DrawLine(
                         GetWorldPosition(x, z),
