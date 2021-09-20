@@ -46,21 +46,26 @@ namespace Assets.UnityFoundation.Code.Grid
             return new Vector3(x, 0, z) * CellSize;
         }
 
+        public virtual Vector3 GetWorldPosition(int x, int y, TValue value)
+        {
+            return GetWorldPosition(x, y);
+        }
+
         public bool IsInsideGrid(int x, int y)
         {
             return x >= 0 && x < width
                 && y >= 0 && y < height;
         }
 
-        public bool IsOccupied(int x, int y)
+        public virtual bool CanSetGridValue(int2 gridPosition, TValue value)
         {
-            if(!IsInsideGrid(x, y))
-                return true;
+            if(!IsInsideGrid(gridPosition.x, gridPosition.y))
+                return false;
 
-            if(gridArray[x, y].Value != null)
-                return true;
+            if(gridArray[gridPosition.x, gridPosition.y].Value != null)
+                return false;
 
-            return false;
+            return true;
         }
 
         public virtual bool TrySetGridValue(Vector3 position, TValue value)
@@ -108,10 +113,9 @@ namespace Assets.UnityFoundation.Code.Grid
                     gridArray[x, y].Value = default;
                 }
             }
-                
+
 
             return true;
         }
-
     }
 }

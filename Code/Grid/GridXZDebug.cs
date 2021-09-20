@@ -26,6 +26,11 @@ namespace Assets.UnityFoundation.Code.Grid
             gridTextArray = new TextMeshPro[grid.Width, grid.Height];
         }
 
+        public bool CanSetGridValue(int2 gridPosition, TValue value)
+        {
+            return grid.CanSetGridValue(gridPosition, value);
+        }
+
         public int2 GetGridPostion(Vector3 position)
         {
             return grid.GetGridPostion(position);
@@ -33,7 +38,12 @@ namespace Assets.UnityFoundation.Code.Grid
 
         public Vector3 GetWorldPosition(int x, int y)
         {
-            return new Vector3(x, 0, y) * grid.CellSize;
+            return grid.GetWorldPosition(x, y);
+        }
+
+        public Vector3 GetWorldPosition(int x, int y, TValue value)
+        {
+            return grid.GetWorldPosition(x, y, value);
         }
 
         public bool IsInsideGrid(int x, int y)
@@ -117,7 +127,7 @@ namespace Assets.UnityFoundation.Code.Grid
                 100f
             );
         }
-        
+
         public bool DrawLines(params int2[] gridPositions)
         {
             for(int i = 1; i < gridPositions.Length; i++)

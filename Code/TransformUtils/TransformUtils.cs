@@ -12,6 +12,13 @@ namespace Assets.UnityFoundation.Code {
             return distance < Mathf.Pow(range, 2);
         }
 
+        public static void ChangeLayer(Transform target, LayerMask layer)
+        {
+            foreach(Transform child in target) {
+                child.gameObject.layer = layer;
+            }
+        }
+
         public static void RemoveChildObjects(Transform parent) {
             var children = new List<GameObject>();
 
