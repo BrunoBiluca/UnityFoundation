@@ -1,5 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using Mirror;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,40 +8,57 @@ namespace Assets.UnityFoundation.UI.ProgressElements.ProgressCircle
 {
     public class ProgressCircle : MonoBehaviour
     {
+        [SerializeField] private bool useCounter = true;
         [SerializeField] private float timerMax;
-        [SerializeField] private bool loop;
-        [SerializeField] private bool destroyWhenFinished;
 
         private Image mask;
-        private float timer;
+        private TextMeshProUGUI counterText;
 
-        void Start()
+        void Awake()
         {
             mask = transform.Find("mask").GetComponent<Image>();
+
+            counterText = transform.Find("counter_text").GetComponent<TextMeshProUGUI>();
+            counterText.gameObject.SetActive(useCounter);
         }
 
-        public void Setup(float timerMax, bool destroyWhenFinished = false)
+        public ProgressCircle Setup(float timerMax)
         {
             this.timerMax = timerMax;
-            this.destroyWhenFinished = destroyWhenFinished;
+            return this;
         }
 
-        private void Update()
+        public ProgressCircle Display(float timer)
         {
-            timer += Time.deltaTime;
+            Show();
             mask.fillAmount = timer / timerMax;
+            return this;
+        }
 
-            if(timer >= timerMax)
-            {
-                if(loop)
-                {
-                    timer = 0f;
-                    return;
-                }
+        public ProgressCircle DisplayCounter(int value)
+        {
+            if(!counterText.gameObject.activeInHierarchy)
+                counterText.gameObject.SetActive(true);
 
-                if(destroyWhenFinished) Destroy(gameObject);
-                else gameObject.SetActive(false);
-            }
+            counterText.text = value.ToString();
+
+            return this;
+        }
+
+        public void Hide()
+        {
+            if(!gameObject.activeInHierarchy)
+                return;
+
+            gameObject.SetActive(false);
+        }
+
+        private void Show()
+        {
+            if(gameObject.activeInHierarchy)
+                return;
+
+            gameObject.SetActive(true);
         }
     }
 }
