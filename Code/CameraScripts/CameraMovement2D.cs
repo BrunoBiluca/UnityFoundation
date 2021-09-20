@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.UnityFoundation.CameraScripts
 {
-    public class CameraMoviment2D : MonoBehaviour
+    public class CameraMovement2D : MonoBehaviour
     {
 
         private CinemachineVirtualCamera virtualCamera;
