@@ -1,39 +1,31 @@
-using Assets.UnityFoundation.TimeUtils;
+using Assets.UnityFoundation.Code.Common;
+using Assets.UnityFoundation.Code.TimeUtils;
 using Cinemachine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class CinemachineCameraShake : MonoBehaviour {
+public class CinemachineCameraShake : Singleton<CinemachineCameraShake>
+{
+    [SerializeField] private float shakeTimeAmount = 1f;
 
-    public static CinemachineCameraShake Instance { get; private set; }
+    private CinemachineBasicMultiChannelPerlin channel;
+    private TimerV2 cameraShakeTimer;
 
-    public CinemachineVirtualCamera virtualCamera;
+    protected override void OnAwake()
+    {
+        channel = GetComponent<CinemachineVirtualCamera>()
+            .GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-    private Timer cameraShakeTimer;
-
-    public void Awake() {
-        Instance = this;
+        cameraShakeTimer = new TimerV2(
+            shakeTimeAmount,
+            () => channel.m_AmplitudeGain = 0f
+        )
+            .SetName("camera_shake")
+            .RunOnce();
     }
 
-    public void Shake() {
-        var channel = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+    public void Shake()
+    {
         channel.m_AmplitudeGain = 5f;
-
-        if(cameraShakeTimer == null) {
-            cameraShakeTimer = new Timer(
-                "camera_shake", 
-                1f, 
-                () => {
-                    channel.m_AmplitudeGain = 0f;
-                },
-                true
-            );
-        }
-        else {
-            cameraShakeTimer.Restart();
-        }
+        cameraShakeTimer.Start();
     }
 }
