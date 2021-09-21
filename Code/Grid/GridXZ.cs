@@ -32,7 +32,7 @@ namespace Assets.UnityFoundation.Code.Grid
                     gridArray[x, z] = new GridPosition<TValue>(x, z);
         }
 
-        public int2 GetGridPostion(Vector3 position)
+        public virtual int2 GetGridPostion(Vector3 position)
         {
             return new int2(
                 (int)Math.Floor(position.x / cellSize),
@@ -40,7 +40,7 @@ namespace Assets.UnityFoundation.Code.Grid
             );
         }
 
-        public Vector3 GetWorldPosition(int x, int y)
+        public virtual Vector3 GetWorldPosition(int x, int y)
         {
             var z = y;
             return new Vector3(x, 0, z) * CellSize;
@@ -51,7 +51,7 @@ namespace Assets.UnityFoundation.Code.Grid
             return GetWorldPosition(x, y);
         }
 
-        public bool IsInsideGrid(int x, int y)
+        public virtual bool IsInsideGrid(int x, int y)
         {
             return x >= 0 && x < width
                 && y >= 0 && y < height;

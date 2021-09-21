@@ -22,5 +22,9 @@ namespace Assets.UnityFoundation.Code.Grid
         bool CanSetGridValue(int2 gridPosition, TValue value);
 
         bool TrySetGridValue(Vector3 position, TValue value);
+
+        bool ClearGridValue(Vector3 position);
+
+        bool ClearGridValue(TValue value);
     }
 }

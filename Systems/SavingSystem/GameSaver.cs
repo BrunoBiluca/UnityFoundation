@@ -1,3 +1,4 @@
+using Assets.UnityFoundation.Code.Common;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;

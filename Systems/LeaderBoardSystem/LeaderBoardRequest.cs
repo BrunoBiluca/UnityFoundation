@@ -1,3 +1,4 @@
+using Assets.UnityFoundation.Code.Common;
 using Assets.UnityFoundation.Code.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;

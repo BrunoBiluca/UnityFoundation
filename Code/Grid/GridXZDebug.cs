@@ -6,52 +6,47 @@ using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Grid
 {
-    class GridXZDebug<TValue> : IGrid<TValue>
+    class GridXZDebug<TValue> : GridXZ<TValue>
     {
         private Transform parent;
         public readonly GridXZ<TValue> grid;
         private readonly TextMeshPro[,] gridTextArray;
 
-        public int Width => grid.Width;
-
-        public int Height => grid.Height;
-
-        public int CellSize => grid.CellSize;
-
-        public GridPosition<TValue>[,] GridArray => grid.GridArray;
-
         public GridXZDebug(GridXZ<TValue> grid)
+            : base(grid.Width, grid.Height, grid.CellSize)
         {
             this.grid = grid;
             gridTextArray = new TextMeshPro[grid.Width, grid.Height];
+
+            Display();
         }
 
-        public bool CanSetGridValue(int2 gridPosition, TValue value)
+        public override bool CanSetGridValue(int2 gridPosition, TValue value)
         {
             return grid.CanSetGridValue(gridPosition, value);
         }
 
-        public int2 GetGridPostion(Vector3 position)
+        public override int2 GetGridPostion(Vector3 position)
         {
             return grid.GetGridPostion(position);
         }
 
-        public Vector3 GetWorldPosition(int x, int y)
+        public override Vector3 GetWorldPosition(int x, int y)
         {
             return grid.GetWorldPosition(x, y);
         }
 
-        public Vector3 GetWorldPosition(int x, int y, TValue value)
+        public override Vector3 GetWorldPosition(int x, int y, TValue value)
         {
             return grid.GetWorldPosition(x, y, value);
         }
 
-        public bool IsInsideGrid(int x, int y)
+        public override bool IsInsideGrid(int x, int y)
         {
             return grid.IsInsideGrid(x, y);
         }
 
-        public bool TrySetGridValue(Vector3 position, TValue value)
+        public override bool TrySetGridValue(Vector3 position, TValue value)
         {
             try
             {
@@ -67,7 +62,7 @@ namespace Assets.UnityFoundation.Code.Grid
             return true;
         }
 
-        public bool ClearGridValue(Vector3 position)
+        public override bool ClearGridValue(Vector3 position)
         {
             var result = grid.ClearGridValue(position);
 
@@ -75,7 +70,7 @@ namespace Assets.UnityFoundation.Code.Grid
             return result;
         }
 
-        public bool ClearGridValue(TValue value)
+        public override bool ClearGridValue(TValue value)
         {
             var result = grid.ClearGridValue(value);
 
@@ -126,28 +121,6 @@ namespace Assets.UnityFoundation.Code.Grid
                 Color.white,
                 100f
             );
-        }
-
-        public bool DrawLines(params int2[] gridPositions)
-        {
-            for(int i = 1; i < gridPositions.Length; i++)
-            {
-                var centerNodeCorrection = new Vector3(grid.CellSize / 2, grid.CellSize / 2, 0);
-
-                Debug.DrawLine(
-                    GetWorldPosition(
-                        gridPositions[i - 1].x,
-                        gridPositions[i - 1].y
-                    ) + centerNodeCorrection,
-                    GetWorldPosition(
-                        gridPositions[i].x,
-                        gridPositions[i].y
-                    ) + centerNodeCorrection,
-                    Color.white,
-                    1000000
-                );
-            }
-            return true;
         }
     }
 }
