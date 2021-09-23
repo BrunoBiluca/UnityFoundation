@@ -1,7 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.CameraScripts
+namespace Assets.UnityFoundation.Code.CameraScripts.OldInputSystem
 {
     public class CameraMovement2D : MonoBehaviour
     {

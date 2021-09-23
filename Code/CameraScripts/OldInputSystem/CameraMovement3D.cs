@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.CameraScripts
+namespace Assets.UnityFoundation.Code.CameraScripts.OldInputSystem
 {
     /// <summary>
     /// <para>
@@ -45,7 +45,7 @@ namespace Assets.UnityFoundation.Code.CameraScripts
 
             var forward = transform.forward;
             forward.y = 0f;
-            var moveDirection = (forward * zAxis + transform.right * xAxis);
+            var moveDirection = forward * zAxis + transform.right * xAxis;
 
             transform.position += moveDirection.normalized * cameraSpeed * Time.deltaTime;
         }
