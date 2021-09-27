@@ -10,7 +10,7 @@ namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
         public Vector2 MoveLimitsX { get; set; }
         public Vector2 MoveLimitsZ { get; set; }
 
-        private readonly Transform targetTransform;
+        private Transform targetTransform;
 
         private Vector2 previousAxisInput;
 
@@ -20,8 +20,15 @@ namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
             ActionsBinder();
         }
 
+        public void SetTargetTransform(Transform target)
+        {
+            targetTransform = target;
+        }
+
         public void OnUpdate()
         {
+            if(targetTransform == null) return;
+
             if(previousAxisInput != Vector2.zero)
                 AxisMovement();
             else
@@ -53,6 +60,7 @@ namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
                 EvaluateMovement(previousAxisInput.x, previousAxisInput.y)
             );
         }
+
         private void EdgeMovement()
         {
             UpdatePosition(
