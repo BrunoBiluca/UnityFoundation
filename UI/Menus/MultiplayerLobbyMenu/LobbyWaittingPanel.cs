@@ -26,13 +26,6 @@ public class LobbyWaittingPanel : AbstractLobbyMenu
             .GetComponent<Button>()
             .onClick
             .AddListener(() => LobbyMenuManager.Instance.LeaveLobby());
-
-        LobbyMenuManager.Instance.OnPartyPlayersInfoChanged += LobbyPlayersInfoHandler;
-    }
-
-    private void OnDestroy()
-    {
-        LobbyMenuManager.Instance.OnPartyPlayersInfoChanged -= LobbyPlayersInfoHandler;
     }
 
     private void LobbyPlayersInfoHandler(List<string> players, bool isPartyOwner)
@@ -49,11 +42,13 @@ public class LobbyWaittingPanel : AbstractLobbyMenu
 
     public override void Show()
     {
+        LobbyMenuManager.Instance.OnPartyPlayersInfoChanged += LobbyPlayersInfoHandler;
         gameObject.SetActive(true);
     }
 
     public override void Hide()
     {
+        LobbyMenuManager.Instance.OnPartyPlayersInfoChanged -= LobbyPlayersInfoHandler;
         gameObject.SetActive(false);
     }
 }
