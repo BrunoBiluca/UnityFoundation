@@ -1,61 +1,62 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseCharacter : MonoBehaviour
+namespace Assets.UnityFoundation.Code.Character2D
 {
-    public BaseCharacterState CurrentState { get; private set; }
-
-    public BaseCharacterState BaseState { get; private set; }
-
-    protected virtual void OnAwake() { }
-    protected virtual void OnUpdate() { }
-    protected virtual void OnFixedUpdate() { }
-    protected virtual void PosOnCollisionEnter2D(Collision2D collision) { }
-    protected virtual void SetBaseCharacterState(BaseCharacterState state)
+    public abstract class BaseCharacter : MonoBehaviour
     {
-        BaseState = state;
-    }
-    protected abstract void SetCharacterStates();
+        public BaseCharacterState CurrentState { get; private set; }
 
-    private void Awake()
-    {
-        OnAwake();
-        SetCharacterStates();
-    }
+        public BaseCharacterState BaseState { get; private set; }
 
-    private void Update()
-    {
-        CurrentState?.Update();
-        OnUpdate();
-    }
+        protected virtual void OnAwake() { }
+        protected virtual void OnUpdate() { }
+        protected virtual void OnFixedUpdate() { }
+        protected virtual void PosOnCollisionEnter2D(Collision2D collision) { }
+        protected virtual void SetBaseCharacterState(BaseCharacterState state)
+        {
+            BaseState = state;
+        }
+        protected abstract void SetCharacterStates();
 
-    private void FixedUpdate()
-    {
-        CurrentState?.FixedUpdate();
-        OnFixedUpdate();
-    }
+        private void Awake()
+        {
+            OnAwake();
+            SetCharacterStates();
+        }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        CurrentState?.OnCollisionEnter(collision);
-        PosOnCollisionEnter2D(collision);
-    }
+        private void Update()
+        {
+            CurrentState?.Update();
+            OnUpdate();
+        }
 
-    public virtual void TransitionToState(BaseCharacterState newState)
-    {
-        if(
-            !newState.ForceInterruption
-            && CurrentState != null 
-            && !CurrentState.CanExitState()
-        ) return;
-        
-        if(!newState.CanEnterState()) return;
+        private void FixedUpdate()
+        {
+            CurrentState?.FixedUpdate();
+            OnFixedUpdate();
+        }
 
-        var previousState = CurrentState;
-        CurrentState = newState;
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            CurrentState?.OnCollisionEnter(collision);
+            PosOnCollisionEnter2D(collision);
+        }
 
-        previousState?.ExitState();
-        CurrentState.EnterState();
+        public virtual void TransitionToState(BaseCharacterState newState)
+        {
+            if(
+                !newState.ForceInterruption
+                && CurrentState != null
+                && !CurrentState.CanExitState()
+            ) return;
+
+            if(!newState.CanEnterState()) return;
+
+            var previousState = CurrentState;
+            CurrentState = newState;
+
+            previousState?.ExitState();
+            CurrentState.EnterState();
+        }
     }
 }

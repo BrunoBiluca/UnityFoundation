@@ -1,43 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackCharacterState : BaseCharacterState
+namespace Assets.UnityFoundation.Code.Character2D
 {
-    private const string attckAnimation = "attack";
-
-    private readonly Player player;
-    private readonly Animator animator;
-    private readonly Rigidbody2D rigidbody;
-
-    public AttackCharacterState(Player player)
+    public class AttackCharacterState : BaseCharacterState
     {
-        this.player = player;
-        animator = player.GetComponent<Animator>();
-        rigidbody = player.GetComponent<Rigidbody2D>();
-    }
+        private const string attckAnimation = "attack";
 
-    public override void EnterState()
-    {
-        animator.Play(attckAnimation);
-    }
+        private readonly Player player;
+        private readonly Animator animator;
+        private readonly Rigidbody2D rigidbody;
 
-    public override void FixedUpdate()
-    {
-        rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
-    }
-
-    public override void Update()
-    {
-        if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 < 0.99f) return;
-
-        if(player.IsOnGround)
+        public AttackCharacterState(Player player)
         {
-            player.TransitionToState(player.idleState);
+            this.player = player;
+            animator = player.GetComponent<Animator>();
+            rigidbody = player.GetComponent<Rigidbody2D>();
         }
-        else
+
+        public override void EnterState()
         {
-            player.TransitionToState(player.jumpingState);
+            animator.Play(attckAnimation);
+        }
+
+        public override void FixedUpdate()
+        {
+            rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
+        }
+
+        public override void Update()
+        {
+            if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 < 0.99f) return;
+
+            if(player.IsOnGround)
+            {
+                player.TransitionToState(player.idleState);
+            }
+            else
+            {
+                player.TransitionToState(player.jumpingState);
+            }
         }
     }
 }

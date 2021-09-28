@@ -1,24 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class PlayerDebugUI : MonoBehaviour
+namespace Assets.UnityFoundation.Code.Character2D.DebugHelpers
 {
-    Player character;
-    TextMeshProUGUI stateText;
-    TextMeshProUGUI onGroundText;
-
-    void Start()
+    public class PlayerDebugUI : MonoBehaviour
     {
-        character = GetComponentInParent<Player>();
-        stateText = transform.Find("state_text").GetComponent<TextMeshProUGUI>();
-        onGroundText = transform.Find("on_ground_text").GetComponent<TextMeshProUGUI>();
-    }
+        Player character;
+        TextMeshProUGUI stateText;
+        TextMeshProUGUI onGroundText;
 
-    void Update()
-    {
-        stateText.text = character.CurrentState.GetType().ToString();
-        onGroundText.text = character.IsOnGround.ToString();
+        void Start()
+        {
+            character = GetComponentInParent<Player>();
+            stateText = transform.Find("state_text").GetComponent<TextMeshProUGUI>();
+            onGroundText = transform.Find("on_ground_text").GetComponent<TextMeshProUGUI>();
+        }
+
+        void Update()
+        {
+            stateText.text = character.CurrentState.GetType().ToString();
+            onGroundText.text = character.IsOnGround.ToString();
+        }
     }
 }

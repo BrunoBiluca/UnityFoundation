@@ -1,56 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleCharacterState : BaseCharacterState
+namespace Assets.UnityFoundation.Code.Character2D
 {
-    protected readonly Player player;
-    protected readonly Rigidbody2D rigidbody;
-
-    public IdleCharacterState(Player player)
+    public class IdleCharacterState : BaseCharacterState
     {
-        this.player = player;
-        rigidbody = player.GetComponent<Rigidbody2D>();
-    }
+        protected readonly Player player;
+        protected readonly Rigidbody2D rigidbody;
 
-    public override void EnterState()
-    {
-        player.GetComponent<Animator>().Play("idle");
-    }
-
-    public override void ExitState()
-    {
-        rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-    }
-
-    public override void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
+        public IdleCharacterState(Player player)
         {
-            player.TransitionToState(player.jumpingState);
+            this.player = player;
+            rigidbody = player.GetComponent<Rigidbody2D>();
         }
 
-        if(Input.GetAxisRaw("Horizontal") != 0f)
+        public override void EnterState()
         {
-            player.TransitionToState(player.walkingState);
+            player.GetComponent<Animator>().Play("idle");
         }
 
-        if(Input.GetMouseButtonDown(0))
+        public override void ExitState()
         {
-            player.TransitionToState(player.attackingState);
+            rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
-    }
 
-    public override void FixedUpdate()
-    {
-        if(player.IsOnGround)
+        public override void Update()
         {
-            rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
-            rigidbody.velocity = new Vector2(0f, 0f);
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                player.TransitionToState(player.jumpingState);
+            }
+
+            if(Input.GetAxisRaw("Horizontal") != 0f)
+            {
+                player.TransitionToState(player.walkingState);
+            }
+
+            if(Input.GetMouseButtonDown(0))
+            {
+                player.TransitionToState(player.attackingState);
+            }
         }
-        else
+
+        public override void FixedUpdate()
         {
-            player.TransitionToState(player.jumpingState);
+            if(player.IsOnGround)
+            {
+                rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+                rigidbody.velocity = new Vector2(0f, 0f);
+            }
+            else
+            {
+                player.TransitionToState(player.jumpingState);
+            }
         }
     }
 }

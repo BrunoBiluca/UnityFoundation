@@ -1,29 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class FlipWithSprite : MonoBehaviour
+namespace Assets.UnityFoundation.Code.Character2D
 {
-    private SpriteRenderer spriteRenderer;
-    private Vector3 originalPosition;
-
-    private void Awake()
+    public class FlipWithSprite : MonoBehaviour
     {
-        originalPosition = transform.localPosition;
-    }
+        private SpriteRenderer spriteRenderer;
+        private Vector3 originalPosition;
 
-    private void Start()
-    {
-        spriteRenderer = GetComponentInParent<Player>().GetComponent<SpriteRenderer>();
-    }
+        private void Awake()
+        {
+            originalPosition = transform.localPosition;
+        }
 
-    void Update()
-    {
-        var direction = spriteRenderer.flipX ? -1 : 1;
-        transform.localPosition = new Vector3(
-            direction * originalPosition.x,
-            originalPosition.y,
-            originalPosition.z
-        );
+        private void Start()
+        {
+            spriteRenderer = GetComponentInParent<Player>().GetComponent<SpriteRenderer>();
+        }
+
+        void Update()
+        {
+            var direction = spriteRenderer.flipX ? -1 : 1;
+            transform.localPosition = new Vector3(
+                direction * originalPosition.x,
+                originalPosition.y,
+                originalPosition.z
+            );
+        }
     }
 }

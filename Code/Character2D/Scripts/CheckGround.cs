@@ -1,32 +1,36 @@
 ﻿using UnityEngine;
-public class CheckGround : MonoBehaviour
+
+namespace Assets.UnityFoundation.Code.Character2D
 {
-    private const string groundTag = "ground";
-    private Player player;
-
-    private void Start()
+    public class CheckGround : MonoBehaviour
     {
-        player = GetComponentInParent<Player>();
-    }
+        private const string groundTag = "ground";
+        private Player player;
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if(!collision.gameObject.CompareTag(groundTag)) return;
+        private void Start()
+        {
+            player = GetComponentInParent<Player>();
+        }
 
-        player.IsOnGround = true;
-    }
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            if(!collision.gameObject.CompareTag(groundTag)) return;
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(!collision.gameObject.CompareTag(groundTag)) return;
+            player.IsOnGround = true;
+        }
 
-        player.IsOnGround = true;
-    }
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if(!collision.gameObject.CompareTag(groundTag)) return;
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if(!collision.gameObject.CompareTag(groundTag)) return;
+            player.IsOnGround = true;
+        }
 
-        player.IsOnGround = false;
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            if(!collision.gameObject.CompareTag(groundTag)) return;
+
+            player.IsOnGround = false;
+        }
     }
 }

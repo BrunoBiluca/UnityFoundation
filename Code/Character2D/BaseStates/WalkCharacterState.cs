@@ -1,3 +1,4 @@
+using Assets.UnityFoundation.Code.Character2D;
 using UnityEngine;
 
 public class WalkCharacterState : BaseCharacterState

@@ -1,24 +1,24 @@
-﻿using UnityEngine;
-using System;
-
-public class Player : BaseCharacter
+﻿namespace Assets.UnityFoundation.Code.Character2D
 {
-    public bool IsOnGround { get; set; }
-
-    public IdleCharacterState idleState;
-    public WalkCharacterState walkingState;
-    public AttackCharacterState attackingState;
-    public JumpCharacterState jumpingState;
-    public OnDamageCharacterState onDamageState;
-
-    protected override void SetCharacterStates()
+    public class Player : BaseCharacter
     {
-        idleState = new IdleCharacterState(this);
-        jumpingState = new JumpCharacterState(this);
-        walkingState = new WalkCharacterState(this);
-        onDamageState = new OnDamageCharacterState(this);
-        attackingState = new AttackCharacterState(this);
+        public bool IsOnGround { get; set; }
 
-        TransitionToState(idleState);
+        public IdleCharacterState idleState;
+        public WalkCharacterState walkingState;
+        public AttackCharacterState attackingState;
+        public JumpCharacterState jumpingState;
+        public OnDamageCharacterState onDamageState;
+
+        protected override void SetCharacterStates()
+        {
+            idleState = new IdleCharacterState(this);
+            jumpingState = new JumpCharacterState(this);
+            walkingState = new WalkCharacterState(this);
+            onDamageState = new OnDamageCharacterState(this);
+            attackingState = new AttackCharacterState(this);
+
+            TransitionToState(idleState);
+        }
     }
 }

@@ -1,3 +1,4 @@
+using Assets.UnityFoundation.Code.Character2D;
 using Assets.UnityFoundation.TimeUtils;
 using UnityEngine;
 
