@@ -39,6 +39,14 @@ namespace Assets.UnityFoundation.Code.TimeUtils
             }
         }
 
+        /// <summary>
+        /// Get if the timer finished it's execution
+        /// </summary>
+        public bool Completed => MathX.NearlyEqual(CurrentTime, amount, 0.1f);
+
+        /// <summary>
+        /// Get if the timer is current running
+        /// </summary>
         public bool IsRunning {
             get {
                 return timerBehaviour != null && timerBehaviour.IsRunning;
@@ -50,6 +58,18 @@ namespace Assets.UnityFoundation.Code.TimeUtils
         private readonly float amount;
         private bool isLoop;
         private readonly Action callback;
+        
+        /// <summary>
+        /// Instantiate a gameobject to run the timer for some provider action, by default run once and stop
+        /// </summary>
+        /// <param name="amount">time in seconds</param>
+        public TimerV2(float amount)
+        {
+            this.amount = amount;
+            this.callback = () => { };
+
+            isLoop = false;
+        }
 
         /// <summary>
         /// Instantiate a gameobject to run the timer for some provider action, by default run once and stop

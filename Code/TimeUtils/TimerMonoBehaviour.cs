@@ -52,15 +52,27 @@ public class TimerMonoBehaviour : MonoBehaviour
 
         if(timer < timerMax) return;
 
-        timer = 0f;
         try
         {
-            callback();
-            if(!loop) Deactivate();
+            FinishCycle();
         }
         catch(MissingReferenceException)
         {
             Close();
         }
+    }
+
+    private void FinishCycle()
+    {
+        callback();
+
+        if(loop)
+        {
+            timer = 0f;
+            return;
+        }
+
+        timer = timerMax;
+        Deactivate();
     }
 }
