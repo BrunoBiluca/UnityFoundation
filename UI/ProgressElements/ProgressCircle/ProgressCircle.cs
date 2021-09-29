@@ -16,7 +16,8 @@ namespace Assets.UnityFoundation.UI.ProgressElements.ProgressCircle
         {
             mask = transform.Find("mask").GetComponent<Image>();
 
-            counterText = transform.Find("counter_text").GetComponent<TextMeshProUGUI>();
+            counterText = transform.Find("counter_text")
+                .GetComponent<TextMeshProUGUI>();
             counterText.gameObject.SetActive(useCounter);
         }
 
