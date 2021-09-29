@@ -4,62 +4,65 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class GameOverMenu : MonoBehaviour
+namespace Assets.UnityFoundation.UI.Menus.GameOverMenu
 {
-    private Transform menu;
-    private TextMeshProUGUI winnerText;
-    private Button actionButton;
-    protected virtual void OnAwake() { }
-    protected virtual void OnStart() { }
-
-    private void Awake()
+    public class GameOverMenu : MonoBehaviour
     {
-        menu = transform.Find("menu");
+        private Transform menu;
+        private TextMeshProUGUI winnerText;
+        private Button actionButton;
+        protected virtual void OnAwake() { }
+        protected virtual void OnStart() { }
 
-        winnerText = menu
-            .Find("winner_text")
-            .GetComponent<TextMeshProUGUI>();
+        private void Awake()
+        {
+            menu = transform.Find("menu");
 
-        actionButton = menu
-            .Find("action_button")
-            .GetComponent<Button>();
+            winnerText = menu
+                .Find("winner_text")
+                .GetComponent<TextMeshProUGUI>();
 
-        Hide();
+            actionButton = menu
+                .Find("action_button")
+                .GetComponent<Button>();
 
-        OnAwake();
-    }
-
-    private void Start()
-    {
-        OnStart();
-    }
-
-    public virtual GameOverMenu Setup(
-        string actionButtonName, 
-        UnityAction actionButtonBehaviour
-    )
-    {
-        actionButton.transform
-            .Find("text")
-            .GetComponent<TextMeshProUGUI>()
-            .text = actionButtonName;
-
-        actionButton.onClick.AddListener(() => {
-            actionButtonBehaviour();
             Hide();
-        });
 
-        return this;
-    }
+            OnAwake();
+        }
 
-    public virtual void Show(string displayText)
-    {
-        winnerText.text = displayText;
-        menu.gameObject.SetActive(true);
-    }
+        private void Start()
+        {
+            OnStart();
+        }
 
-    public virtual void Hide()
-    {
-        menu.gameObject.SetActive(false);
+        public virtual GameOverMenu Setup(
+            string actionButtonName,
+            UnityAction actionButtonBehaviour
+        )
+        {
+            actionButton.transform
+                .Find("text")
+                .GetComponent<TextMeshProUGUI>()
+                .text = actionButtonName;
+
+            actionButton.onClick.AddListener(() => {
+                actionButtonBehaviour();
+                Hide();
+            });
+
+            return this;
+        }
+
+        public virtual void Show(string displayText)
+        {
+            winnerText.text = displayText;
+            menu.gameObject.SetActive(true);
+        }
+
+        public virtual void Hide()
+        {
+            menu.gameObject.SetActive(false);
+        }
     }
 }
