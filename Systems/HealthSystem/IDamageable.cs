@@ -1,6 +1,8 @@
-namespace Assets.UnityFoundation.HealthSystem {
+namespace Assets.UnityFoundation.HealthSystem
+{
+
     public interface IDamageable {
 
-        public void Damage(float amount);
+        public void Damage(float amount, DamageableLayer layer = null);
     }
 }

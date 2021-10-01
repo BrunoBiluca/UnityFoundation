@@ -1,7 +1,13 @@
-﻿namespace Assets.UnityFoundation.Code.Character2D
+﻿using Assets.UnityFoundation.Code.Character2D.BaseStates;
+using UnityEngine;
+
+namespace Assets.UnityFoundation.Code.Character2D
 {
     public class Player : BaseCharacter
     {
+        [SerializeField] private BasePlayerStats stats;
+        public BasePlayerStats Stats => stats;
+
         public bool IsOnGround { get; set; }
 
         public IdleCharacterState idleState;

@@ -1,97 +1,147 @@
 using System;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.TimeUtils {
-    [Obsolete("This class is deprecated, use TimerV2 instead.")]
-    public class Timer {
-        private class TimerMonoBehaviour : MonoBehaviour {
-            [SerializeField]
-            private bool runOnce;
+namespace Assets.UnityFoundation.Code.TimeUtils
+{
+    public class Timer
+    {
+        private static GameObject timersReference;
 
-            [SerializeField]
-            private float timerMax;
+        private static void TryGetTimersReference()
+        {
+            if(timersReference != null) return;
 
-            [SerializeField]
-            private float timer;
-            public float Timer {
-                get { return timer; }
-                set { timer = value; }
-            }
-            private Action callback;
-
-            public void Setup(float amount, Action callback, bool runOnce) {
-                timer = 0f;
-                timerMax = amount;
-                this.callback = callback;
-                this.runOnce = runOnce;
+            var timersRef = GameObject.Find("** Timers");
+            if(timersRef == null)
+            {
+                timersRef = new GameObject("** Timers");
             }
 
-            private void Update() {
-                timer += Time.deltaTime;
+            timersReference = timersRef;
+        }
 
-                if(timer >= timerMax) {
-                    timer = 0f;
-                    try {
-                        callback();
-                        if(runOnce) Close();
-                    } catch(MissingReferenceException) {
-                        Close();
-                    }
-                }
+        /// <summary>
+        /// Get the time passed in the current loop in seconds
+        /// </summary>
+        public float CurrentTime { get { return timerBehaviour.Timer; } }
+
+        /// <summary>
+        /// Get the time to end the current loop in seconds
+        /// </summary>
+        public float RemainingTime { get { return amount - timerBehaviour.Timer; } }
+
+        /// <summary>
+        /// Get the completion percentage of the timer
+        /// </summary>
+        public float Completion {
+            get {
+                return CurrentTime / amount * 100f;
             }
+        }
 
-            public void Close() {
-                if(gameObject == null) return;
-                Destroy(gameObject);
+        /// <summary>
+        /// Get if the timer finished it's execution
+        /// </summary>
+        public bool Completed => MathX.NearlyEqual(CurrentTime, amount, 0.1f);
+
+        /// <summary>
+        /// Get if the timer is current running
+        /// </summary>
+        public bool IsRunning {
+            get {
+                return timerBehaviour != null && timerBehaviour.IsRunning;
             }
         }
 
         private TimerMonoBehaviour timerBehaviour;
-        private readonly string name;
+        private string name;
         private readonly float amount;
-        private readonly bool runOnce;
+        private bool isLoop;
         private readonly Action callback;
+        
+        /// <summary>
+        /// Instantiate a gameobject to run the timer for some provider action, by default run once and stop
+        /// </summary>
+        /// <param name="amount">time in seconds</param>
+        public Timer(float amount)
+        {
+            this.amount = amount;
+            this.callback = () => { };
 
-        public Timer(string name, float amount, Action callback, bool runOnce = false) {
-            this.name = name;
+            isLoop = false;
+        }
+
+        /// <summary>
+        /// Instantiate a gameobject to run the timer for some provider action, by default run once and stop
+        /// </summary>
+        /// <param name="amount">time in seconds</param>
+        /// <param name="callback">callback called when amount of time is reached</param>
+        public Timer(float amount, Action callback)
+        {
             this.amount = amount;
             this.callback = callback;
-            this.runOnce = runOnce;
 
-            InstantiateTimer();
+            isLoop = true;
         }
 
-        public void Restart() {
-            if(timerBehaviour != null) {
-                timerBehaviour.Setup(amount, callback, runOnce);
-                return;
-            }
-
-            InstantiateTimer();
+        public Timer SetName(string name)
+        {
+            this.name = name;
+            return this;
         }
 
-        private void InstantiateTimer() {
-            // TODO: melhorar esse código para não ficar pesquisando toda
-            // a vez que um timer é instanciado,
-            // o objeto ** Timers já deve ficar em cache depois da primeira vez que foi criado
-            var timersRef = GameObject.Find("** Timers");
-            if(timersRef == null) {
-                timersRef = new GameObject("** Timers");
-            }
-
-            timerBehaviour = new GameObject(name).AddComponent<TimerMonoBehaviour>();
-            timerBehaviour.transform.SetParent(timersRef.transform);
-            timerBehaviour.Setup(amount, callback, runOnce);
+        public Timer RunOnce()
+        {
+            isLoop = false;
+            return this;
         }
 
-        public void Close() {
+        public Timer Loop()
+        {
+            isLoop = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Start the timer with the setting parameters
+        /// </summary>
+        public Timer Start()
+        {
+            if(timerBehaviour == null)
+                InstantiateTimer();
+
+            timerBehaviour.Setup(amount, callback, isLoop);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Stop running the timer
+        /// </summary>
+        public void Stop()
+        {
+            timerBehaviour.Deactivate();
+        }
+
+        public void Resume()
+        {
+            timerBehaviour.Activate();
+        }
+
+        public void Close()
+        {
             if(timerBehaviour == null) return;
             timerBehaviour.Close();
         }
 
-        public float GetCurrentTime() {
-            return amount - timerBehaviour.Timer;
-        }
+        private void InstantiateTimer()
+        {
+            TryGetTimersReference();
 
+            if(string.IsNullOrEmpty(name)) name = Guid.NewGuid().ToString();
+
+            timerBehaviour = new GameObject(name).AddComponent<TimerMonoBehaviour>();
+            timerBehaviour.transform.SetParent(timersReference.transform);
+        }
     }
 }

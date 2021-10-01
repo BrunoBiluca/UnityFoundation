@@ -30,8 +30,9 @@ namespace Assets.UnityFoundation.Code.Character2D
         {
             if(player.IsOnGround)
             {
-                const float jumpForce = 3000f;
-                rigidbody.AddForce(Vector2.up * jumpForce);
+                rigidbody.AddForce(
+                    Vector2.up * player.Stats.JumpForce, ForceMode2D.Impulse
+                );
                 player.IsOnGround = false;
             }
 

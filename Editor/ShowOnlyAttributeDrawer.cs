@@ -7,7 +7,9 @@ namespace Assets.UnityFoundation.Editor
     [CustomPropertyDrawer(typeof(ShowOnlyAttribute))]
     public class ShowOnlyAttributeDrawer : PropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty prop, GUIContent label)
+        public override void OnGUI(
+            Rect position, SerializedProperty prop, GUIContent label
+        )
         {
             string valueStr;
 

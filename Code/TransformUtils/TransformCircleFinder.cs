@@ -1,3 +1,4 @@
+using Assets.UnityFoundation.Code.TimeUtils;
 using Assets.UnityFoundation.DebugHelper;
 using Assets.UnityFoundation.GameManagers;
 using Assets.UnityFoundation.TimeUtils;
@@ -38,9 +39,9 @@ namespace Assets.UnityFoundation.Code {
                 this.referenceTransform = referenceTransform;
             }
 
-            lookForTargetsTimer = new Timer(
-                $"Look for targets {lookingForType}", 0.2f, Find
-            );
+            lookForTargetsTimer = new Timer(0.2f, Find)
+                .SetName($"Look for targets {lookingForType}")
+                .Start();
         }
 
         void Update() {

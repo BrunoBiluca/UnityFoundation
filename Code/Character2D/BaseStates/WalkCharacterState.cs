@@ -1,60 +1,61 @@
-using Assets.UnityFoundation.Code.Character2D;
 using UnityEngine;
 
-public class WalkCharacterState : BaseCharacterState
+namespace Assets.UnityFoundation.Code.Character2D.BaseStates
 {
-    private const string startWalkAnimation = "start_walk";
-    private const string walkAnimation = "walk";
-
-    protected readonly Player player;
-    protected readonly Animator animator;
-    protected readonly Rigidbody2D rigidbody;
-    protected readonly SpriteRenderer spriteRenderer;
-
-    protected float inputX;
-
-    public WalkCharacterState(Player player)
+    public class WalkCharacterState : BaseCharacterState
     {
-        this.player = player;
-        animator = player.GetComponent<Animator>();
-        rigidbody = player.GetComponent<Rigidbody2D>();
-        spriteRenderer = player.GetComponent<SpriteRenderer>();
-    }
+        private const string startWalkAnimation = "start_walk";
+        private const string walkAnimation = "walk";
 
-    public override void EnterState()
-    {
-        animator.Play(startWalkAnimation);
-    }
+        protected readonly Player player;
+        protected readonly Animator animator;
+        protected readonly Rigidbody2D rigidbody;
+        protected readonly SpriteRenderer spriteRenderer;
 
-    public override void FixedUpdate()
-    {
-        const float speed = 3000F;
-        var velocityX = speed * inputX * Time.deltaTime;
+        protected float inputX;
 
-        rigidbody.velocity = new Vector2(velocityX, rigidbody.velocity.y);
-    }
-
-    public override void Update()
-    {
-        inputX = Input.GetAxisRaw("Horizontal");
-
-        if(inputX == 0f)
+        public WalkCharacterState(Player player)
         {
-            player.TransitionToState(player.idleState);
-            return;
+            this.player = player;
+            animator = player.GetComponent<Animator>();
+            rigidbody = player.GetComponent<Rigidbody2D>();
+            spriteRenderer = player.GetComponent<SpriteRenderer>();
         }
 
-        if(inputX > 0) spriteRenderer.flipX = false;
-        else if(inputX < 0) spriteRenderer.flipX = true;
-
-        if(Input.GetKeyDown(KeyCode.Space))
+        public override void EnterState()
         {
-            player.TransitionToState(player.jumpingState);
+            animator.Play(startWalkAnimation);
         }
 
-        if(Input.GetMouseButton(0))
+        public override void FixedUpdate()
         {
-            player.TransitionToState(player.attackingState);
+            var velocityX = player.Stats.WalkSpeed * inputX * Time.deltaTime;
+
+            rigidbody.velocity = new Vector2(velocityX, rigidbody.velocity.y);
+        }
+
+        public override void Update()
+        {
+            inputX = Input.GetAxisRaw("Horizontal");
+
+            if(inputX == 0f)
+            {
+                player.TransitionToState(player.idleState);
+                return;
+            }
+
+            if(inputX > 0) spriteRenderer.flipX = false;
+            else if(inputX < 0) spriteRenderer.flipX = true;
+
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                player.TransitionToState(player.jumpingState);
+            }
+
+            if(Input.GetMouseButton(0))
+            {
+                player.TransitionToState(player.attackingState);
+            }
         }
     }
 }

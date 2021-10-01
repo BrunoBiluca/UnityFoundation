@@ -8,14 +8,14 @@ public class CinemachineCameraShake : Singleton<CinemachineCameraShake>
     [SerializeField] private float shakeTimeAmount = 1f;
 
     private CinemachineBasicMultiChannelPerlin channel;
-    private TimerV2 cameraShakeTimer;
+    private Timer cameraShakeTimer;
 
     protected override void OnAwake()
     {
         channel = GetComponent<CinemachineVirtualCamera>()
             .GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-        cameraShakeTimer = new TimerV2(
+        cameraShakeTimer = new Timer(
             shakeTimeAmount,
             () => channel.m_AmplitudeGain = 0f
         )

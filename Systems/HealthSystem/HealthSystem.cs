@@ -1,3 +1,4 @@
+using Assets.UnityFoundation.Systems.HealthSystem;
 using System;
 using UnityEngine;
 
@@ -25,9 +26,18 @@ namespace Assets.UnityFoundation.HealthSystem
             private set { currentHealth = value; }
         }
 
+        [SerializeField] private DamageableLayer layer;
+        public DamageableLayer Layer {
+            get { return layer; }
+            set { layer = value; }
+        }
+
         public EventHandler OnTakeDamage;
         public EventHandler OnFullyHeal;
         public EventHandler OnDied;
+
+        private DamageableLayerManager damageableLayerManager;
+        private Func<bool> guardDamageCallback;
 
         public void Start()
         {
@@ -54,20 +64,26 @@ namespace Assets.UnityFoundation.HealthSystem
             CurrentHealth = baseHealth;
 
             HealthBarReference();
-            healthBar.Setup(baseHealth);
+            healthBar?.Setup(baseHealth);
+
+            damageableLayerManager = DamageableLayerManager.Instance;
 
             OnFullyHeal?.Invoke(this, EventArgs.Empty);
         }
 
-
-        public void Damage(float amount)
+        public void SetGuardDamage(Func<bool> callback)
         {
-            CurrentHealth -= amount;
+            guardDamageCallback = callback;
+        }
 
-            if(healthBar != null)
-            {
-                healthBar.SetCurrentHealth(CurrentHealth);
-            }
+        public void Damage(float amount, DamageableLayer layer = null)
+        {
+            if(!CanInflictDamage(layer))
+                return;
+
+            CurrentHealth -= Mathf.Abs(EvaluateDamage(amount));
+
+            healthBar?.SetCurrentHealth(CurrentHealth);
 
             if(CurrentHealth <= 0f)
             {
@@ -84,15 +100,28 @@ namespace Assets.UnityFoundation.HealthSystem
             }
         }
 
+        private bool CanInflictDamage(DamageableLayer layer)
+        {
+            if(
+                damageableLayerManager != null
+                && !damageableLayerManager.HasRelationship(layer, Layer)
+            )
+                return false;
+
+            if(guardDamageCallback != null && guardDamageCallback())
+                return false;
+
+            return true;
+        }
+
+        protected virtual float EvaluateDamage(float amount) => amount;
+
         public void Heal(float amount)
         {
             CurrentHealth += amount;
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0, baseHealth);
 
-            if(healthBar != null)
-            {
-                healthBar.SetCurrentHealth(CurrentHealth);
-            }
+            healthBar?.SetCurrentHealth(CurrentHealth);
 
             if(CurrentHealth == baseHealth)
             {
@@ -104,10 +133,7 @@ namespace Assets.UnityFoundation.HealthSystem
         {
             CurrentHealth = baseHealth;
 
-            if(healthBar != null)
-            {
-                healthBar.SetCurrentHealth(CurrentHealth);
-            }
+            healthBar?.SetCurrentHealth(CurrentHealth);
 
             OnFullyHeal?.Invoke(this, EventArgs.Empty);
         }
