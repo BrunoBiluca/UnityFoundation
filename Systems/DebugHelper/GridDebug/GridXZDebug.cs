@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Grid
 {
-    class GridXZDebug<TValue> : GridXZ<TValue>
+    public class GridXZDebug<TValue> : GridXZ<TValue>
     {
         private Transform parent;
         public readonly GridXZ<TValue> grid;

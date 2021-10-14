@@ -1,11 +1,9 @@
 using Assets.UnityFoundation.Code.TimeUtils;
-using Assets.UnityFoundation.DebugHelper;
-using Assets.UnityFoundation.GameManagers;
-using Assets.UnityFoundation.TimeUtils;
 using System;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code {
+namespace Assets.UnityFoundation.Code
+{
     public class TransformCircleFinder : MonoBehaviour {
 
         [SerializeField]
@@ -42,12 +40,6 @@ namespace Assets.UnityFoundation.Code {
             lookForTargetsTimer = new Timer(0.2f, Find)
                 .SetName($"Look for targets {lookingForType}")
                 .Start();
-        }
-
-        void Update() {
-            if(BaseGameManager.Instance.DebugMode) {
-                DebugDraw.DrawCircle(transform.position, lookRangeRadius, Color.green);
-            }
         }
 
         protected virtual void Find() {

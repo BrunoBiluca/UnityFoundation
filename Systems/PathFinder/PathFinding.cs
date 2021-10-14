@@ -50,7 +50,7 @@ public class PathFinding {
         }
     }
 
-    internal void SetIsWalkable(Vector2 position, bool v) {
+    public void SetIsWalkable(Vector2 position, bool v) {
         blockablePosisitions.Add(GridIndex((int)position.x, (int)position.y));
     }
 

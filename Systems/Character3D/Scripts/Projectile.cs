@@ -2,24 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+namespace Assets.UnityFoundation.Systems.Character3D
 {
-    [SerializeField] private float speed = 10;
-
-    private Rigidbody rb;
-
-    private void Awake()
+    public class Projectile : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody>();
-    }
+        [SerializeField] private float speed = 10;
 
-    void Update()
-    {
-        rb.velocity = transform.forward * speed;
-    }
+        private Rigidbody rb;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Destroy(gameObject);
+        private void Awake()
+        {
+            rb = GetComponent<Rigidbody>();
+        }
+
+        void Update()
+        {
+            rb.velocity = transform.forward * speed;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            Destroy(gameObject);
+        }
     }
 }
