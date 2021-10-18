@@ -1,11 +1,14 @@
 using Assets.UnityFoundation.Code.Common;
 using System;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.UnityFoundation.DialogueSystem
 {
     public class DialogueManager : Singleton<DialogueManager>
     {
+        [SerializeField] private DialogueUI dialogueUI;
+
         private DialogueSO currentDialogue;
         private DialogueNode currentDialogueNode;
 
@@ -14,12 +17,30 @@ namespace Assets.UnityFoundation.DialogueSystem
             currentDialogue = dialogue;
             currentDialogueNode = currentDialogue.StartDialogueNode;
 
-            DialogueUI.Instance.Display(currentDialogueNode);
+            FindDialogueUIReference();
+            SetupDialogueUI();
+        }
+        private void FindDialogueUIReference()
+        {
+            if(dialogueUI != null) return;
 
-            DialogueUI.Instance.OnNextLine -= NextDialogueNode;
-            DialogueUI.Instance.OnDialogueChoiceMade -= NextChoosenDialogueNode;
-            DialogueUI.Instance.OnNextLine += NextDialogueNode;
-            DialogueUI.Instance.OnDialogueChoiceMade += NextChoosenDialogueNode;
+            dialogueUI = (DialogueUI)FindObjectOfType(typeof(DialogueUI));
+        }
+
+        private void SetupDialogueUI()
+        {
+            if(dialogueUI == null)
+            {
+                Debug.LogError("Dialogue UI not found on scene.");
+                return;
+            }
+
+            dialogueUI.Display(currentDialogueNode);
+
+            dialogueUI.OnNextLine -= NextDialogueNode;
+            dialogueUI.OnDialogueChoiceMade -= NextChoosenDialogueNode;
+            dialogueUI.OnNextLine += NextDialogueNode;
+            dialogueUI.OnDialogueChoiceMade += NextChoosenDialogueNode;
         }
 
         private void NextDialogueNode(object sender, EventArgs e)
@@ -34,7 +55,7 @@ namespace Assets.UnityFoundation.DialogueSystem
             if(nextNodes.Length == 1)
                 currentDialogueNode = nextNodes[0];
 
-            DialogueUI.Instance.Display(nextNodes);
+            dialogueUI.Display(nextNodes);
         }
 
         private void NextChoosenDialogueNode(object sender, DialogueChoiceEventArgs e)
