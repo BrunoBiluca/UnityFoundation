@@ -1,0 +1,20 @@
+{
+    "name": "UnityFoundation.DialogueSystem.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d7d703d7ba19f3c45b01309621aede27",
+        "GUID:9f5d94d3aabffa5448f17daa0e5a2d34",
+        "GUID:65fbe47f312b94d40a815ae059324640"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
