@@ -21,10 +21,16 @@ namespace Assets.UnityFoundation.Code
             else
                 return diff / (absA + absB) < epsilon;
         }
-    }
 
-    public static class FloatMathExtensions
-    {
-        public static float Remainder(this float value) => Mathf.Floor(value) - value;
+        public static float Remap(
+            float value,
+            float from1,
+            float to1,
+            float from2,
+            float to2
+        )
+        {
+            return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+        }
     }
 }
