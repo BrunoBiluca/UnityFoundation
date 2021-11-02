@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.UnityFoundation.HealthSystem {
+namespace Assets.UnityFoundation.Systems.HealthSystem
+{
     public class TestHealthBar : MonoBehaviour {
 
         [SerializeField] public HealthBar healthBar;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.HealthSystem
+namespace Assets.UnityFoundation.Systems.HealthSystem
 {
     [CreateAssetMenu(
         fileName = "damageable_layer", 

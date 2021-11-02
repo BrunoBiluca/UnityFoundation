@@ -1,152 +1,153 @@
-using Assets.UnityFoundation.HealthSystem;
-using Assets.UnityFoundation.Systems.HealthSystem;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(DamageableLayerConfigSO))]
-public class DamageableLayerRelationshipEditor : Editor
+namespace Assets.UnityFoundation.Systems.HealthSystem.HealthSystemEditor
 {
-    private DamageableLayerConfigSO currentRelationship;
-
-    public void OnEnable()
+    [CustomEditor(typeof(DamageableLayerConfigSO))]
+    public class DamageableLayerRelationshipEditor : Editor
     {
-        currentRelationship = (DamageableLayerConfigSO)target;
-    }
+        private DamageableLayerConfigSO currentRelationship;
 
-    public override void OnInspectorGUI()
-    {
-        List<UpdateLayerEntity> updateLayers = new List<UpdateLayerEntity>();
-
-        EditorGUILayout.LabelField("Layers");
-        for(var i = 0; i < currentRelationship.layers.Count; i++)
+        public void OnEnable()
         {
-            var layer = currentRelationship.layers[i];
-            var newLayer = EditorGUILayout.ObjectField(
-                layer.LayerName,
-                layer,
-                typeof(DamageableLayer),
-                false
-            ) as DamageableLayer;
+            currentRelationship = (DamageableLayerConfigSO)target;
+        }
 
-            if(layer != newLayer)
+        public override void OnInspectorGUI()
+        {
+            List<UpdateLayerEntity> updateLayers = new List<UpdateLayerEntity>();
+
+            EditorGUILayout.LabelField("Layers");
+            for(var i = 0; i < currentRelationship.layers.Count; i++)
             {
-                updateLayers.Add(
-                    new UpdateLayerEntity() {
-                        index = i,
-                        newLayer = newLayer
-                    }
-                );
-            }
-        }
+                var layer = currentRelationship.layers[i];
+                var newLayer = EditorGUILayout.ObjectField(
+                    layer.LayerName,
+                    layer,
+                    typeof(DamageableLayer),
+                    false
+                ) as DamageableLayer;
 
-        if(updateLayers.Count > 0)
-        {
-            foreach(var updateLayer in updateLayers)
-                UpdateLayer(updateLayer);
-        }
-
-        if(GUILayout.Button("Add Layer"))
-        {
-            Undo.RecordObject(currentRelationship, "Add new layer");
-            currentRelationship.layers.Add(CreateInstance<DamageableLayer>());
-        }
-
-        EditorGUILayout.LabelField("Relationships");
-
-        GUILayout.BeginHorizontal();
-
-        EditorGUILayout.LabelField("");
-
-        var orderedLayers = currentRelationship.layers
-            .FindAll(l => l != null)
-            .OrderBy(l => l.LayerName);
-
-        foreach(var layerX in orderedLayers)
-        {
-            EditorGUILayout.LabelField(
-                layerX.LayerName,
-                new GUIStyle() { 
-                    normal = new GUIStyleState() { textColor = Color.white },
-                    contentOffset = new Vector2(-15, 0)
-                },
-                new GUILayoutOption[] {
-                    GUILayout.Width(60),
-                    GUILayout.Height(30)
+                if(layer != newLayer)
+                {
+                    updateLayers.Add(
+                        new UpdateLayerEntity() {
+                            index = i,
+                            newLayer = newLayer
+                        }
+                    );
                 }
-            );
-        }
-        GUILayout.EndHorizontal();
+            }
 
-        foreach(var layerY in orderedLayers)
-        {
+            if(updateLayers.Count > 0)
+            {
+                foreach(var updateLayer in updateLayers)
+                    UpdateLayer(updateLayer);
+            }
+
+            if(GUILayout.Button("Add Layer"))
+            {
+                Undo.RecordObject(currentRelationship, "Add new layer");
+                currentRelationship.layers.Add(CreateInstance<DamageableLayer>());
+            }
+
+            EditorGUILayout.LabelField("Relationships");
+
             GUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(layerY.LayerName);
+
+            EditorGUILayout.LabelField("");
+
+            var orderedLayers = currentRelationship.layers
+                .FindAll(l => l != null)
+                .OrderBy(l => l.LayerName);
 
             foreach(var layerX in orderedLayers)
             {
-                var relationship = currentRelationship.relationships
-                    .Find(r =>
-                        (r.layer1 == layerY && r.layer2 == layerX)
-                        || (r.layer1 == layerX && r.layer2 == layerY)
-                    );
-
-                if(relationship == null) continue;
-
-                var newState = EditorGUILayout.Toggle(
-                    relationship.hasRelation,
+                EditorGUILayout.LabelField(
+                    layerX.LayerName,
+                    new GUIStyle() {
+                        normal = new GUIStyleState() { textColor = Color.white },
+                        contentOffset = new Vector2(-15, 0)
+                    },
                     new GUILayoutOption[] {
-                        GUILayout.Width(60)
+                    GUILayout.Width(60),
+                    GUILayout.Height(30)
                     }
                 );
-                relationship.hasRelation = newState;
             }
             GUILayout.EndHorizontal();
-        }
-    }
 
-    private void UpdateLayer(UpdateLayerEntity updateLayer)
-    {
-        if(currentRelationship.layers.Contains(updateLayer.newLayer))
-        {
-            Debug.LogWarning(
-                "Damageable Layer already exists on this Damageable Relationship SO"
-            );
-            return;
+            foreach(var layerY in orderedLayers)
+            {
+                GUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField(layerY.LayerName);
+
+                foreach(var layerX in orderedLayers)
+                {
+                    var relationship = currentRelationship.relationships
+                        .Find(r =>
+                            (r.layer1 == layerY && r.layer2 == layerX)
+                            || (r.layer1 == layerX && r.layer2 == layerY)
+                        );
+
+                    if(relationship == null) continue;
+
+                    var newState = EditorGUILayout.Toggle(
+                        relationship.hasRelation,
+                        new GUILayoutOption[] {
+                        GUILayout.Width(60)
+                        }
+                    );
+                    relationship.hasRelation = newState;
+                }
+                GUILayout.EndHorizontal();
+            }
         }
 
-        if(updateLayer.newLayer == null)
+        private void UpdateLayer(UpdateLayerEntity updateLayer)
         {
-            var oldLayer = currentRelationship.layers[updateLayer.index];
+            if(currentRelationship.layers.Contains(updateLayer.newLayer))
+            {
+                Debug.LogWarning(
+                    "Damageable Layer already exists on this Damageable Relationship SO"
+                );
+                return;
+            }
+
+            if(updateLayer.newLayer == null)
+            {
+                var oldLayer = currentRelationship.layers[updateLayer.index];
+
+                Undo.RecordObjects(
+                    new Object[] { currentRelationship, oldLayer },
+                    "Remove Damageable Layer"
+                );
+
+                currentRelationship.relationships
+                    .RemoveAll(r => r.layer2 == oldLayer || r.layer1 == oldLayer);
+
+                currentRelationship.layers.RemoveAt(updateLayer.index);
+                return;
+            }
 
             Undo.RecordObjects(
-                new Object[] { currentRelationship, oldLayer },
-                "Remove Damageable Layer"
+                new Object[] { currentRelationship, updateLayer.newLayer },
+                "Update Damageable Layer"
             );
 
-            currentRelationship.relationships
-                .RemoveAll(r => r.layer2 == oldLayer || r.layer1 == oldLayer);
+            currentRelationship.layers[updateLayer.index] = updateLayer.newLayer;
 
-            currentRelationship.layers.RemoveAt(updateLayer.index);
-            return;
-        }
-
-        Undo.RecordObjects(
-            new Object[] { currentRelationship, updateLayer.newLayer},
-            "Update Damageable Layer"
-        );
-
-        currentRelationship.layers[updateLayer.index] = updateLayer.newLayer;
-
-        foreach(var layer in currentRelationship.layers)
-        {
-            currentRelationship.relationships
-                .Add(new DamageableLayerRelationship() {
-                    layer1 = currentRelationship.layers[updateLayer.index],
-                    layer2 = layer,
-                    hasRelation = true
-                });
+            foreach(var layer in currentRelationship.layers)
+            {
+                currentRelationship.relationships
+                    .Add(new DamageableLayerRelationship() {
+                        layer1 = currentRelationship.layers[updateLayer.index],
+                        layer2 = layer,
+                        hasRelation = true
+                    });
+            }
         }
     }
 }

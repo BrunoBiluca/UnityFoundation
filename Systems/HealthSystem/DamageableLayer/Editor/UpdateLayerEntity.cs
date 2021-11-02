@@ -1,9 +1,8 @@
-﻿using Assets.UnityFoundation.HealthSystem;
-
-public class UpdateLayerEntity
+﻿namespace Assets.UnityFoundation.Systems.HealthSystem.HealthSystemEditor
 {
-
-    public int index;
-    public DamageableLayer newLayer;
-
+    public class UpdateLayerEntity
+    {
+        public int index;
+        public DamageableLayer newLayer;
+    }
 }

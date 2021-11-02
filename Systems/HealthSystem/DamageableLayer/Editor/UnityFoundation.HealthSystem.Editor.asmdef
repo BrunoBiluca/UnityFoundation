@@ -1,0 +1,18 @@
+{
+    "name": "UnityFoundation.HealthSystem.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f08893b3a8e90124c80945026e148b14"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,18 +1,13 @@
 ﻿using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 
+/* Note: animations are called via the controller for both the character and capsule using animator null checks
+ */
 namespace Assets.UnityFoundation.Systems.Character3D
 {
-#endif
-
-    /* Note: animations are called via the controller for both the character and capsule using animator null checks
-     */
 
     [RequireComponent(typeof(CharacterController))]
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
     [RequireComponent(typeof(PlayerInput))]
-#endif
     public class ThirdPersonController : MonoBehaviour
     {
         [Header("Player")]
@@ -359,10 +354,10 @@ namespace Assets.UnityFoundation.Systems.Character3D
             // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
             Gizmos.DrawSphere(
                 new Vector3(
-                    transform.position.x, 
-                    transform.position.y - GroundedOffset, 
+                    transform.position.x,
+                    transform.position.y - GroundedOffset,
                     transform.position.z
-                ), 
+                ),
                 GroundedRadius
             );
         }

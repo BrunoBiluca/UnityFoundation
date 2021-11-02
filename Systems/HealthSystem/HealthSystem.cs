@@ -1,8 +1,7 @@
-using Assets.UnityFoundation.Systems.HealthSystem;
 using System;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.HealthSystem
+namespace Assets.UnityFoundation.Systems.HealthSystem
 {
     public class HealthSystem : MonoBehaviour, IDamageable
     {

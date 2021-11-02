@@ -1,6 +1,4 @@
 using Assets.UnityFoundation.Code.Common;
-using Assets.UnityFoundation.HealthSystem;
-using System;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Systems.HealthSystem

@@ -1,4 +1,4 @@
-namespace Assets.UnityFoundation.HealthSystem
+namespace Assets.UnityFoundation.Systems.HealthSystem
 {
 
     public interface IDamageable {
