@@ -1,4 +1,4 @@
-﻿using Unity.Mathematics;
+﻿using Assets.UnityFoundation.Code.Common;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Grid.ObjectPlacementGrid
@@ -10,13 +10,13 @@ namespace Assets.UnityFoundation.Code.Grid.ObjectPlacementGrid
         {
         }
 
-        public override bool CanSetGridValue(int2 gridPosition, GridObject value)
+        public override bool CanSetGridValue(Int2 gridPosition, GridObject value)
         {
             var objDimentions = GridObjectDimentions(gridPosition, value);
 
-            for(int x = gridPosition.x; x < objDimentions.x; x++)
-                for(int y = gridPosition.y; y < objDimentions.y; y++)
-                    if(!base.CanSetGridValue(new int2(x, y), value))
+            for(int x = gridPosition.X; x < objDimentions.X; x++)
+                for(int y = gridPosition.Y; y < objDimentions.Y; y++)
+                    if(!base.CanSetGridValue(new Int2(x, y), value))
                         return false;
 
             return true;
@@ -30,8 +30,8 @@ namespace Assets.UnityFoundation.Code.Grid.ObjectPlacementGrid
                 return false;
 
             var objDimentions = GridObjectDimentions(gridPosition, value);
-            for(int x = gridPosition.x; x < objDimentions.x; x++)
-                for(int y = gridPosition.y; y < objDimentions.y; y++)
+            for(int x = gridPosition.X; x < objDimentions.X; x++)
+                for(int y = gridPosition.Y; y < objDimentions.Y; y++)
                     gridArray[x, y].Value = value;
 
             return true;
@@ -57,25 +57,25 @@ namespace Assets.UnityFoundation.Code.Grid.ObjectPlacementGrid
             }
 
             return new Vector3(
-               offsetX * gridObject.Direction.Offset.x * CellSize,
+               offsetX * gridObject.Direction.Offset.X * CellSize,
                0f,
-               offsetY * gridObject.Direction.Offset.y * CellSize
+               offsetY * gridObject.Direction.Offset.Y * CellSize
             );
         }
 
-        private static int2 GridObjectDimentions(int2 gridPosition, GridObject value)
+        private static Int2 GridObjectDimentions(Int2 gridPosition, GridObject value)
         {
-            var objectDimensionX = gridPosition.x + value.Width;
-            var objectDimensionY = gridPosition.y + value.Height;
+            var objectDimensionX = gridPosition.X + value.Width;
+            var objectDimensionY = gridPosition.Y + value.Height;
 
             if(value.Direction == GridObjectDirection.LEFT
                 || value.Direction == GridObjectDirection.RIGHT)
             {
-                objectDimensionX = gridPosition.x + value.Height;
-                objectDimensionY = gridPosition.y + value.Width;
+                objectDimensionX = gridPosition.X + value.Height;
+                objectDimensionY = gridPosition.Y + value.Width;
             }
 
-            return new int2(objectDimensionX, objectDimensionY);
+            return new Int2(objectDimensionX, objectDimensionY);
         }
 
     }

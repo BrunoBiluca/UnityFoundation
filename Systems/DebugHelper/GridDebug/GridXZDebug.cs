@@ -1,7 +1,7 @@
-﻿using Assets.UnityFoundation.DebugHelper;
+﻿using Assets.UnityFoundation.Code.Common;
+using Assets.UnityFoundation.DebugHelper;
 using System;
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Grid
@@ -21,12 +21,12 @@ namespace Assets.UnityFoundation.Code.Grid
             Display();
         }
 
-        public override bool CanSetGridValue(int2 gridPosition, TValue value)
+        public override bool CanSetGridValue(Int2 gridPosition, TValue value)
         {
             return grid.CanSetGridValue(gridPosition, value);
         }
 
-        public override int2 GetGridPostion(Vector3 position)
+        public override Int2 GetGridPostion(Vector3 position)
         {
             return grid.GetGridPostion(position);
         }

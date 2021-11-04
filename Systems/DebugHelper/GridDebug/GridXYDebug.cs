@@ -1,7 +1,7 @@
+using Assets.UnityFoundation.Code.Common;
 using Assets.UnityFoundation.DebugHelper;
 using System;
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Grid
@@ -83,7 +83,7 @@ namespace Assets.UnityFoundation.Code.Grid
             return true;
         }
 
-        public bool DrawLines(params int2[] gridPositions)
+        public bool DrawLines(params Int2[] gridPositions)
         {
             for(int i = 1; i < gridPositions.Length; i++)
             {
@@ -91,12 +91,12 @@ namespace Assets.UnityFoundation.Code.Grid
 
                 Debug.DrawLine(
                     GetWorldPosition(
-                        gridPositions[i - 1].x,
-                        gridPositions[i - 1].y
+                        gridPositions[i - 1].X,
+                        gridPositions[i - 1].Y
                     ) + centerNodeCorrection,
                     GetWorldPosition(
-                        gridPositions[i].x,
-                        gridPositions[i].y
+                        gridPositions[i].X,
+                        gridPositions[i].Y
                     ) + centerNodeCorrection,
                     Color.white,
                     1000000

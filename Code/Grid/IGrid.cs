@@ -1,4 +1,4 @@
-﻿using Unity.Mathematics;
+﻿using Assets.UnityFoundation.Code.Common;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Grid
@@ -11,7 +11,7 @@ namespace Assets.UnityFoundation.Code.Grid
 
         GridPosition<TValue>[,] GridArray { get; }
 
-        int2 GetGridPostion(Vector3 position);
+        Int2 GetGridPostion(Vector3 position);
 
         Vector3 GetWorldPosition(int x, int y);
 
@@ -19,7 +19,7 @@ namespace Assets.UnityFoundation.Code.Grid
 
         bool IsInsideGrid(int x, int y);
 
-        bool CanSetGridValue(int2 gridPosition, TValue value);
+        bool CanSetGridValue(Int2 gridPosition, TValue value);
 
         bool TrySetGridValue(Vector3 position, TValue value);
 

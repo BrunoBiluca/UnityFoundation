@@ -1,11 +1,5 @@
-using Assets.UnityFoundation.TimeUtils;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 
 namespace Assets.UnityFoundation.PostProcessing {
     public class ChromaticAberrationHandler : MonoBehaviour {
@@ -14,7 +8,6 @@ namespace Assets.UnityFoundation.PostProcessing {
 
         private Volume chromaticAberration;
         private float weight;
-
 
         void Awake() {
             Instance = this;

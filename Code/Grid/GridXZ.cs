@@ -1,5 +1,5 @@
-﻿using System;
-using Unity.Mathematics;
+﻿using Assets.UnityFoundation.Code.Common;
+using System;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Grid
@@ -32,9 +32,9 @@ namespace Assets.UnityFoundation.Code.Grid
                     gridArray[x, z] = new GridPosition<TValue>(x, z);
         }
 
-        public virtual int2 GetGridPostion(Vector3 position)
+        public virtual Int2 GetGridPostion(Vector3 position)
         {
-            return new int2(
+            return new Int2(
                 (int)Math.Floor(position.x / cellSize),
                 (int)Math.Floor(position.z / cellSize)
             );
@@ -57,12 +57,12 @@ namespace Assets.UnityFoundation.Code.Grid
                 && y >= 0 && y < height;
         }
 
-        public virtual bool CanSetGridValue(int2 gridPosition, TValue value)
+        public virtual bool CanSetGridValue(Int2 gridPosition, TValue value)
         {
-            if(!IsInsideGrid(gridPosition.x, gridPosition.y))
+            if(!IsInsideGrid(gridPosition.X, gridPosition.Y))
                 return false;
 
-            if(gridArray[gridPosition.x, gridPosition.y].Value != null)
+            if(gridArray[gridPosition.Y, gridPosition.Y].Value != null)
                 return false;
 
             return true;
@@ -72,10 +72,10 @@ namespace Assets.UnityFoundation.Code.Grid
         {
             var gridPosition = GetGridPostion(position);
 
-            if(!IsInsideGrid(gridPosition.x, gridPosition.y))
+            if(!IsInsideGrid(gridPosition.X, gridPosition.Y))
                 return false;
 
-            gridArray[gridPosition.x, gridPosition.y].Value = value;
+            gridArray[gridPosition.X, gridPosition.Y].Value = value;
             return true;
         }
 
@@ -92,10 +92,10 @@ namespace Assets.UnityFoundation.Code.Grid
         {
             var gridPosition = GetGridPostion(position);
 
-            if(!IsInsideGrid(gridPosition.x, gridPosition.y))
+            if(!IsInsideGrid(gridPosition.X, gridPosition.Y))
                 return false;
 
-            gridArray[gridPosition.x, gridPosition.y].Value = default;
+            gridArray[gridPosition.X, gridPosition.Y].Value = default;
             return true;
         }
 

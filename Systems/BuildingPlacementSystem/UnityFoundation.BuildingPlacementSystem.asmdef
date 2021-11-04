@@ -2,7 +2,6 @@
     "name": "UnityFoundation.BuildingPlacementSystem",
     "rootNamespace": "",
     "references": [
-        "GUID:d8b63aba1907145bea998dd612889d6b",
         "GUID:d7d703d7ba19f3c45b01309621aede27",
         "GUID:987ca89d8055f9d4ba9f699951ec109d",
         "GUID:e439e5fc24c4afa4e95f296f73f28396",

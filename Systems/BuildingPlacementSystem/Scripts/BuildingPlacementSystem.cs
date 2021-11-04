@@ -87,7 +87,7 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
         private void CreateBuilding()
         {
             var position = grid.GetGridPostion(CameraUtils.GetMousePosition3D());
-            if(!grid.IsInsideGrid(position.x, position.y))
+            if(!grid.IsInsideGrid(position.X, position.Y))
             {
                 DebugPopup.Create("Can't create here.");
                 return;
@@ -97,7 +97,7 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
                 CurrentBuilding.Width, CurrentBuilding.Height, currentDirection
             );
 
-            if(!grid.TrySetGridValue(grid.GetWorldPosition(position.x, position.y), gridObject))
+            if(!grid.TrySetGridValue(grid.GetWorldPosition(position.X, position.Y), gridObject))
                 return;
 
             var building = buildingPooling.GetAvailableObject(CurrentBuilding.Tag).Get();
@@ -107,7 +107,7 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
                 .Activate((go) => {
                     go
                     .transform
-                    .position = grid.GetWorldPosition(position.x, position.y, gridObject);
+                    .position = grid.GetWorldPosition(position.X, position.Y, gridObject);
 
                     go
                     .transform
@@ -140,7 +140,7 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
                 return false;
             }
 
-            gridPosition = grid.GetWorldPosition(gridPos.x, gridPos.y, newGridObject);
+            gridPosition = grid.GetWorldPosition(gridPos.X, gridPos.Y, newGridObject);
             rotation = Quaternion.Euler(0f, currentDirection.Rotation, 0f);
             return true;
         }

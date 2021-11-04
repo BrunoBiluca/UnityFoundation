@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/UnityFoundation/Code/CameraScripts/NewInputSystem/CameraMovementInputActions.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/UnityFoundation/Systems/CameraScripts/NewInputSystem/CameraMovementInputActions.inputactions'
 
 using System;
 using System.Collections;
