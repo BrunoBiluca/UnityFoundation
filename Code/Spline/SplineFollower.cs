@@ -1,4 +1,4 @@
-using Assets.UnityFoundation.Code;
+using Assets.UnityFoundation.Code.Common;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Spline
@@ -8,23 +8,78 @@ namespace Assets.UnityFoundation.Code.Spline
         [SerializeField] private SplineMonoBehaviour spline;
 
         [SerializeField] private float followDuration = 1f;
-        [SerializeField] private bool followLoop;
+
+        [StringInList(
+            typeof(EnumX<SplineFollowBehaviour>), nameof(SplineFollowBehaviour.Values)
+        )]
+        public string followBehaviour;
 
         private float interpolateAmount;
 
+        private float backAndForthDirection = 1;
+
+        public SplineFollower Setup(
+            SplineMonoBehaviour spline,
+            SplineFollowBehaviour followBehaviour
+        )
+        {
+            this.spline = spline;
+            this.followBehaviour = followBehaviour;
+            interpolateAmount = 0f;
+            backAndForthDirection = 1f;
+
+            enabled = true;
+            return this;
+        }
+
         void Update()
         {
-            interpolateAmount += Time.deltaTime;
-
-            if(followLoop)
-                interpolateAmount %= followDuration;
-
-            if(interpolateAmount > followDuration)
+            if(spline == null)
+            {
+                enabled = false;
                 return;
+            }
+
+
+            if(followBehaviour == SplineFollowBehaviour.oneGo)
+                OneGoEvaluateInterpolateAmount();
+            else if(followBehaviour == SplineFollowBehaviour.loop)
+                LoopEvaluateInterpolateAmount();
+            else if(followBehaviour == SplineFollowBehaviour.backAndForth)
+                BackAndForthEvaluateInterpolateAmount();
 
             transform.position = spline.GetPosition(
                 interpolateAmount.Remap(0f, followDuration, 0f, 1f)
             );
+        }
+
+        private void OneGoEvaluateInterpolateAmount()
+        {
+            interpolateAmount += Time.deltaTime;
+        }
+
+        private void LoopEvaluateInterpolateAmount()
+        {
+            interpolateAmount += Time.deltaTime;
+            interpolateAmount %= followDuration;
+        }
+
+        private void BackAndForthEvaluateInterpolateAmount()
+        {
+            interpolateAmount += Time.deltaTime * backAndForthDirection;
+
+            if(interpolateAmount >= followDuration)
+            {
+                backAndForthDirection = -1;
+                interpolateAmount = followDuration;
+            }
+
+            if(interpolateAmount <= 0f)
+            {
+                backAndForthDirection = 1;
+                interpolateAmount = 0f;
+            }
+
         }
     }
 }

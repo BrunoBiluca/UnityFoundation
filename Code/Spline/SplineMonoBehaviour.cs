@@ -43,20 +43,18 @@ namespace Assets.UnityFoundation.Code.Spline
 
         public Vector3 GetPosition(float interpolateAmount)
         {
-            interpolateAmount %= 1f;
-
             var segments = anchors.Count - 1;
             if(closedLoop) segments += 1;
 
-            var interpolate = interpolateAmount * segments;
+            var interpolate = Mathf.Clamp01(interpolateAmount) * segments;
 
             var currentAnchor = Mathf.FloorToInt(interpolate);
             var nextAnchor = currentAnchor + 1;
 
             // Last segment
-            if(currentAnchor == anchors.Count - 1)
+            if(currentAnchor >= anchors.Count - 1)
             {
-                currentAnchor -= 1;
+                currentAnchor = anchors.Count - 2;
                 nextAnchor = currentAnchor + 1;
 
                 if(closedLoop)
