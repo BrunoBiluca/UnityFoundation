@@ -27,10 +27,16 @@ namespace Assets.UnityFoundation.Code
             float from1,
             float to1,
             float from2,
-            float to2
+            float to2,
+            bool clampValue = true
         )
         {
-            return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+            var testValue = value;
+            
+            if(clampValue)
+                testValue = Mathf.Clamp(value, from1, to1);
+
+            return (testValue - from1) / (to1 - from1) * (to2 - from2) + from2;
         }
     }
 }

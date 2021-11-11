@@ -55,7 +55,7 @@ namespace Assets.UnityFoundation.Code.TimeUtils
 
         private TimerMonoBehaviour timerBehaviour;
         private string name;
-        private readonly float amount;
+        private float amount;
         private bool isLoop;
         private readonly Action callback;
         
@@ -82,6 +82,12 @@ namespace Assets.UnityFoundation.Code.TimeUtils
             this.callback = callback;
 
             isLoop = true;
+        }
+
+        public Timer SetAmount(float newAmount)
+        {
+            amount = newAmount;
+            return this;
         }
 
         public Timer SetName(string name)

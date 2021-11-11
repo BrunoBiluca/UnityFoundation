@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Common
@@ -10,18 +8,28 @@ namespace Assets.UnityFoundation.Code.Common
         private static Singleton<T> instance;
         public static T Instance {
             get {
+                if(instance == null)
+                {
+                    var className = typeof(T).Name;
+                    instance = new GameObject(className)
+                        .AddComponent<T>();
+                    Debug.LogWarning($"{className} was created automatically and was not found on scene. Is this the expected behaviour?");
+                }
+
+
                 return (T)instance;
             }
         }
 
         [SerializeField] private bool destroyOnLoad;
+        public virtual bool DestroyOnLoad => destroyOnLoad;
 
         private void Awake()
         {
             if(instance == null)
             {
                 instance = this;
-                if(!destroyOnLoad) DontDestroyOnLoad(gameObject);
+                if(!DestroyOnLoad) DontDestroyOnLoad(gameObject);
             }
             else
             {

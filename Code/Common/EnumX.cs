@@ -40,5 +40,9 @@ namespace Assets.UnityFoundation.Code.Common
 
             return (T)values[nextIndex];
         }
+
+        public string Name => name;
+
+        public static string[] Values() => values.Values.Select(v => v.name).ToArray();
     }
 }
