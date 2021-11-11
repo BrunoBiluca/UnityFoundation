@@ -1,36 +1,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static Assets.UnityFoundation.Code.ObjectPooling.ObjectPoolingStrings;
+using static Assets.UnityFoundation.Systems.ObjectPooling.ObjectPoolingStrings;
 
-namespace Assets.UnityFoundation.Code.ObjectPooling
+namespace Assets.UnityFoundation.Systems.ObjectPooling
 {
     public class ObjectPooling : MonoBehaviour
     {
-
         [SerializeField] private GameObject objectPrefab;
         [SerializeField] private int poolSize;
         [SerializeField] private bool canGrown;
+        [SerializeField] private bool destroyOnLoad = true;
 
-        public bool DestroyOnLoad { get; set; }
+        public bool DestroyOnLoad => destroyOnLoad;
 
-        private readonly List<PooledObject> pool = new List<PooledObject>();
+        private List<PooledObject> pool;
 
         private void Awake()
         {
-            SceneManager.sceneLoaded += delegate {
-                pool.ForEach(obj => obj.Deactivate());
-            };
+            if(!DestroyOnLoad) DontDestroyOnLoad(gameObject);
+
+            pool = new List<PooledObject>();
         }
 
         public void InstantiateObjects()
         {
+            if(pool.Count >= poolSize) return;
+
             for(int i = 0; i < poolSize; i++)
             {
-                var pooledObject = Instantiate(objectPrefab)
-                    .GetComponent<PooledObject>();
+                var obj = Instantiate(objectPrefab);
 
-                if(pooledObject == null)
+                if(!obj.TryGetComponent(out PooledObject pooledObject))
                     throw new MissingComponentException(
                         MISSING_POOLED_OBJECT_COMPONENT_MSG()
                     );

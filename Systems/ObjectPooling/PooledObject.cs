@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Assets.UnityFoundation.Code.MonoBehaviourUtils;
+using Assets.UnityFoundation.EditorInspector;
+using System;
+using System.Collections;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.ObjectPooling
+namespace Assets.UnityFoundation.Systems.ObjectPooling
 {
-    public class PooledObject : MonoBehaviour
+    public class PooledObject : MonoBehaviour, IDestroyBehaviour
     {
+        private Action onDestroyAction;
+
         public bool IsActive => gameObject.activeInHierarchy;
 
         public string Tag { get; set; }
@@ -15,10 +20,15 @@ namespace Assets.UnityFoundation.Code.ObjectPooling
             return this;
         }
 
+        public void Activate()
+        {
+            gameObject.SetActive(true);
+        }
+
         public void Activate(Action<GameObject> preActivate)
         {
             preActivate(gameObject);
-            gameObject.SetActive(true);
+            Activate();
         }
 
         public void Activate<T>(Action<T> preActivate) where T : MonoBehaviour
@@ -29,13 +39,42 @@ namespace Assets.UnityFoundation.Code.ObjectPooling
 
         public virtual PooledObject Deactivate()
         {
+            onDestroyAction?.Invoke();
             gameObject.SetActive(false);
             return this;
         }
 
+        public IEnumerator Deativate(float time)
+        {
+            yield return new WaitForSecondsRealtime(time);
+            Deactivate();
+        }
+
         public void Destroy()
         {
-            throw new DestroyPooledObjectException("Destroy pooled object is not allow.");
+            Deactivate();
+        }
+
+        public void Destroy(float time)
+        {
+            StartCoroutine(Deativate(time));
+        }
+
+        public void OnBeforeDestroy(Action p)
+        {
+            onDestroyAction = p;
+        }
+
+        ///
+        ///   UNITY METHODS
+        ///
+
+        public void OnDestroy()
+        {
+            if(PlayState.IsPlayMode)
+                Debug.LogWarning(
+                    "Pooled object was destroyed. Is this the expected behaviour?"
+                );
         }
     }
 }

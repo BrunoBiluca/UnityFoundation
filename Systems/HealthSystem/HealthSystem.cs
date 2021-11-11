@@ -1,9 +1,10 @@
+using Assets.UnityFoundation.Code.MonoBehaviourUtils;
 using System;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Systems.HealthSystem
 {
-    public class HealthSystem : MonoBehaviour, IDamageable
+    public class HealthSystem : CustomDestroyMonoBehaviour, IDamageable
     {
 
         // TODO: criar aqui uma annotation de restrição
@@ -89,7 +90,7 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
                 OnDied?.Invoke(this, EventArgs.Empty);
 
                 if(destroyHealthBarOnDied) Destroy(healthBarComponent);
-                if(destroyOnDied) Destroy(gameObject);
+                if(destroyOnDied) destroyBehaviour.Destroy();
                 return;
             }
 

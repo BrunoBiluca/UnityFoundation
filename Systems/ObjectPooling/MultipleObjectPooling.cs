@@ -2,10 +2,9 @@ using Assets.UnityFoundation.EditorInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using static Assets.UnityFoundation.Code.ObjectPooling.ObjectPoolingStrings;
+using static Assets.UnityFoundation.Systems.ObjectPooling.ObjectPoolingStrings;
 
-namespace Assets.UnityFoundation.Code.ObjectPooling
+namespace Assets.UnityFoundation.Systems.ObjectPooling
 {
     [Serializable]
     public class ObjectPoolingDictionary : SerializableDictionary<string, GameObject> { }
@@ -16,15 +15,13 @@ namespace Assets.UnityFoundation.Code.ObjectPooling
         [SerializeField] private int poolSize;
         [SerializeField] private bool canGrown;
 
-        public bool DestroyOnLoad { get; set; }
+        public bool DestroyOnLoad { get; set; } = true;
 
-        private readonly List<PooledObject> pool = new List<PooledObject>();
+        private List<PooledObject> pool;
 
         private void Awake()
         {
-            SceneManager.sceneLoaded += delegate {
-                pool.ForEach(obj => obj.Deactivate());
-            };
+            pool = new List<PooledObject>();
         }
 
         public void InstantiateObjects()

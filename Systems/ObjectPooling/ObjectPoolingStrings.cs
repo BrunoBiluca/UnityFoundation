@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Assets.UnityFoundation.Code.ObjectPooling
+namespace Assets.UnityFoundation.Systems.ObjectPooling
 {
     public static class ObjectPoolingStrings
     {
