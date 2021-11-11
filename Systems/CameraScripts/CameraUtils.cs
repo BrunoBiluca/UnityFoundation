@@ -22,6 +22,15 @@ namespace Assets.UnityFoundation.CameraScripts
             return worldPosition;
         }
 
+        public static Vector3 GetMousePosition2D(Vector2 screenPosition)
+        {
+            if(mainCamera == null) mainCamera = Camera.main;
+
+            var worldPosition = mainCamera.ScreenToWorldPoint(screenPosition);
+            worldPosition.z = 0f;
+            return worldPosition;
+        }
+
         public static Vector3 GetMousePosition3D()
         {
             if(mainCamera == null) mainCamera = Camera.main;

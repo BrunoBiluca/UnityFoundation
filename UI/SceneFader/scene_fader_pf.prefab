@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3705359189566079205}
   - component: {fileID: 3705359189566079194}
   m_Layer: 0
-  m_Name: SceneFader
+  m_Name: scene_fader_pf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

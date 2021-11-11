@@ -1,18 +1,11 @@
-﻿using UnityEngine;
+﻿using Assets.UnityFoundation.Code.Common;
+using UnityEngine;
 
 namespace Assets.UnityFoundation.CameraScripts {
-    public class CameraFollower : MonoBehaviour {
-        public static CameraFollower Instance { get; private set; }
+    public class CameraFollower : Singleton<CameraFollower> {
+        private float offsetX;
 
-        public static float offsetX;
-
-        [SerializeField, SerializeReference]
         private IFollowable follower;
-
-        public void Awake() {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
 
         public void Setup(IFollowable follower) {
             this.follower = follower;
@@ -20,7 +13,7 @@ namespace Assets.UnityFoundation.CameraScripts {
             offsetX = follower.GetPositionOffset().x;
         }
 
-        void Update() {
+        public void Update() {
             MoveTheCamera();
         }
 

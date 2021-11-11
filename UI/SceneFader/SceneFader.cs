@@ -2,10 +2,12 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using Assets.UnityFoundation.TimeUtils;
+using Assets.UnityFoundation.Code.Common;
 
 namespace Assets.UnityFoundation.SceneFader {
-    public class SceneFader : MonoBehaviour {
-        public static SceneFader Instance { get; private set; }
+    public class SceneFader : Singleton<SceneFader> {
+
+        public override bool DestroyOnLoad => false;
 
         private static class SceneFaderAnimations{
             public const string fadeIn = "FadeIn";
@@ -17,11 +19,6 @@ namespace Assets.UnityFoundation.SceneFader {
 
         [SerializeField]
         private Animator fadeAnim;
-
-        void Awake() {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
 
         public void FadeIn(string levelName) {
             StartCoroutine(FadeInAnimation(levelName));
