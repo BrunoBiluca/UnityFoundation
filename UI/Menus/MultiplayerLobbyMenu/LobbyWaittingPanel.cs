@@ -1,54 +1,60 @@
-using Assets.UnityFoundation.UI.Menus.MultiplayerLobbyMenu;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LobbyWaittingPanel : AbstractLobbyMenu
+namespace Assets.UnityFoundation.UI.Menus.MultiplayerLobbyMenu
 {
-    private readonly List<TMP_Text> playersText = new List<TMP_Text>();
-
-    private Button startGameButton;
-
-    private void Awake()
+    public class LobbyWaittingPanel : AbstractLobbyMenu
     {
-        foreach(Transform wattingPlayerPanel in transform.Find("waitting_players"))
-            playersText.Add(wattingPlayerPanel.Find("text").GetComponent<TMP_Text>());
+        private readonly List<TMP_Text> playersText = new List<TMP_Text>();
 
-        startGameButton = transform
-            .Find("start_game_button")
-            .GetComponent<Button>();
-        startGameButton.onClick
-            .AddListener(() => LobbyMenuManager.Instance.StartGame());
+        private Button startGameButton;
 
-        transform
-            .Find("leave_lobby_button")
-            .GetComponent<Button>()
-            .onClick
-            .AddListener(() => LobbyMenuManager.Instance.LeaveLobby());
-    }
+        private void Awake()
+        {
+            foreach(Transform wattingPlayerPanel in transform.Find("waitting_players"))
+                playersText.Add(
+                    wattingPlayerPanel.Find("text").GetComponent<TMP_Text>()
+                );
 
-    private void LobbyPlayersInfoHandler(List<string> players, bool isPartyOwner)
-    {
-        for(int i = 0; i < players.Count; i++)
-            playersText[i].text = players[i];
+            startGameButton = transform
+                .Find("start_game_button")
+                .GetComponent<Button>();
+            startGameButton.onClick
+                .AddListener(() => LobbyMenuManager.Instance.StartGame());
 
-        for(int i = players.Count; i < playersText.Count; i++)
-            playersText[i].text = "Waitting player...";
+            transform
+                .Find("leave_lobby_button")
+                .GetComponent<Button>()
+                .onClick
+                .AddListener(() => LobbyMenuManager.Instance.LeaveLobby());
+        }
 
-        startGameButton.gameObject.SetActive(isPartyOwner);
-        startGameButton.interactable = players.Count == 2;
-    }
+        private void LobbyPlayersInfoHandler(List<string> players, bool isPartyOwner)
+        {
+            for(int i = 0; i < players.Count; i++)
+                playersText[i].text = players[i];
 
-    public override void Show()
-    {
-        LobbyMenuManager.Instance.OnPartyPlayersInfoChanged += LobbyPlayersInfoHandler;
-        gameObject.SetActive(true);
-    }
+            for(int i = players.Count; i < playersText.Count; i++)
+                playersText[i].text = "Waitting player...";
 
-    public override void Hide()
-    {
-        LobbyMenuManager.Instance.OnPartyPlayersInfoChanged -= LobbyPlayersInfoHandler;
-        gameObject.SetActive(false);
+            startGameButton.gameObject.SetActive(isPartyOwner);
+            startGameButton.interactable = players.Count == 2;
+        }
+
+        public override void Show()
+        {
+            LobbyMenuManager.Instance.OnPartyPlayersInfoChanged 
+                += LobbyPlayersInfoHandler;
+            gameObject.SetActive(true);
+        }
+
+        public override void Hide()
+        {
+            LobbyMenuManager.Instance.OnPartyPlayersInfoChanged 
+                -= LobbyPlayersInfoHandler;
+            gameObject.SetActive(false);
+        }
     }
 }

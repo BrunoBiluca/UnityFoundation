@@ -8,7 +8,6 @@ namespace Assets.UnityFoundation.UI.Menus.MultiplayerLobbyMenu
     public class LobbyMenuManager : Singleton<LobbyMenuManager>
     {
         [SerializeField] protected LandingPanel landingPanel;
-        [SerializeField] protected EnterAddressPanel enterAddressPanel;
         [SerializeField] protected LobbyWaittingPanel lobbyWattingPanel;
 
         public event Action<List<string>, bool> OnPartyPlayersInfoChanged;
@@ -29,7 +28,6 @@ namespace Assets.UnityFoundation.UI.Menus.MultiplayerLobbyMenu
         public void Start()
         {
             landingPanel.Show();
-            enterAddressPanel.Hide();
             lobbyWattingPanel.Hide();
 
             OnStart();
@@ -38,6 +36,8 @@ namespace Assets.UnityFoundation.UI.Menus.MultiplayerLobbyMenu
         public void HostLobby() => OnHostLobby();
 
         public void HostLobby(string roomName) => OnHostLobby(roomName);
+
+        public void HostLobby(string address, string room) => OnHostLobby(room);
 
         public void JoinLobby(string address) => OnJoinLobby(address);
 
@@ -51,21 +51,12 @@ namespace Assets.UnityFoundation.UI.Menus.MultiplayerLobbyMenu
         public void OpenLandingPanel()
         {
             landingPanel.Show();
-            enterAddressPanel.Hide();
-            lobbyWattingPanel.Hide();
-        }
-
-        public void OpenLobbyAddressMenu()
-        {
-            landingPanel.Hide();
-            enterAddressPanel.Show();
             lobbyWattingPanel.Hide();
         }
 
         public void OpenLobbyWattingRoom()
         {
             landingPanel.Hide();
-            enterAddressPanel.Hide();
             lobbyWattingPanel.Show();
         }
     }

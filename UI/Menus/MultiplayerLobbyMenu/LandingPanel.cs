@@ -7,6 +7,7 @@ namespace Assets.UnityFoundation.UI.Menus.MultiplayerLobbyMenu
     public class LandingPanel : AbstractLobbyMenu
     {
         [SerializeField] private bool canSetPlayerName;
+        [SerializeField] private bool canSetAddress;
         [SerializeField] private bool canSetRoomName;
         [SerializeField] private bool startButtonsDisabled;
 
@@ -28,6 +29,7 @@ namespace Assets.UnityFoundation.UI.Menus.MultiplayerLobbyMenu
             SetupButtons();
             SetupPlayerName();
             SetupRoomName();
+            SetupAddress();
         }
 
         private void SetupButtons()
@@ -43,11 +45,6 @@ namespace Assets.UnityFoundation.UI.Menus.MultiplayerLobbyMenu
 
             joinLobbyButton = transform.Find("join_lobby_button")
                 .GetComponent<Button>();
-            joinLobbyButton
-                .onClick
-                .AddListener(
-                    () => LobbyMenuManager.Instance.OpenLobbyAddressMenu()
-                );
             joinLobbyButton.interactable = !startButtonsDisabled;
         }
 
@@ -80,8 +77,30 @@ namespace Assets.UnityFoundation.UI.Menus.MultiplayerLobbyMenu
                 hostLobbyButton.onClick.AddListener(
                     () => LobbyMenuManager.Instance.HostLobby(roomNameField.text)
                 );
+
+                joinLobbyButton.onClick.RemoveAllListeners();
+                joinLobbyButton.onClick.AddListener(
+                    () => LobbyMenuManager.Instance.JoinLobby(roomNameField.text)
+                );
             }
-                
+
+        }
+
+        private void SetupAddress()
+        {
+            var addressField = transform
+                .Find("address_field")
+                .GetComponent<TMP_InputField>();
+            addressField.gameObject.SetActive(canSetAddress);
+
+            if(canSetAddress)
+            {
+                joinLobbyButton.onClick.RemoveAllListeners();
+                joinLobbyButton.onClick.AddListener(
+                    () => LobbyMenuManager.Instance.JoinLobby(addressField.text)
+                );
+            }
+
         }
 
         public void EnableButtons()
