@@ -42,7 +42,7 @@ namespace Assets.UnityFoundation.Code.TimeUtils
         /// <summary>
         /// Get if the timer finished it's execution
         /// </summary>
-        public bool Completed => MathX.NearlyEqual(CurrentTime, amount, 0.1f);
+        public bool Completed => MathX.NearlyEqual(CurrentTime, amount, 0.01f);
 
         /// <summary>
         /// Get if the timer is current running

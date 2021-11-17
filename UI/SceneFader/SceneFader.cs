@@ -4,7 +4,8 @@ using UnityEngine.SceneManagement;
 using Assets.UnityFoundation.TimeUtils;
 using Assets.UnityFoundation.Code.Common;
 
-namespace Assets.UnityFoundation.SceneFader {
+namespace Assets.UnityFoundation.SceneFader
+{
     public class SceneFader : Singleton<SceneFader> {
 
         public override bool DestroyOnLoad => false;
@@ -20,6 +21,15 @@ namespace Assets.UnityFoundation.SceneFader {
         [SerializeField]
         private Animator fadeAnim;
 
+        protected override void OnAwake()
+        {
+            if(fadeCanvas == null)
+                fadeCanvas = transform.Find("canvas").gameObject;
+
+            if(fadeAnim == null)
+                fadeAnim = fadeCanvas.transform.Find("panel").GetComponent<Animator>();
+        }
+
         public void FadeIn(string levelName) {
             StartCoroutine(FadeInAnimation(levelName));
         }
@@ -28,11 +38,13 @@ namespace Assets.UnityFoundation.SceneFader {
             StartCoroutine(FadeOutAnimation());
         }
 
-        IEnumerator FadeInAnimation(string levelName) {
+        IEnumerator FadeInAnimation(string sceneName) {
             fadeCanvas.SetActive(true);
             fadeAnim.Play(SceneFaderAnimations.fadeIn);
             yield return StartCoroutine(WaittingCoroutine.RealSeconds(0.7f));
-            SceneManager.LoadScene(levelName);
+
+            OnLoadScene(sceneName);
+
             FadeOut();
         }
 
@@ -42,5 +54,9 @@ namespace Assets.UnityFoundation.SceneFader {
             fadeCanvas.SetActive(false);
         }
 
+        protected virtual void OnLoadScene(string sceneName)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }

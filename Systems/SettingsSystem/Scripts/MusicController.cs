@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class MusicController : MonoBehaviour
 {
@@ -27,6 +26,9 @@ public class MusicController : MonoBehaviour
 
     void PlayOrTurnOffMusic()
     {
+        if(backgroundMusicAudioSource == null)
+            backgroundMusicAudioSource = GetComponent<AudioSource>();
+
         backgroundMusicAudioSource.volume = musicVolume;
 
         if(musicVolume == 0 && backgroundMusicAudioSource.isPlaying)
@@ -35,7 +37,8 @@ public class MusicController : MonoBehaviour
             return;
         }
 
-        if(backgroundMusicAudioSource.volume > 0 && !backgroundMusicAudioSource.isPlaying)
+        if(backgroundMusicAudioSource.volume > 0 
+            && !backgroundMusicAudioSource.isPlaying)
         {
             backgroundMusicAudioSource.Play();
         }        
