@@ -1,4 +1,5 @@
-﻿using Assets.UnityFoundation.DialogueSystem;
+﻿using Assets.UnityFoundation.Code.Common;
+using Assets.UnityFoundation.DialogueSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;

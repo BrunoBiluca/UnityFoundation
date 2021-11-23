@@ -27,6 +27,14 @@ namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Zoom"",
+                    ""type"": ""Value"",
+                    ""id"": ""edefc2d6-5a43-4e2b-8f2d-6845428ff182"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -139,6 +147,17 @@ namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
                     ""action"": ""AxisMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""01684e45-7030-4093-83b8-8d6f512a862e"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -148,6 +167,7 @@ namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
             // Camera
             m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
             m_Camera_AxisMovement = m_Camera.FindAction("AxisMovement", throwIfNotFound: true);
+            m_Camera_Zoom = m_Camera.FindAction("Zoom", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -198,11 +218,13 @@ namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
         private readonly InputActionMap m_Camera;
         private ICameraActions m_CameraActionsCallbackInterface;
         private readonly InputAction m_Camera_AxisMovement;
+        private readonly InputAction m_Camera_Zoom;
         public struct CameraActions
         {
             private @CameraMovementInputActions m_Wrapper;
             public CameraActions(@CameraMovementInputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @AxisMovement => m_Wrapper.m_Camera_AxisMovement;
+            public InputAction @Zoom => m_Wrapper.m_Camera_Zoom;
             public InputActionMap Get() { return m_Wrapper.m_Camera; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -215,6 +237,9 @@ namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
                     @AxisMovement.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnAxisMovement;
                     @AxisMovement.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnAxisMovement;
                     @AxisMovement.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnAxisMovement;
+                    @Zoom.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnZoom;
+                    @Zoom.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnZoom;
+                    @Zoom.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnZoom;
                 }
                 m_Wrapper.m_CameraActionsCallbackInterface = instance;
                 if (instance != null)
@@ -222,6 +247,9 @@ namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
                     @AxisMovement.started += instance.OnAxisMovement;
                     @AxisMovement.performed += instance.OnAxisMovement;
                     @AxisMovement.canceled += instance.OnAxisMovement;
+                    @Zoom.started += instance.OnZoom;
+                    @Zoom.performed += instance.OnZoom;
+                    @Zoom.canceled += instance.OnZoom;
                 }
             }
         }
@@ -229,6 +257,7 @@ namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
         public interface ICameraActions
         {
             void OnAxisMovement(InputAction.CallbackContext context);
+            void OnZoom(InputAction.CallbackContext context);
         }
     }
 }

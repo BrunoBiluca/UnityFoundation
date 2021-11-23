@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -47,8 +46,8 @@ namespace Assets.UnityFoundation.UI.Menus.GameOverMenu
                 .text = actionButtonName;
 
             actionButton.onClick.AddListener(() => {
-                actionButtonBehaviour();
                 Hide();
+                actionButtonBehaviour();
             });
 
             return this;
@@ -57,12 +56,12 @@ namespace Assets.UnityFoundation.UI.Menus.GameOverMenu
         public virtual void Show(string displayText)
         {
             winnerText.text = displayText;
-            menu.gameObject.SetActive(true);
+            gameObject.SetActive(true);
         }
 
         public virtual void Hide()
         {
-            menu.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 }

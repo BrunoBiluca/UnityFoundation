@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,33 +7,45 @@ namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
     public class CameraMovementXZ
     {
         public float CameraSpeed { get; set; } = 20f;
-        public float EdgeOffset { get; set; }  = 10f;
+        public bool EnabledEdgeMovement { get; set; }
+        public float EdgeOffset { get; set; } = 10f;
         public Vector2 MoveLimitsX { get; set; }
+        public Vector2 MoveLimitsY { get; set; }
         public Vector2 MoveLimitsZ { get; set; }
 
-        private Transform targetTransform;
+        public bool EnableZoomMovement { get; set; }
+        public float ZoomAmount { get; set; } = 2f;
+        public float ZoomSpeed { get; set; } = 5f;
+
+        private Transform target;
 
         private Vector2 previousAxisInput;
 
+        private float previousZoomInput;
+        private float targetZoom;
+
         public CameraMovementXZ(Transform transform)
         {
-            targetTransform = transform;
+            SetTargetTransform(transform);
             ActionsBinder();
         }
 
         public void SetTargetTransform(Transform target)
         {
-            targetTransform = target;
+            this.target = target;
+            targetZoom = target.transform.position.y;
         }
 
         public void OnUpdate()
         {
-            if(targetTransform == null) return;
+            if(target == null) return;
 
             if(previousAxisInput != Vector2.zero)
                 AxisMovement();
             else
                 EdgeMovement();
+
+            ZoomMovement();
         }
 
         /// **************************************************
@@ -46,7 +59,15 @@ namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
             controls.Camera.AxisMovement.performed += SetPreviousInput;
             controls.Camera.AxisMovement.canceled += SetPreviousInput;
 
+            controls.Camera.Zoom.performed += SetZoomInput;
+            controls.Camera.Zoom.canceled += SetZoomInput;
+
             controls.Enable();
+        }
+
+        private void SetZoomInput(InputAction.CallbackContext ctx)
+        {
+            previousZoomInput = ctx.ReadValue<float>();
         }
 
         private void SetPreviousInput(InputAction.CallbackContext ctx)
@@ -63,16 +84,41 @@ namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
 
         private void EdgeMovement()
         {
+            if(!EnabledEdgeMovement) return;
+
             UpdatePosition(
                 EvaluateMovement(EdgeScreenDirectionX(), EdgeScreenDirectionY())
             );
         }
 
+        private void ZoomMovement()
+        {
+            if(!EnableZoomMovement) return;
+
+            var zoomInput = (-previousZoomInput).Normalize();
+
+            targetZoom += zoomInput * ZoomAmount;
+            targetZoom = Mathf.Clamp(
+                targetZoom,
+                MoveLimitsY.x != 0f ? MoveLimitsY.x : float.MinValue,
+                MoveLimitsY.y != 0f ? MoveLimitsY.y : float.MaxValue
+            );
+
+            var positionY = Mathf.Lerp(
+                target.position.y,
+                targetZoom,
+                Time.deltaTime * ZoomSpeed
+            );
+
+            target.position = new Vector3(
+                target.position.x, positionY, target.position.z
+            );
+        }
+
         private Vector3 EvaluateMovement(float xDirection, float zDirection)
         {
-            var forward = targetTransform.forward;
-            forward.y = 0f;
-            var moveDirection = forward * zDirection + targetTransform.right * xDirection;
+            var moveDirection = Vector3.forward * zDirection
+                + Vector3.right * xDirection;
 
             return moveDirection.normalized * CameraSpeed * Time.deltaTime;
         }
@@ -103,11 +149,16 @@ namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
 
         private void UpdatePosition(Vector3 addPosition)
         {
-            var newPos = targetTransform.position + addPosition;
+            var newPos = target.position + addPosition;
             newPos.x = Mathf.Clamp(newPos.x, MoveLimitsX.x, MoveLimitsX.y);
+            newPos.y = Mathf.Clamp(
+                newPos.y,
+                MoveLimitsY.x != 0f ? MoveLimitsY.x : float.MinValue,
+                MoveLimitsY.y != 0f ? MoveLimitsY.y : float.MaxValue
+            );
             newPos.z = Mathf.Clamp(newPos.z, MoveLimitsZ.x, MoveLimitsZ.y);
 
-            targetTransform.position = newPos;
+            target.position = newPos;
         }
 
     }

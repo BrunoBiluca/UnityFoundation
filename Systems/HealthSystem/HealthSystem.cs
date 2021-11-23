@@ -6,6 +6,7 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
 {
     public class HealthSystem : CustomDestroyMonoBehaviour, IDamageable
     {
+        [SerializeField] private bool setupOnStart = false;
 
         // TODO: criar aqui uma annotation de restrição
         // para elementos que possui um component IHealthBar
@@ -19,7 +20,7 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
         [SerializeField] private bool destroyHealthBarOnDied = false;
 
         [SerializeField] private bool destroyOnDied = true;
-
+        
         [SerializeField] private float currentHealth;
         public float CurrentHealth {
             get { return currentHealth; }
@@ -41,7 +42,8 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
 
         public void Start()
         {
-            Setup(baseHealth);
+            if(setupOnStart)
+                Setup(baseHealth);
         }
 
         private void HealthBarReference()
@@ -70,6 +72,11 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
 
             OnFullyHeal?.Invoke(this, EventArgs.Empty);
         }
+
+        public void SetDestroyOnDied(bool value) => destroyOnDied = value;
+
+        public void SetDestroyHealthbar(bool value) => destroyHealthBarOnDied = value;
+
 
         public void SetGuardDamage(Func<bool> callback)
         {

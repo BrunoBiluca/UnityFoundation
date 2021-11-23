@@ -1,3 +1,4 @@
+using Assets.UnityFoundation.Code.Common;
 using Assets.UnityFoundation.DialogueSystem;
 using UnityEngine;
 
