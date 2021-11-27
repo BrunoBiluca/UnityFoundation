@@ -22,5 +22,23 @@ namespace Assets.UnityFoundation.Code.Common
                 list[n] = value;
             }
         }
+
+        public static void AddIfNot<T>(
+            this IList<T> list, Func<T, bool> predicate, T value
+        )
+        {
+            if(list.Any(predicate))
+                return;
+
+            list.Add(value);
+        }
+
+        public static void AddIfNotExits<T>(this IList<T> list, T value)
+        {
+            if(list.Contains(value))
+                return;
+
+            list.Add(value);
+        }
     }
 }

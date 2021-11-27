@@ -8,7 +8,9 @@ namespace Assets.UnityFoundation.Code {
 
         public static bool IsInRange(Transform target, Transform pursuer, float range)
         {
-            float distance = (target.transform.position - pursuer.position).sqrMagnitude;
+            float distance = (
+                target.transform.position - pursuer.position
+            ).sqrMagnitude;
             return distance < Mathf.Pow(range, 2);
         }
 
@@ -17,6 +19,22 @@ namespace Assets.UnityFoundation.Code {
             foreach(Transform child in target) {
                 child.gameObject.layer = layer;
             }
+        }
+
+        public static T FindComponent<T>(Transform transform, string path)
+        {
+            var transformNames = path.Split('.');
+
+            var auxTransform = transform;
+            foreach(var name in transformNames)
+            {
+                auxTransform = auxTransform.Find(name);
+
+                if(auxTransform == null)
+                    return default;
+            }
+
+            return auxTransform.GetComponent<T>();
         }
 
         public static void RemoveChildObjects(Transform parent) {
