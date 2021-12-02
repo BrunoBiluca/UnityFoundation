@@ -20,7 +20,6 @@ namespace Assets.UnityFoundation.Code.Spline
             meshFilter = GetComponent<MeshFilter>();
         }
 
-        // Start is called before the first frame update
         void Start()
         {
             transform.position = spline.transform.position;

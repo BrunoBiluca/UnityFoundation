@@ -148,6 +148,7 @@ namespace Assets.UnityFoundation.Code.SplineEditor
                 currentSpline.GetPosition(point),
                 Quaternion.identity
             );
+
             if(EditorGUI.EndChangeCheck())
             {
                 Undo.RecordObject(currentSpline, "Change Anchor Position");

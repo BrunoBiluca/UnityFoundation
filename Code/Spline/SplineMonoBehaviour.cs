@@ -85,7 +85,6 @@ namespace Assets.UnityFoundation.Code.Spline
         public void SetPointPosition(SplinePoint point, Vector3 newPosition)
         {
             point.Position = newPosition - transform.position;
-
             OnSplineUpdated?.Invoke();
         }
     }

@@ -9,6 +9,8 @@ namespace Assets.UnityFoundation.Code
 {
     public static class TransformExtensions
     {
+        public static Vector3 Down(this Transform transform) => transform.up * -1f;
+
         public static Transform FindTransform(this Transform transform, string path)
             => TransformUtils.FindComponent<Transform>(transform, path);
 

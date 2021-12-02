@@ -27,6 +27,9 @@ namespace Assets.UnityFoundation.Editor
                 case SerializedPropertyType.String:
                     valueStr = prop.stringValue;
                     break;
+                case SerializedPropertyType.Vector2:
+                    valueStr = $"X: {prop.vector2Value.x} - Y: {prop.vector2Value.y}";
+                    break;
                 default:
                     valueStr = "(not supported)";
                     break;
