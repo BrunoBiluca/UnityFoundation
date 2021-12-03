@@ -23,7 +23,14 @@ namespace Assets.UnityFoundation.Code.TimeUtils
         /// <summary>
         /// Get the time passed in the current loop in seconds
         /// </summary>
-        public float CurrentTime { get { return timerBehaviour.Timer; } }
+        public float CurrentTime { 
+            get { 
+                if(timerBehaviour == null)
+                    return 0f;
+                    
+                return timerBehaviour.Timer; 
+            } 
+        }
 
         /// <summary>
         /// Get the time to end the current loop in seconds

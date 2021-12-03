@@ -6,13 +6,17 @@ using UnityEngine;
 public class CinemachineCameraShake : Singleton<CinemachineCameraShake>
 {
     [SerializeField] private float shakeTimeAmount = 1f;
+    [SerializeField] private CinemachineVirtualCamera vCamera;
 
     private CinemachineBasicMultiChannelPerlin channel;
     private Timer cameraShakeTimer;
 
     protected override void OnAwake()
     {
-        channel = GetComponent<CinemachineVirtualCamera>()
+        if(vCamera == null)
+            vCamera = GetComponent<CinemachineVirtualCamera>();
+
+        channel = vCamera
             .GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         cameraShakeTimer = new Timer(

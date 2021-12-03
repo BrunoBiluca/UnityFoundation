@@ -5,15 +5,15 @@ namespace Assets.UnityFoundation.Code.CameraScripts.OldInputSystem
 {
     public class CameraMovement2D : MonoBehaviour
     {
-
-        private CinemachineVirtualCamera virtualCamera;
+        [SerializeField] private CinemachineVirtualCamera virtualCamera;
 
         private float orthographicSize;
         private float targetOrthographicSize;
 
         private void Awake()
         {
-            virtualCamera = GetComponent<CinemachineVirtualCamera>();
+            if(virtualCamera == null)
+                virtualCamera = GetComponent<CinemachineVirtualCamera>();
         }
 
         void Start()
