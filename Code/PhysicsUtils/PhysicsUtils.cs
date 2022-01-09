@@ -37,4 +37,9 @@ public static class PhysicsUtils
         return Raycast(position, out target, layerMask);
     }
 
+    public static bool RaycastTypeMousePosition<T>(out T target, LayerMask layerMask)
+    {
+        var position = Mouse.current.position.ReadValue();
+        return RaycastType<T>(position, out target, layerMask);
+    }
 }

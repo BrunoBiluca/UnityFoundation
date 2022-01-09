@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.UnityFoundation.Code
 {
@@ -12,9 +7,22 @@ namespace Assets.UnityFoundation.Code
         public static Vector3 Down(this Transform transform) => transform.up * -1f;
 
         public static Transform FindTransform(this Transform transform, string path)
+            => TransformUtils.FindComponent<Transform>(transform, path.Split('.'));
+
+        public static Transform FindTransform(this Transform transform, params string[] path)
             => TransformUtils.FindComponent<Transform>(transform, path);
 
         public static T FindComponent<T>(this Transform transform, string path)
+            => TransformUtils.FindComponent<T>(transform, path.Split('.'));
+
+        public static T FindComponent<T>(this Transform transform, params string[] path)
             => TransformUtils.FindComponent<T>(transform, path);
+
+        public static T[] FindComponentsInChildren<T>(this Transform transform, string path)
+            => TransformUtils.FindComponentsInChildren<T>(transform, path.Split('.'));
+
+        public static T[] FindComponentsInChildren<T>(this Transform transform, params string[] path)
+            => TransformUtils.FindComponentsInChildren<T>(transform, path);
+
     }
 }
