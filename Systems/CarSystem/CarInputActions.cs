@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Scenes/Systems/CarSystem/car_input_actions.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/UnityFoundation/Systems/CarSystem/car_input_actions.inputactions'
 
 using System;
 using System.Collections;
@@ -126,12 +126,14 @@ namespace Assets.UnityFoundation.Systems.CarSystem
             UnityEngine.Object.Destroy(asset);
         }
 
-        public InputBinding? bindingMask {
+        public InputBinding? bindingMask
+        {
             get => asset.bindingMask;
             set => asset.bindingMask = value;
         }
 
-        public ReadOnlyArray<InputDevice>? devices {
+        public ReadOnlyArray<InputDevice>? devices
+        {
             get => asset.devices;
             set => asset.devices = value;
         }
@@ -181,7 +183,7 @@ namespace Assets.UnityFoundation.Systems.CarSystem
             public static implicit operator InputActionMap(CarActions set) { return set.Get(); }
             public void SetCallbacks(ICarActions instance)
             {
-                if(m_Wrapper.m_CarActionsCallbackInterface != null)
+                if (m_Wrapper.m_CarActionsCallbackInterface != null)
                 {
                     @Move.started -= m_Wrapper.m_CarActionsCallbackInterface.OnMove;
                     @Move.performed -= m_Wrapper.m_CarActionsCallbackInterface.OnMove;
@@ -191,7 +193,7 @@ namespace Assets.UnityFoundation.Systems.CarSystem
                     @Turn.canceled -= m_Wrapper.m_CarActionsCallbackInterface.OnTurn;
                 }
                 m_Wrapper.m_CarActionsCallbackInterface = instance;
-                if(instance != null)
+                if (instance != null)
                 {
                     @Move.started += instance.OnMove;
                     @Move.performed += instance.OnMove;
@@ -204,9 +206,11 @@ namespace Assets.UnityFoundation.Systems.CarSystem
         }
         public CarActions @Car => new CarActions(this);
         private int m_KeyboardMouseSchemeIndex = -1;
-        public InputControlScheme KeyboardMouseScheme {
-            get {
-                if(m_KeyboardMouseSchemeIndex == -1) m_KeyboardMouseSchemeIndex = asset.FindControlSchemeIndex("KeyboardMouse");
+        public InputControlScheme KeyboardMouseScheme
+        {
+            get
+            {
+                if (m_KeyboardMouseSchemeIndex == -1) m_KeyboardMouseSchemeIndex = asset.FindControlSchemeIndex("KeyboardMouse");
                 return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
             }
         }
