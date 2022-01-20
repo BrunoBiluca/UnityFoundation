@@ -8,13 +8,13 @@ namespace Assets.UnityFoundation.Code.Character2D.DebugHelpers
     {
         [SerializeField] private bool showOnlyClassName;
 
-        BaseCharacter character;
+        BaseCharacter2D character;
         TextMeshProUGUI stateText;
         TextMeshProUGUI onGroundText;
 
         void Start()
         {
-            character = GetComponentInParent<BaseCharacter>();
+            character = GetComponentInParent<BaseCharacter2D>();
             stateText = transform.Find("state_text")
                 .GetComponent<TextMeshProUGUI>();
 

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Character2D
 {
-    public class AttackCharacterState : BaseCharacterState
+    public class AttackCharacterState : BaseCharacterState2D
     {
         private const string attckAnimation = "attack";
 

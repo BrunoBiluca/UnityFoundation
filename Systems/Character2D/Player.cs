@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Character2D
 {
-    public class Player : BaseCharacter
+    public class Player : BaseCharacter2D
     {
         [SerializeField] private BasePlayerStats stats;
         public BasePlayerStats Stats => stats;

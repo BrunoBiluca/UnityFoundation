@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Character2D
 {
-    public class IdleCharacterState : BaseCharacterState
+    public class IdleCharacterState : BaseCharacterState2D
     {
         protected readonly Player player;
         protected readonly Rigidbody2D rigidbody;

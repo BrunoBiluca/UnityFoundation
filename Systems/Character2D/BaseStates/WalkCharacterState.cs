@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Character2D.BaseStates
 {
-    public class WalkCharacterState : BaseCharacterState
+    public class WalkCharacterState : BaseCharacterState2D
     {
         private const string startWalkAnimation = "start_walk";
         private const string walkAnimation = "walk";

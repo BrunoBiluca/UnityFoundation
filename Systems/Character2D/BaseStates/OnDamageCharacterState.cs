@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Character2D
 {
-    public class OnDamageCharacterState : BaseCharacterState
+    public class OnDamageCharacterState : BaseCharacterState2D
     {
         private readonly Rigidbody2D rigidbody;
         private readonly SpriteRenderer spriteRenderer;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Character2D
 {
-    public class JumpCharacterState : BaseCharacterState
+    public class JumpCharacterState : BaseCharacterState2D
     {
         private readonly Player player;
         private readonly Rigidbody2D rigidbody;
