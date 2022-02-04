@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.UnityFoundation.Systems.HealthSystem
 {
-    public class HealthSystem : CustomDestroyMonoBehaviour, IDamageable
+    public class HealthSystem : CustomDestroyMonoBehaviour, IDamageable, IHealable
     {
         [SerializeField] private bool setupOnStart = false;
 
@@ -33,9 +33,9 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
             set { layer = value; }
         }
 
-        public EventHandler OnTakeDamage;
-        public EventHandler OnFullyHeal;
-        public EventHandler OnDied;
+        public event EventHandler OnTakeDamage;
+        public event EventHandler OnFullyHeal;
+        public event EventHandler OnDied;
 
         private DamageableLayerManager damageableLayerManager;
         private Func<bool> guardDamageCallback;
