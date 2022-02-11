@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.PhysicsUtils
@@ -6,13 +7,18 @@ namespace Assets.UnityFoundation.Code.PhysicsUtils
     {
         public bool IsGrounded { get; private set; }
 
-        private bool debugMode;
-        private Transform transform;
-        private Collider collider;
+        public event Action OnLanded;
 
-        public CheckGroundHandler(Transform checkedTransform)
+        private bool debugMode;
+        private readonly Transform transform;
+        private readonly Collider collider;
+        private float groundOffset;
+        private bool previousState;
+
+        public CheckGroundHandler(Transform checkedTransform, float groundOffset)
         {
-            this.transform = checkedTransform;
+            transform = checkedTransform;
+            this.groundOffset = groundOffset;
             collider = checkedTransform.gameObject.GetComponent<Collider>();
         }
 
@@ -35,14 +41,21 @@ namespace Assets.UnityFoundation.Code.PhysicsUtils
             IsGrounded = Physics.Raycast(
                 collider.bounds.center,
                 transform.Down(),
-                collider.height + 0.05f
+                collider.height / 2 + groundOffset
             );
+
+            if(!previousState && IsGrounded)
+            {
+                OnLanded?.Invoke();
+            }
+            previousState = IsGrounded;
+
 
             if(debugMode)
             {
                 Debug.DrawRay(
                     collider.bounds.center,
-                    transform.Down() * (collider.height + 0.05f),
+                    transform.Down() * (collider.height / 2 + groundOffset),
                     IsGrounded ? Color.green : Color.red
                 );
             }
