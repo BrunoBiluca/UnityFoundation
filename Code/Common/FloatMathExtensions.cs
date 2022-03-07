@@ -19,5 +19,8 @@
             if(value < 0f) return -1;
             return 0f;
         }
+
+        public static bool NearlyEqual(this float value, float expected, float epsilon)
+            => MathX.NearlyEqual(value, expected, epsilon);
     }
 }

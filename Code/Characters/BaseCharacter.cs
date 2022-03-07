@@ -25,29 +25,29 @@ namespace Assets.UnityFoundation.Code.Characters
 
         protected virtual void SetCharacterStates() { }
 
-        private void Awake()
+        public void Awake()
         {
             OnAwake();
             SetCharacterStates();
         }
 
-        private void Start()
+        public void Start()
         {
             OnStart();
         }
 
-        private void OnEnable()
+        public void OnEnable()
         {
             OnEnableCall();
         }
 
-        private void Update()
+        public void Update()
         {
             CurrentState?.Update();
             OnUpdate();
         }
 
-        private void FixedUpdate()
+        public void FixedUpdate()
         {
             CurrentState?.FixedUpdate();
             OnFixedUpdate();
