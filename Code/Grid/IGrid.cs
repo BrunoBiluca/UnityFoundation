@@ -1,7 +1,6 @@
-﻿using Assets.UnityFoundation.Code.Common;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.Grid
+namespace UnityFoundation.Code.Grid
 {
     public interface IGrid<TValue>
     {

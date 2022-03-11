@@ -1,7 +1,8 @@
-﻿using Assets.UnityFoundation.Code.Common;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityFoundation.Code;
 
-namespace Assets.UnityFoundation.CameraScripts {
+namespace UnityFoundation.CameraScripts
+{
     public class CameraFollower : Singleton<CameraFollower> {
         private float offsetX;
 

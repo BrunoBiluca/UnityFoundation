@@ -1,4 +1,4 @@
-using Assets.UnityFoundation.Code.Common;
+using UnityFoundation.Code;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Systems.QuestSystem

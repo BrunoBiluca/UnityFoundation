@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
-namespace Assets.UnityFoundation.Code.Common
+namespace UnityFoundation.Code
 {
     public static class UIntMathExtensions
     {

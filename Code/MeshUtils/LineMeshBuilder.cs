@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.MeshUtils
+namespace UnityFoundation.Code.MeshUtils
 {
     public class LineMeshBuilder
     {

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using Assets.UnityFoundation.TimeUtils;
-using Assets.UnityFoundation.Code.Common;
+using UnityFoundation.Code;
 
 namespace Assets.UnityFoundation.SceneFader
 {

@@ -1,7 +1,6 @@
-﻿using Assets.UnityFoundation.Code.Common;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.Grid.ObjectPlacementGrid
+namespace UnityFoundation.Code.Grid.ObjectPlacementGrid
 {
     public class ObjectPlacementGrid : GridXZ<GridObject>
     {

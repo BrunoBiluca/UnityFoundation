@@ -1,4 +1,4 @@
-using Assets.UnityFoundation.Code.MonoBehaviourUtils;
+using UnityFoundation.Code.MonoBehaviourUtils;
 using System;
 using UnityEngine;
 

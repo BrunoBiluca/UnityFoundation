@@ -1,8 +1,8 @@
-using Assets.UnityFoundation.Code;
-using Assets.UnityFoundation.UI.Indicators;
+using UnityFoundation.Code;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.UI.Indicators {
+namespace Assets.UnityFoundation.UI.Indicators
+{
     public class ClosestObjectIndicator : MonoBehaviour {
 
         [SerializeField]

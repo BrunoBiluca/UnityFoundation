@@ -1,4 +1,4 @@
-using Assets.UnityFoundation.Code.Characters;
+using UnityFoundation.Code.Characters;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Systems.Character3D.Scripts

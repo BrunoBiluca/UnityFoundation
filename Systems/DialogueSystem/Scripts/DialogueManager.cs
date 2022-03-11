@@ -1,7 +1,7 @@
-using Assets.UnityFoundation.Code.Common;
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityFoundation.Code;
 
 namespace Assets.UnityFoundation.DialogueSystem
 {

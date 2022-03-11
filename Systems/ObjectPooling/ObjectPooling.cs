@@ -1,7 +1,6 @@
-using Assets.UnityFoundation.Code.Common;
+using UnityFoundation.Code;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using static Assets.UnityFoundation.Systems.ObjectPooling.ObjectPoolingStrings;
 
 namespace Assets.UnityFoundation.Systems.ObjectPooling

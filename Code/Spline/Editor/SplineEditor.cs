@@ -1,8 +1,8 @@
-using Assets.UnityFoundation.Code.Spline;
+using UnityFoundation.Code.Spline;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.SplineEditor
+namespace UnityFoundation.Code.SplineEditor
 {
     [CustomEditor(typeof(SplineMonoBehaviour))]
     public class SplineEditor : Editor

@@ -1,4 +1,4 @@
-using Assets.UnityFoundation.Code.Common;
+using UnityFoundation.Code;
 using Assets.UnityFoundation.DialogueSystem;
 using Assets.UnityFoundation.Systems.DialogueSystem.Editor.Events;
 using System.Collections.Generic;

@@ -1,9 +1,8 @@
-using Assets.UnityFoundation.Code.Common;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.Spline
+namespace UnityFoundation.Code.Spline
 {
     public class SplineMonoBehaviour : MonoBehaviour
     {

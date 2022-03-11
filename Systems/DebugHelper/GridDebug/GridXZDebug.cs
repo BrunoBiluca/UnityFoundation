@@ -1,8 +1,9 @@
-﻿using Assets.UnityFoundation.Code.Common;
+﻿using UnityFoundation.Code;
 using Assets.UnityFoundation.DebugHelper;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityFoundation.Code.Grid;
 
 namespace Assets.UnityFoundation.Code.Grid
 {

@@ -1,8 +1,7 @@
-﻿using Assets.UnityFoundation.Code.Common;
-using System;
+﻿using System;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.Grid
+namespace UnityFoundation.Code.Grid
 {
     public class GridXZ<TValue> : IGrid<TValue>
     {

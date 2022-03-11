@@ -1,10 +1,5 @@
-﻿using Assets.UnityFoundation.Code.Common;
+﻿using UnityFoundation.Code;
 using Assets.UnityFoundation.DialogueSystem;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Systems.DialogueSystem.Editor

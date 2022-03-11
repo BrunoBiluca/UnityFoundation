@@ -1,7 +1,6 @@
-using Assets.UnityFoundation.Code.Common;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.GameManagers
+namespace UnityFoundation.Code.GameManagers
 {
     public class BaseGameManager : BaseGameManager<BaseGameManager> { }
 

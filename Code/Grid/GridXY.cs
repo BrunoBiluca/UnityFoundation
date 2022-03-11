@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.Grid
+namespace UnityFoundation.Code.Grid
 {
     public class GridXY
     {

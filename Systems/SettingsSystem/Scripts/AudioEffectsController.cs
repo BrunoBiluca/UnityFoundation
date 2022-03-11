@@ -1,4 +1,4 @@
-using Assets.UnityFoundation.Code.Common;
+using UnityFoundation.Code;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +11,7 @@ public class AudioEffectsController : Singleton<AudioEffectsController>
     private AudioSource audioSource;
     private float volume;
 
-    private void Awake()
+    protected override void OnAwake()
     {
         audioSource = GetComponent<AudioSource>();
     }

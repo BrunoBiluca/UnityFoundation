@@ -1,4 +1,4 @@
-namespace Assets.UnityFoundation.Code.Characters
+namespace UnityFoundation.Code.Characters
 {
     public class BaseCharacterState
     {

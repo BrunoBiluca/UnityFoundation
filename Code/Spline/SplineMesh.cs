@@ -1,7 +1,7 @@
-using Assets.UnityFoundation.Code.MeshUtils;
+using UnityFoundation.Code.MeshUtils;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.Spline
+namespace UnityFoundation.Code.Spline
 {
     public class SplineMesh : MonoBehaviour
     {

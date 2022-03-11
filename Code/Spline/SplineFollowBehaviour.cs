@@ -1,10 +1,8 @@
-﻿using Assets.UnityFoundation.Code.Common;
-
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace Assets.UnityFoundation.Code.Spline
+namespace UnityFoundation.Code.Spline
 {
 #if UNITY_EDITOR
     [InitializeOnLoad]

@@ -1,5 +1,5 @@
-using Assets.UnityFoundation.Code.Characters;
 using UnityEngine;
+using UnityFoundation.Code.Characters;
 
 namespace Assets.UnityFoundation.Code.Character2D
 {

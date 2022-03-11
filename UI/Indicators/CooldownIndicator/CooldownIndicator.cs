@@ -1,4 +1,4 @@
-using Assets.UnityFoundation.Code.TimeUtils;
+using UnityFoundation.Code.TimeUtils;
 using UnityEngine;
 using UnityEngine.UI;
 

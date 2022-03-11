@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code
+namespace UnityFoundation.Code
 {
     public static class MathX
     {
@@ -32,11 +30,33 @@ namespace Assets.UnityFoundation.Code
         )
         {
             var testValue = value;
-            
+
             if(clampValue)
                 testValue = Mathf.Clamp(value, from1, to1);
 
             return (testValue - from1) / (to1 - from1) * (to2 - from2) + from2;
+        }
+
+        public static float Borders(float value, float borderMin, float borderMax)
+        {
+            if(value == 0f) return 0f;
+
+            return value > 0f ? borderMax : borderMin;
+        }
+
+        public static bool IsBetween(float value, float minInclusive, float maxInclusive)
+        {
+            return minInclusive <= value && value <= maxInclusive;
+        }
+
+        public static float Distance(float a, float b)
+        {
+            if(a * b >= 0f)
+                return Mathf.Abs(Mathf.Abs(a) - Mathf.Abs(b)); 
+
+            var distanceA = Distance(a, 0f);
+            var distanceB = Distance(b, 0f);
+            return distanceA + distanceB;
         }
     }
 }

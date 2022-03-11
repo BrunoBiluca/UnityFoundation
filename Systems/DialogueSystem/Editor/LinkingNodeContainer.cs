@@ -1,4 +1,4 @@
-﻿using Assets.UnityFoundation.Code.Common;
+﻿using UnityFoundation.Code;
 using Assets.UnityFoundation.DialogueSystem;
 
 namespace Assets.UnityFoundation.Systems.DialogueSystem.Editor

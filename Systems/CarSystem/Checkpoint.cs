@@ -1,5 +1,5 @@
 using UnityEngine;
-using Assets.UnityFoundation.Code.TimeUtils;
+using UnityFoundation.Code.TimeUtils;
 using System;
 
 namespace Assets.UnityFoundation.Systems.CarSystem

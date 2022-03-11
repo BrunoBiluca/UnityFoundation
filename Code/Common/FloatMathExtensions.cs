@@ -1,4 +1,4 @@
-﻿namespace Assets.UnityFoundation.Code
+﻿namespace UnityFoundation.Code
 {
     public static class FloatMathExtensions
     {
@@ -22,5 +22,17 @@
 
         public static bool NearlyEqual(this float value, float expected, float epsilon)
             => MathX.NearlyEqual(value, expected, epsilon);
+
+        public static bool NearlyEqualOrLess(this float value, float expected, float epsilon)
+            => value < expected || MathX.NearlyEqual(value, expected, epsilon);
+
+        public static bool NearlyEqualOrGreater(this float value, float expected, float epsilon)
+            => value > expected || MathX.NearlyEqual(value, expected, epsilon);
+
+        public static bool IsBetween(this float value, float minInclusive, float maxInclusive)
+            => MathX.IsBetween(value, minInclusive, maxInclusive);
+
+        public static float Borders(this float value, float borderMin, float borderMax)
+            => MathX.Borders(value, borderMin, borderMax);
     }
 }

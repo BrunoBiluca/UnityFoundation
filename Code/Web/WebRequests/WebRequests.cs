@@ -4,7 +4,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Assets.UnityFoundation.Code.Web
+namespace UnityFoundation.Code.Web
 {
     public static class WebRequests
     {

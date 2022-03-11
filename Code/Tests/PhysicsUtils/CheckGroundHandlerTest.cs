@@ -1,4 +1,4 @@
-using Assets.UnityFoundation.Code.PhysicsUtils;
+using UnityFoundation.Code.PhysicsUtils;
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;

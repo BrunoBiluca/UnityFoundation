@@ -1,5 +1,5 @@
 using Assets.UnityFoundation.CameraScripts;
-using Assets.UnityFoundation.Code;
+using UnityFoundation.Code;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem

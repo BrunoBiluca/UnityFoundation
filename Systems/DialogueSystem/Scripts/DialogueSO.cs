@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Assets.UnityFoundation.EditorInspector;
-using Assets.UnityFoundation.Code.Common;
+using UnityFoundation.Code;
 
 namespace Assets.UnityFoundation.DialogueSystem
 {

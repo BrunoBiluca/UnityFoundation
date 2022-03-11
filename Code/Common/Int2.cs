@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.Common
+namespace UnityFoundation.Code
 {
     public class Int2
     {

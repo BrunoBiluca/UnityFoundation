@@ -1,6 +1,6 @@
 using UnityEngine;
 using Cinemachine;
-using Assets.UnityFoundation.Code;
+using UnityFoundation.Code;
 
 namespace Assets.UnityFoundation.Systems.CarSystem
 {
@@ -48,7 +48,7 @@ namespace Assets.UnityFoundation.Systems.CarSystem
             if(inputs.Turn < 0f)
                 screenX = .7f;
 
-            vCameraComposer.m_ScreenX = cameraScreenX.SetBase(screenX).Eval(Time.deltaTime);
+            vCameraComposer.m_ScreenX = cameraScreenX.SetEndValue(screenX).Eval(Time.deltaTime);
         }
 
         private void FixedUpdate()

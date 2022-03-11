@@ -1,4 +1,4 @@
-using Assets.UnityFoundation.Code;
+using UnityFoundation.Code;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Systems.CarSystem
@@ -70,7 +70,7 @@ namespace Assets.UnityFoundation.Systems.CarSystem
                 wheelsRotations = -45f;
 
             var interpolation = wheelsInterpolation
-                .SetBase(wheelsRotations)
+                .SetEndValue(wheelsRotations)
                 .Eval(Time.deltaTime);
 
             return interpolation;

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.PhysicsUtils
+namespace UnityFoundation.Code.PhysicsUtils
 {
     public class CheckGroundHandler
     {

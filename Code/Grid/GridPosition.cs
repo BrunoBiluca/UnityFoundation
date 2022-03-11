@@ -1,4 +1,4 @@
-﻿namespace Assets.UnityFoundation.Code.Grid
+﻿namespace UnityFoundation.Code.Grid
 {
     public class GridPosition<TValue>
     {

@@ -1,7 +1,7 @@
-using Assets.UnityFoundation.Code.Common;
-using Assets.UnityFoundation.Code.TimeUtils;
+using UnityFoundation.Code;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityFoundation.Code.TimeUtils;
 
 namespace Assets.UnityFoundation.UI
 {

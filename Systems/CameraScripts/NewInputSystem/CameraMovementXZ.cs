@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityFoundation.Code;
 
 namespace Assets.UnityFoundation.Code.CameraScripts.NewInputSystem
 {

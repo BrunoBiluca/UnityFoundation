@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.UnityFoundation.Code {
+namespace UnityFoundation.Code {
     public static class RotationUtils {
 
         public static Vector3 GetZRotation(Vector3 direction) {

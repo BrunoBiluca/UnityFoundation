@@ -1,8 +1,7 @@
-using Assets.UnityFoundation.Code.Common;
+using UnityFoundation.Code;
 using TMPro;
-using Assets.UnityFoundation.Code;
-using Assets.UnityFoundation.Code.TimeUtils;
 using UnityEngine;
+using UnityFoundation.Code.TimeUtils;
 
 namespace Assets.UnityFoundation.Systems.CarSystem
 {

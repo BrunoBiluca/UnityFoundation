@@ -1,6 +1,4 @@
-﻿using Assets.UnityFoundation.Code.Common;
-
-namespace Assets.UnityFoundation.Code.Grid.ObjectPlacementGrid
+﻿namespace UnityFoundation.Code.Grid.ObjectPlacementGrid
 {
     public class GridObjectDirection : EnumX<GridObjectDirection>
     {

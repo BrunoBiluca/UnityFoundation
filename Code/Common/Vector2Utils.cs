@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code
+namespace UnityFoundation.Code
 {
     public static class Vector2Utils
     {

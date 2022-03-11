@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.UnityFoundation.Code.Web
+namespace UnityFoundation.Code.Web
 {
     public class TestWebRequests : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Assets.UnityFoundation.Code.Common
+namespace UnityFoundation.Code
 {
     public class Optional<T>
     {

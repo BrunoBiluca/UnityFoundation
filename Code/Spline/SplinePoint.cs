@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.Spline
+namespace UnityFoundation.Code.Spline
 {
     [Serializable]
     public class SplinePoint

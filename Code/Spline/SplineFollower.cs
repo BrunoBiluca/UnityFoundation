@@ -1,7 +1,6 @@
-using Assets.UnityFoundation.Code.Common;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.Spline
+namespace UnityFoundation.Code.Spline
 {
     public class SplineFollower : MonoBehaviour
     {

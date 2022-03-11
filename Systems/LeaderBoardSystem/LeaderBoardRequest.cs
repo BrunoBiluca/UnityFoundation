@@ -1,10 +1,10 @@
-using Assets.UnityFoundation.Code.Common;
-using Assets.UnityFoundation.Code.Web;
+using UnityFoundation.Code;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityFoundation.Code.Web;
 
 namespace Assets.UnityFoundation.Systems.LeaderBoardSystem
 {

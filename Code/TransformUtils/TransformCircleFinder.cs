@@ -1,9 +1,8 @@
-using Assets.UnityFoundation.Code.Common;
-using Assets.UnityFoundation.Code.TimeUtils;
+using UnityFoundation.Code.TimeUtils;
 using System;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code
+namespace UnityFoundation.Code
 {
     public class TransformCircleFinder : MonoBehaviour {
 

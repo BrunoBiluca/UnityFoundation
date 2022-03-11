@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code
+namespace UnityFoundation.Code
 {
     public class Vector3Utils
     {

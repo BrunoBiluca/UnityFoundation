@@ -1,23 +1,37 @@
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code
+namespace UnityFoundation.Code
 {
     public class Lerp
     {
-        private float baseValue;
-        private float current;
+        private float startValue;
+        private float endValue;
+        private float currentInterpolationAmount;
         private float interpolationSpeed;
+        private float range;
 
-        public Lerp(float baseValue)
+        public float BaseValue => endValue;
+        public float InterpolationSpeed => interpolationSpeed;
+
+        public Lerp(float startValue)
         {
-            this.baseValue = baseValue;
-            current = baseValue;
+            this.startValue = startValue;
+            endValue = startValue;
             interpolationSpeed = 1f;
         }
 
-        public Lerp SetBase(float newBaseValue)
+        public Lerp SetEndValue(float newEndValue)
         {
-            baseValue = newBaseValue;
+            startValue = endValue;
+            endValue = newEndValue;
+            currentInterpolationAmount = 0f;
+
+            var direction = startValue * endValue;
+            if(direction < 0f)
+                range = Mathf.Abs(startValue) + Mathf.Abs(endValue);
+            else
+                range = Mathf.Abs(Mathf.Abs(endValue) - Mathf.Abs(startValue));
+
             return this;
         }
 
@@ -29,11 +43,18 @@ namespace Assets.UnityFoundation.Code
 
         public float Eval(float amount)
         {
-            current = Mathf.Lerp(
-                current, baseValue, amount * interpolationSpeed
+            currentInterpolationAmount += amount;
+            return Mathf.Lerp(
+                startValue,
+                endValue,
+                currentInterpolationAmount * interpolationSpeed
             );
+        }
 
-            return current;
+        public float EvalBy(float value)
+        {
+            var amount = value / range;
+            return Eval(amount);
         }
     }
 }

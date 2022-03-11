@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
-using Assets.UnityFoundation.Code.Common;
+using UnityFoundation.Code;
 
 namespace Assets.UnityFoundation.Systems.PathFinder {
     public class PathFinding {

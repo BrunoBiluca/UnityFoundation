@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.Common
+namespace UnityFoundation.Code
 {
     public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
@@ -16,7 +16,6 @@ namespace Assets.UnityFoundation.Code.Common
                     Debug.LogWarning($"{className} was created automatically and was not found on scene. Is this the expected behaviour?");
                 }
 
-
                 return (T)instance;
             }
         }
@@ -24,7 +23,7 @@ namespace Assets.UnityFoundation.Code.Common
         [SerializeField] private bool destroyOnLoad;
         public virtual bool DestroyOnLoad => destroyOnLoad;
 
-        private void Awake()
+        public void Awake()
         {
             if(instance == null)
             {

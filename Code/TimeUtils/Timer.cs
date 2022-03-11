@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.TimeUtils
+namespace UnityFoundation.Code.TimeUtils
 {
     public class Timer
     {

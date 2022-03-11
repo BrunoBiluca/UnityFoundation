@@ -1,4 +1,4 @@
-using Assets.UnityFoundation.Code;
+using UnityFoundation.Code;
 using System.Collections.Generic;
 using UnityEngine;
 

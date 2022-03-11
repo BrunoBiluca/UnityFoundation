@@ -1,12 +1,15 @@
-using System;
+using TMPro;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.Characters
+namespace UnityFoundation.Code.Characters
 {
     public abstract class DefaultBaseCharacter : BaseCharacter<BaseCharacterState> { }
 
     public abstract class BaseCharacter<T> : MonoBehaviour where T : BaseCharacterState
     {
+        public bool DebugMode;
+        public TMP_Text StateText;
+
         public T CurrentState { get; protected set; }
 
         public T BaseState { get; protected set; }
@@ -27,6 +30,9 @@ namespace Assets.UnityFoundation.Code.Characters
 
         public void Awake()
         {
+            if(DebugMode)
+                StateText = transform.FindComponent<TMP_Text>("canvas.state_text");
+
             OnAwake();
             SetCharacterStates();
         }
@@ -70,6 +76,19 @@ namespace Assets.UnityFoundation.Code.Characters
 
             previousState?.ExitState();
             CurrentState.EnterState();
+
+            if(DebugMode)
+            {
+                if(StateText != null)
+                    StateText.text = "State: " + newState.GetType().Name;
+            }
+        }
+
+        public virtual void TransitionToStateIfDifferent(T newState)
+        {
+            if(newState == CurrentState) return;
+
+            TransitionToState(newState);
         }
 
         private bool CanTransitionState(T newState)

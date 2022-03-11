@@ -1,7 +1,7 @@
 using UnityEngine;
 using N = NUnit.Framework;
 
-namespace Assets.GameAssets.Player.Tests
+namespace Assets.UnityFoundation.TestUtility
 {
     public static class AssertHelper
     {
@@ -10,6 +10,13 @@ namespace Assets.GameAssets.Player.Tests
             var distance = Vector2.Distance(expected, actual);
 
             N.Assert.That(0f, N.Is.EqualTo(distance).Within(delta));
+        }
+
+        public static void AreEqual(Vector3 expected, Vector3 actual, float delta = 0f)
+        {
+            var distance = Vector3.Distance(expected, actual);
+
+            N.Assert.That(distance, N.Is.EqualTo(0f).Within(delta));
         }
 
         public static void Between(
@@ -21,7 +28,8 @@ namespace Assets.GameAssets.Player.Tests
             bool inclusiveEnd = true
         )
         {
-            if(inclusive){
+            if(inclusive)
+            {
                 N.Assert.GreaterOrEqual(actual, expectedBegin);
                 N.Assert.LessOrEqual(actual, expectedEnd);
                 return;
