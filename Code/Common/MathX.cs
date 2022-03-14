@@ -44,9 +44,33 @@ namespace UnityFoundation.Code
             return value > 0f ? borderMax : borderMin;
         }
 
-        public static bool IsBetween(float value, float minInclusive, float maxInclusive)
+        public static bool IsBetween(
+            float value, float minInclusive, float maxInclusive
+        )
         {
             return minInclusive <= value && value <= maxInclusive;
+        }
+
+        public static bool IsBetweenWithoutOrder(
+            float value, float aInclusive, float bInclusive
+        )
+        {
+            return IsBetween(value, aInclusive, bInclusive)
+                || IsBetween(value, bInclusive, aInclusive);
+        }
+
+        public static float ClampWithoutOrder(float value, float a, float b)
+        {
+            var min = a;
+            var max = b;
+
+            if(b < a)
+            {
+                min = b;
+                max = a;
+            }
+                
+            return Mathf.Clamp(value, min, max);
         }
 
         public static float Distance(float a, float b)

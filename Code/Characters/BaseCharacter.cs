@@ -79,6 +79,7 @@ namespace UnityFoundation.Code.Characters
 
             if(DebugMode)
             {
+                Debug.Log($"State: {newState.GetType().Name} ({gameObject.name})");
                 if(StateText != null)
                     StateText.text = "State: " + newState.GetType().Name;
             }

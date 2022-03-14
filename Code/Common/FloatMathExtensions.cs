@@ -31,6 +31,10 @@
 
         public static bool IsBetween(this float value, float minInclusive, float maxInclusive)
             => MathX.IsBetween(value, minInclusive, maxInclusive);
+        public static bool IsBetweenWithoutOrder(
+            this float value, float aInclusive, float bInclusive
+        )
+            => MathX.IsBetweenWithoutOrder(value, aInclusive, bInclusive);
 
         public static float Borders(this float value, float borderMin, float borderMax)
             => MathX.Borders(value, borderMin, borderMax);
