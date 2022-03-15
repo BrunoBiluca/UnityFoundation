@@ -1,6 +1,6 @@
 {
     "name": "UnityFoundation.Character3D",
-    "rootNamespace": "",
+    "rootNamespace": "UnityFoundation.Character3D",
     "references": [
         "GUID:d7d703d7ba19f3c45b01309621aede27",
         "GUID:75469ad4d38634e559750d17036d5f7c",

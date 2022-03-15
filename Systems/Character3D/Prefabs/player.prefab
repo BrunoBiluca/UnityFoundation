@@ -1622,11 +1622,11 @@ GameObject:
   - component: {fileID: 1621765136379664199}
   - component: {fileID: 5416236835389593485}
   - component: {fileID: 5416236835389593484}
+  - component: {fileID: 8531581766805672975}
   - component: {fileID: 2867167799010377079}
   - component: {fileID: 8612018937399249915}
   - component: {fileID: 5416236835389593483}
   - component: {fileID: 8531581766805672968}
-  - component: {fileID: 8531581766805672975}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -1721,6 +1721,26 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+--- !u!114 &8531581766805672975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5416236835389593479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85c44bf05effec54c9ceedb32ff7ebdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aimCamera: {fileID: 0}
+  normalSensitivity: 0.8
+  aimSensitivity: 0.4
+  aimSpeed: 10
+  rotateCharacterSpeed: 10
+  debugAimObject: {fileID: 0}
+  projectileSpawner: {fileID: 8531581767617011344}
+  projectilePrefab: {fileID: 6532537761344339805, guid: 7fbd29d2a7cfe9b4393f8be6b639c465, type: 3}
 --- !u!114 &2867167799010377079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1871,26 +1891,6 @@ CapsuleCollider:
   m_Height: 1.8073741
   m_Direction: 1
   m_Center: {x: 0.018865049, y: 0.88122076, z: -0.025104135}
---- !u!114 &8531581766805672975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5416236835389593479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85c44bf05effec54c9ceedb32ff7ebdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aimCamera: {fileID: 0}
-  normalSensitivity: 0.8
-  aimSensitivity: 0.4
-  aimSpeed: 10
-  rotateCharacterSpeed: 10
-  debugAimObject: {fileID: 0}
-  projectileSpawner: {fileID: 8531581767617011344}
-  projectilePrefab: {fileID: 6532537761344339805, guid: 7fbd29d2a7cfe9b4393f8be6b639c465, type: 3}
 --- !u!1 &5519666737623668218
 GameObject:
   m_ObjectHideFlags: 0
