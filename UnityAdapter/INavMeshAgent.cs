@@ -7,5 +7,6 @@ namespace Assets.UnityFoundation.UnityAdapter
         float Speed { get; set; }
         bool SetDestination(Vector3 target);
         void Update();
+        void Disabled();
     }
 }
