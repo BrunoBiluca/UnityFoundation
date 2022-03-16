@@ -18,8 +18,6 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
         public float BaseHealth { get { return baseHealth; } }
 
         [SerializeField] private bool destroyHealthBarOnDied = false;
-
-        [SerializeField] private bool destroyOnDied = true;
         
         [SerializeField] private float currentHealth;
         public float CurrentHealth {
@@ -32,6 +30,10 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
             get { return layer; }
             set { layer = value; }
         }
+
+        public bool DestroyOnDied { get; set; } = false;
+
+        public bool IsDead { get; private set; }
 
         public event EventHandler OnTakeDamage;
         public event EventHandler OnFullyHeal;
@@ -65,6 +67,8 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
             this.baseHealth = baseHealth;
             CurrentHealth = baseHealth;
 
+            IsDead = false;
+
             HealthBarReference();
             healthBar?.Setup(baseHealth);
 
@@ -72,8 +76,6 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
 
             OnFullyHeal?.Invoke(this, EventArgs.Empty);
         }
-
-        public void SetDestroyOnDied(bool value) => destroyOnDied = value;
 
         public void SetDestroyHealthbar(bool value) => destroyHealthBarOnDied = value;
 
@@ -94,10 +96,11 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
 
             if(CurrentHealth <= 0f)
             {
+                IsDead = true;
                 OnDied?.Invoke(this, EventArgs.Empty);
 
                 if(destroyHealthBarOnDied) Destroy(healthBarComponent);
-                if(destroyOnDied) destroyBehaviour.Destroy();
+                if(DestroyOnDied) destroyBehaviour.Destroy();
                 return;
             }
 
@@ -109,6 +112,9 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
 
         private bool CanInflictDamage(DamageableLayer layer)
         {
+            if(IsDead) 
+                return false;
+
             if(
                 damageableLayerManager != null
                 && !damageableLayerManager.HasRelationship(layer, Layer)

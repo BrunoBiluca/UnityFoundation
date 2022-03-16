@@ -6,9 +6,13 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
     {
         float BaseHealth { get; }
         float CurrentHealth { get; }
+        bool IsDead { get; }
+        bool DestroyOnDied { get; set; }
 
         event EventHandler OnTakeDamage;
         event EventHandler OnFullyHeal;
         event EventHandler OnDied;
+
+        void Setup(float baseHealth);
     }
 }
