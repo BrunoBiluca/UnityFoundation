@@ -31,7 +31,17 @@ namespace UnityFoundation.Code.Characters
         public void Awake()
         {
             if(DebugMode)
-                StateText = transform.FindComponent<TMP_Text>("canvas.state_text");
+            {
+                // TODO: transfomar esse debug canvas em um debug padrão
+                // para outros sistemas do Unity Foundation, como por exemplo HealthSystem
+                var canvas = transform.FindComponent<Canvas>("debug_canvas");
+
+                if(canvas != null)
+                {
+                    canvas.gameObject.SetActive(true);
+                    StateText = transform.FindComponent<TMP_Text>("state_text");
+                }
+            }
 
             OnAwake();
             SetCharacterStates();
@@ -77,11 +87,23 @@ namespace UnityFoundation.Code.Characters
             previousState?.ExitState();
             CurrentState.EnterState();
 
-            if(DebugMode)
+            SetupDebugMode(newState);
+        }
+
+        private void SetupDebugMode(T newState)
+        {
+            if(!DebugMode)
             {
-                Debug.Log($"State: {newState.GetType().Name} ({gameObject.name})");
                 if(StateText != null)
-                    StateText.text = "State: " + newState.GetType().Name;
+                    StateText.gameObject.SetActive(false);
+                return;
+            }
+
+            Debug.Log($"State: {newState.GetType().Name} ({gameObject.name})");
+            if(StateText != null)
+            {
+                StateText.gameObject.SetActive(true);
+                StateText.text = "State: " + newState.GetType().Name;
             }
         }
 
