@@ -30,7 +30,6 @@ namespace UnityFoundation.Character3D
 
         public void OnTriggerEnter(Collider other)
         {
-            Debug.Log(transform.position);
             Destroy(gameObject);
         }
 
