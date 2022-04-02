@@ -19,6 +19,20 @@ namespace Assets.UnityFoundation.TestUtility
             N.Assert.That(distance, N.Is.EqualTo(0f).Within(delta));
         }
 
+        public static void AreNotEqual(Vector2 expected, Vector2 actual, float delta = 0f)
+        {
+            var distance = Vector2.Distance(expected, actual);
+
+            N.Assert.That(0f, N.Is.Not.EqualTo(distance).Within(delta));
+        }
+
+        public static void AreNotEqual(Vector3 expected, Vector3 actual, float delta = 0f)
+        {
+            var distance = Vector3.Distance(expected, actual);
+
+            N.Assert.That(distance, N.Is.Not.EqualTo(0f).Within(delta));
+        }
+
         public static void Between(
             float expectedBegin,
             float expectedEnd,

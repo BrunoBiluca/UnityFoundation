@@ -16,17 +16,20 @@ namespace Assets.UnityFoundation.UnityAdapter
 
         public float StoppingDistance {
             get => agent.stoppingDistance;
-            set => agent.stoppingDistance = value; 
+            set => agent.stoppingDistance = value;
         }
 
         public float RemainingDistance => agent.remainingDistance;
 
         public void Disabled() {
-            agent.ResetPath(); 
+            agent.ResetPath();
             agent.enabled = false;
         }
 
-        public void ResetPath() => agent.ResetPath();
+        public void ResetPath() {
+            if(agent.isActiveAndEnabled)
+                agent.ResetPath();
+        }
 
         public bool SetDestination(Vector3 target) => agent.SetDestination(target);
 

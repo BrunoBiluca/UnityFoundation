@@ -80,6 +80,5 @@ namespace UnityFoundation.Code
                 yield return WaittingCoroutine.RealSeconds(waitBetween);
             }
         }
-
     }
 }

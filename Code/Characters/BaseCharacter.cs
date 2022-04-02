@@ -81,13 +81,35 @@ namespace UnityFoundation.Code.Characters
 
             if(!newState.CanEnterState()) return;
 
+            ChangeState(newState);
+
+            SetupDebugMode(newState);
+        }
+
+        private void ChangeState(T newState)
+        {
             var previousState = CurrentState;
             CurrentState = newState;
 
             previousState?.ExitState();
             CurrentState.EnterState();
+        }
 
-            SetupDebugMode(newState);
+        private bool CanTransitionState(T newState)
+            => CurrentState == null
+                || CurrentState.CanExitState()
+                || CurrentState.CanBeInterrupted && newState.ForceInterruption;
+
+        public virtual void TransitionToStateIfDifferent(T newState)
+        {
+            if(newState == CurrentState) return;
+
+            TransitionToState(newState);
+        }
+
+        public virtual void TransitionToStateForce(T newState)
+        {
+            ChangeState(newState);
         }
 
         private void SetupDebugMode(T newState)
@@ -106,17 +128,5 @@ namespace UnityFoundation.Code.Characters
                 StateText.text = "State: " + newState.GetType().Name;
             }
         }
-
-        public virtual void TransitionToStateIfDifferent(T newState)
-        {
-            if(newState == CurrentState) return;
-
-            TransitionToState(newState);
-        }
-
-        private bool CanTransitionState(T newState)
-            => CurrentState == null
-                || CurrentState.CanExitState()
-                || CurrentState.CanBeInterrupted && newState.ForceInterruption;
     }
 }

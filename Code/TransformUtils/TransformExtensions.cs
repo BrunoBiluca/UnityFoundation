@@ -24,5 +24,7 @@ namespace UnityFoundation.Code
         public static T[] FindComponentsInChildren<T>(this Transform transform, params string[] path)
             => TransformUtils.FindComponentsInChildren<T>(transform, path);
 
+        public static float Distance(this Transform transA, Transform transB)
+            => Vector3.Distance(transA.position, transB.position);
     }
 }
