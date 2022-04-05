@@ -1,7 +1,4 @@
 using Assets.UnityFoundation.UnityAdapter;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioSourceDec : IAudioSource
@@ -34,4 +31,6 @@ public class AudioSourceDec : IAudioSource
     {
         audioSource.clip = null;
     }
+
+    public void Stop() => audioSource.Stop();
 }
