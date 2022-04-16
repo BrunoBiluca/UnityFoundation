@@ -27,6 +27,8 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
 
         [SerializeField] private int separationValue = 10;
 
+        [SerializeField] private float interpolationTime = 0.05f;
+
         public void Setup(float baseHealth)
         {
             InitializeComponents();
@@ -84,13 +86,13 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
             if(barSize < 0) barSize = 0;
             else if(barSize > maxBarValue) barSize = maxBarValue;
 
-            if(immediately)
+            if(immediately || interpolationTime == 0f)
             {
                 BarDimension(NormalizedBarSize);
             }
             else
             {
-                InvokeRepeating(nameof(SlowBarReduction), 0f, 0.05f);
+                InvokeRepeating(nameof(SlowBarReduction), 0f, interpolationTime);
             }
         }
 

@@ -62,6 +62,11 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
             }
         }
 
+        public void SetHealthBar(IHealthBar bar)
+        {
+            healthBar = bar;
+        }
+
         public void Setup(float baseHealth)
         {
             this.baseHealth = baseHealth;
