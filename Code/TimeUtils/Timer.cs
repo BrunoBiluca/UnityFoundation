@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UnityFoundation.Code.TimeUtils
 {
-    public class Timer
+    public class Timer : ITimer
     {
         private static GameObject timersReference;
 
@@ -23,13 +23,13 @@ namespace UnityFoundation.Code.TimeUtils
         /// <summary>
         /// Get the time passed in the current loop in seconds
         /// </summary>
-        public float CurrentTime { 
-            get { 
+        public float CurrentTime {
+            get {
                 if(timerBehaviour == null)
                     return 0f;
-                    
-                return timerBehaviour.Timer; 
-            } 
+
+                return timerBehaviour.Timer;
+            }
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace UnityFoundation.Code.TimeUtils
         private float amount;
         private bool isLoop;
         private readonly Action callback;
-        
+
         /// <summary>
         /// Instantiate a gameobject to run the timer for some provider action, by default run once and stop
         /// </summary>
@@ -91,25 +91,25 @@ namespace UnityFoundation.Code.TimeUtils
             isLoop = true;
         }
 
-        public Timer SetAmount(float newAmount)
+        public ITimer SetAmount(float newAmount)
         {
             amount = newAmount;
             return this;
         }
 
-        public Timer SetName(string name)
+        public ITimer SetName(string name)
         {
             this.name = name;
             return this;
         }
 
-        public Timer RunOnce()
+        public ITimer RunOnce()
         {
             isLoop = false;
             return this;
         }
 
-        public Timer Loop()
+        public ITimer Loop()
         {
             isLoop = true;
             return this;
@@ -118,7 +118,7 @@ namespace UnityFoundation.Code.TimeUtils
         /// <summary>
         /// Start the timer with the setting parameters
         /// </summary>
-        public Timer Start()
+        public ITimer Start()
         {
             if(timerBehaviour == null)
                 InstantiateTimer();
@@ -133,6 +133,8 @@ namespace UnityFoundation.Code.TimeUtils
         /// </summary>
         public void Stop()
         {
+            if(timerBehaviour == null)
+                return;
             timerBehaviour.Deactivate();
         }
 

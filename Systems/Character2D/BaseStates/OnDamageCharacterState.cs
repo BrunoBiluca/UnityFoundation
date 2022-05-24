@@ -16,7 +16,7 @@ namespace Assets.UnityFoundation.Code.Character2D
             rigidbody = player.GetComponent<Rigidbody2D>();
             spriteRenderer = player.GetComponent<SpriteRenderer>();
 
-            changeMaterialTimer = new Timer(
+            changeMaterialTimer = (Timer)new Timer(
                 .2f,
                 () => player.TransitionToState(player.idleState)
             )

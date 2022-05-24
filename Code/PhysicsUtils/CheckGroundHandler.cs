@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
+using UnityFoundation.Code.TimeUtils;
 
 namespace UnityFoundation.Code.PhysicsUtils
 {
-    public class CheckGroundHandler
+    public class CheckGroundHandler : ICheckGroundHandler
     {
         public bool IsGrounded { get; private set; }
 
@@ -12,8 +13,9 @@ namespace UnityFoundation.Code.PhysicsUtils
         private bool debugMode;
         private readonly Transform transform;
         private readonly Collider collider;
-        private float groundOffset;
+        private readonly float groundOffset;
         private bool previousState;
+        private ITimer timer;
 
         public CheckGroundHandler(Transform checkedTransform, float groundOffset)
         {
@@ -22,7 +24,7 @@ namespace UnityFoundation.Code.PhysicsUtils
             collider = checkedTransform.gameObject.GetComponent<Collider>();
         }
 
-        public CheckGroundHandler DebugMode(bool active)
+        public ICheckGroundHandler DebugMode(bool active)
         {
             debugMode = active;
             return this;
@@ -30,6 +32,10 @@ namespace UnityFoundation.Code.PhysicsUtils
 
         public bool CheckGround()
         {
+            if(timer != null && !timer.Completed)
+                return false;
+                
+
             if(collider is CapsuleCollider capsuleCollider)
                 CapsuleColliderHandler(capsuleCollider);
 
@@ -59,6 +65,13 @@ namespace UnityFoundation.Code.PhysicsUtils
                     IsGrounded ? Color.green : Color.red
                 );
             }
+        }
+
+        public void Disable(ITimer timer)
+        {
+            IsGrounded = false;
+            this.timer = timer;
+            timer.Start();
         }
     }
 }

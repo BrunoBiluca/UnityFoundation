@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace UnityFoundation.Code
 {
-    public class TransformCircleFinder : MonoBehaviour {
+    public class TransformCircleFinder : MonoBehaviour
+    {
 
         [SerializeField]
         protected Transform defaultTarget;
@@ -26,30 +27,37 @@ namespace UnityFoundation.Code
             Transform referenceTransform = null,
             float lookRangeRadius = 6f,
             Transform defaultTarget = null
-        ) {
+        )
+        {
             this.defaultTarget = defaultTarget;
             this.lookingForType = lookingForType;
             this.lookRangeRadius = lookRangeRadius;
 
-            if(referenceTransform == null) {
+            if(referenceTransform == null)
+            {
                 this.referenceTransform = transform;
-            } else {
+            }
+            else
+            {
                 this.referenceTransform = referenceTransform;
             }
 
-            lookForTargetsTimer = new Timer(0.2f, Find)
+            lookForTargetsTimer = (Timer)new Timer(0.2f, Find)
                 .SetName($"Look for targets {lookingForType}")
                 .Start();
         }
 
-        protected virtual void Find() {
+        protected virtual void Find()
+        {
             var nearObjects = Physics2D.OverlapCircleAll(
                 referenceTransform.position, lookRangeRadius
             );
 
-            foreach(var obj in nearObjects) {
+            foreach(var obj in nearObjects)
+            {
                 var searchedComponent = obj.gameObject.GetComponent(lookingForType);
-                if(searchedComponent != null) {
+                if(searchedComponent != null)
+                {
                     target = obj.transform;
                     return;
                 }
@@ -58,7 +66,8 @@ namespace UnityFoundation.Code
             target = defaultTarget;
         }
 
-        private void OnDestroy() {
+        private void OnDestroy()
+        {
             if(lookForTargetsTimer != null)
                 lookForTargetsTimer.Close();
         }

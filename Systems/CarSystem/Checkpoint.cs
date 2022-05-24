@@ -14,7 +14,7 @@ namespace Assets.UnityFoundation.Systems.CarSystem
 
         private void Awake()
         {
-            canTriggerTimer = new Timer(2f).Start();
+            canTriggerTimer = (Timer)new Timer(2f).Start();
             boxCollider = GetComponent<BoxCollider>();
         }
 

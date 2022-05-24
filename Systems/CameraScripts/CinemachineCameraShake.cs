@@ -19,7 +19,7 @@ public class CinemachineCameraShake : Singleton<CinemachineCameraShake>
         channel = vCamera
             .GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-        cameraShakeTimer = new Timer(
+        cameraShakeTimer = (Timer)new Timer(
             shakeTimeAmount,
             () => channel.m_AmplitudeGain = 0f
         )
