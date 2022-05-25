@@ -10,5 +10,14 @@ namespace UnityFoundation.Code
             && MathX.NearlyEqual(a.y, b.y, delta)
             && MathX.NearlyEqual(a.z, b.z, delta);
         }
+
+        public static Vector3 RandomPoint()
+        {
+            return new Vector3(
+                Random.Range(float.MinValue, float.MaxValue),
+                Random.Range(float.MinValue, float.MaxValue),
+                Random.Range(float.MinValue, float.MaxValue)
+            );
+        }
     }
 }
