@@ -1,0 +1,22 @@
+{
+    "name": "UnityFoundation.FirstPersonModeSystem",
+    "rootNamespace": "UnityFoundation.FirstPersonModeSystem",
+    "references": [
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:d7d703d7ba19f3c45b01309621aede27",
+        "GUID:b2dd7f5b91eeaa344942a50ec1874aa1",
+        "GUID:f08893b3a8e90124c80945026e148b14",
+        "GUID:3375a51da77e5794fa6b41d2598ad8d9",
+        "GUID:6a456d7af9e4b154d8618adfe002b380"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

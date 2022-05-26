@@ -1,0 +1,31 @@
+{
+    "name": "UnityFoundation.FirstPersonModeSystem.Tests",
+    "rootNamespace": "UnityFoundation.FirstPersonModeSystem.Tests",
+    "references": [
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:dc04f38471c3a459fb4d31124ee9127d",
+        "GUID:d7d703d7ba19f3c45b01309621aede27",
+        "GUID:b2dd7f5b91eeaa344942a50ec1874aa1",
+        "GUID:56de67b70740b014a8b08bb241006e29",
+        "GUID:6a456d7af9e4b154d8618adfe002b380",
+        "GUID:f22922c822afd0b4c90c7ff8aa549f09"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Moq.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
