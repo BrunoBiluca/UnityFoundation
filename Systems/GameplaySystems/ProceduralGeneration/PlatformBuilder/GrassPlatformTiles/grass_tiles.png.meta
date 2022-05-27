@@ -102,6 +102,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -110,9 +111,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -748,6 +749,33 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      grass_tiles_22: 802362335147374496
+      grass_tiles_7: -6017978440473542878
+      grass_tiles_24: -7655503975028417537
+      grass_tiles_11: -4092713084865669328
+      grass_tiles_8: -2432769053453161673
+      grass_tiles_10: -76887263535518909
+      grass_tiles_0: -2281647678458052734
+      grass_tiles_2: -5059879172852215513
+      grass_tiles_18: 8110820448714688812
+      grass_tiles_12: -130681380995778609
+      grass_tiles_3: -8773862064115312133
+      grass_tiles_20: 7517028927114465588
+      grass_tiles_1: 1619632526482261327
+      grass_tiles_16: 2466887878014560031
+      grass_tiles_19: -959300781463363000
+      grass_tiles_21: 533874427636578092
+      grass_tiles_13: 617933131004528265
+      grass_tiles_23: -3340712994660632126
+      grass_tiles_6: -4225848418282543193
+      grass_tiles_9: -3305604405728236681
+      grass_tiles_5: -1615830180908131344
+      grass_tiles_15: 5818188758679152206
+      grass_tiles_25: 2021213628343403898
+      grass_tiles_14: 7988324006982283711
+      grass_tiles_4: -4352171272665555694
+      grass_tiles_17: -6358494298745873014
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

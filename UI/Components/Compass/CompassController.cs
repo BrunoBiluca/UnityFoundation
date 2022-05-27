@@ -28,6 +28,8 @@ namespace UnityFoundation.Compass
 
         public void Update()
         {
+            if(Player == null) return;
+
             foreach(var obj in CompassObjects)
             {
                 var direction = obj.Value.Obj.position - Player.position;

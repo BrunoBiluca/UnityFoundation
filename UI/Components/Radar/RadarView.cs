@@ -77,6 +77,8 @@ namespace UnityFoundation.Radar
 
         public void Update()
         {
+            if(playerTransform == null) return;
+
             foreach(var ro in trackedObjects)
             {
                 var radarPos = ro.Value.TransformRef.position - playerTransform.position;

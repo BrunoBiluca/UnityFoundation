@@ -1,4 +1,4 @@
-using UnityEditor.Experimental.SceneManagement;
+
 using UnityEngine;
 
 namespace UnityFoundation.Radar
@@ -38,7 +38,7 @@ namespace UnityFoundation.Radar
 
         public void Update()
         {
-            if(PrefabStageUtility.GetCurrentPrefabStage() == null)
+            if(UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage() == null)
             {
                 gameObject.SetActive(false);
             }
