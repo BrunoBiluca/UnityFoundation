@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Assets.UnityFoundation.UI.Menus.GameOverMenu
+namespace UnityFoundation.UI.Menus.GameOverMenu
 {
     public class GameOverMenu : MonoBehaviour
     {

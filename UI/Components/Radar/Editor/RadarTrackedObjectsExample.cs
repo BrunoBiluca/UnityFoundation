@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEditor.SceneManagement;
 
 namespace UnityFoundation.Radar
 {
@@ -20,11 +21,11 @@ namespace UnityFoundation.Radar
             radar = GetComponentInParent<RadarView>();
 
             objectReferences = new RectTransform[transform.childCount];
-            for (int i = 0; i < transform.childCount; i++)
+            for(int i = 0; i < transform.childCount; i++)
             {
                 objectReferences[i] = transform.GetChild(i).GetComponent<RectTransform>();
             }
-            
+
             originalPositions = new Vector3[objectReferences.Length];
             for(int i = 0; i < objectReferences.Length; i++)
             {
@@ -38,11 +39,11 @@ namespace UnityFoundation.Radar
 
         public void Update()
         {
-            if(UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage() == null)
+            if(PrefabStageUtility.GetCurrentPrefabStage() == null)
             {
                 gameObject.SetActive(false);
             }
-                    
+
             if(radar == null)
             {
                 Init();
