@@ -1,7 +1,7 @@
 using UnityFoundation.Code;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Systems.CarSystem
+namespace UnityFoundation.CarSystem
 {
     public class CarWheelsController : MonoBehaviour
     {

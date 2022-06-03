@@ -1,8 +1,8 @@
 using UnityEngine;
-using UnityFoundation.Code.TimeUtils;
+using UnityFoundation.Tools.TimeUtils;
 using System;
 
-namespace Assets.UnityFoundation.Systems.CarSystem
+namespace UnityFoundation.CarSystem
 {
     public class Checkpoint : MonoBehaviour
     {

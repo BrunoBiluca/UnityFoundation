@@ -2,7 +2,7 @@ using Assets.UnityFoundation.EditorInspector;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
-namespace Assets.UnityFoundation.Systems.CarSystem
+namespace UnityFoundation.CarSystem
 {
     public class CarInputs : MonoBehaviour
     {

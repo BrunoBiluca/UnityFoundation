@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UnityFoundation.Code.Actions
+namespace UnityFoundation.Tools.Actions
 {
     public class ExitGameHandler : MonoBehaviour
     {

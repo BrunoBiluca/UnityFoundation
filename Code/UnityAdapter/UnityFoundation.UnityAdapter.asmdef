@@ -1,7 +1,9 @@
 {
     "name": "UnityFoundation.UnityAdapter",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:d7d703d7ba19f3c45b01309621aede27"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

@@ -1,0 +1,17 @@
+{
+    "name": "UnityFoundation.Physics3D",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d7d703d7ba19f3c45b01309621aede27",
+        "GUID:e0ceb8f812b37254c99fe72aeb27a9be"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

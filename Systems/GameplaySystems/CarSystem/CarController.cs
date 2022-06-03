@@ -2,7 +2,7 @@ using UnityEngine;
 using Cinemachine;
 using UnityFoundation.Code;
 
-namespace Assets.UnityFoundation.Systems.CarSystem
+namespace UnityFoundation.CarSystem
 {
     public partial class CarController : MonoBehaviour
     {

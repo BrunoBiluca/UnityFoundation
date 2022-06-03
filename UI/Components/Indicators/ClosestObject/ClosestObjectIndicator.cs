@@ -1,5 +1,6 @@
 using UnityFoundation.Code;
 using UnityEngine;
+using UnityFoundation.Physics2D.Finder;
 
 namespace Assets.UnityFoundation.UI.Indicators
 {

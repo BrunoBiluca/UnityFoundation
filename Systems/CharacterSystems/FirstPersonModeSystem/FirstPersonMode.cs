@@ -2,10 +2,8 @@ using Assets.UnityFoundation.Systems.Character3D.Scripts;
 using Assets.UnityFoundation.UnityAdapter;
 using System;
 using UnityEngine;
-using UnityFoundation.FirstPersonModeSystem;
-using UnityFoundation.Code;
-using UnityFoundation.Code.PhysicsUtils;
-using UnityFoundation.Code.TimeUtils;
+using UnityFoundation.Physics3D.CheckGround;
+using UnityFoundation.Tools.TimeUtils;
 using Zenject;
 
 namespace UnityFoundation.FirstPersonModeSystem

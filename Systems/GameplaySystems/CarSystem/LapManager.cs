@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityFoundation.Tools.TimeUtils;
 
-namespace Assets.UnityFoundation.Systems.CarSystem
+namespace UnityFoundation.CarSystem
 {
     public class LapManager : MonoBehaviour
     {

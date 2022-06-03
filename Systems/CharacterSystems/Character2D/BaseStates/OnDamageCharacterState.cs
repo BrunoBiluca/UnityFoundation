@@ -1,4 +1,4 @@
-using UnityFoundation.Code.TimeUtils;
+using UnityFoundation.Tools.TimeUtils;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Code.Character2D
