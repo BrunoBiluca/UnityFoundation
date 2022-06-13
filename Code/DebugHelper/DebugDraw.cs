@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.DebugHelper
+namespace UnityFoundation.Code.DebugHelper
 {
     public static class DebugDraw
     {

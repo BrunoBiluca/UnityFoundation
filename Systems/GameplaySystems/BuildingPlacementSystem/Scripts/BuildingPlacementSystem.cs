@@ -1,13 +1,11 @@
-using Assets.UnityFoundation.CameraScripts;
 using UnityFoundation.Code;
-using Assets.UnityFoundation.Code.DebugHelper;
-using Assets.UnityFoundation.Code.Grid;
 using Assets.UnityFoundation.Systems.ObjectPooling;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityFoundation.Code.Grid.ObjectPlacementGrid;
 using UnityFoundation.Code.Grid;
+using UnityFoundation.Code.DebugHelper;
 
 namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
 {

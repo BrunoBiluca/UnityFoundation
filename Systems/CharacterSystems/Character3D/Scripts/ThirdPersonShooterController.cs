@@ -1,6 +1,6 @@
-using Assets.UnityFoundation.CameraScripts;
 using Cinemachine;
 using UnityEngine;
+using UnityFoundation.Code;
 
 namespace Assets.UnityFoundation.Systems.Character3D
 {

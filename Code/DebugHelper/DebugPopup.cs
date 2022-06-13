@@ -1,8 +1,7 @@
-﻿using Assets.UnityFoundation.CameraScripts;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Code.DebugHelper
+namespace UnityFoundation.Code.DebugHelper
 {
     public class SimplePopup : MonoBehaviour
     {

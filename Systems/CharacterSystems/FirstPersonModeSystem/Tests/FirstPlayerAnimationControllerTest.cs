@@ -1,6 +1,6 @@
-using Assets.UnityFoundation.UnityAdapter;
 using Moq;
 using NUnit.Framework;
+using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.FirstPersonModeSystem.Tests
 {

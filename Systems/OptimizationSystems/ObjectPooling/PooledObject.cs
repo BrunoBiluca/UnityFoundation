@@ -1,4 +1,4 @@
-﻿using UnityFoundation.Code.MonoBehaviourUtils;
+﻿using UnityFoundation.Code.UnityAdapter;
 using Assets.UnityFoundation.EditorInspector;
 using System;
 using System.Collections;

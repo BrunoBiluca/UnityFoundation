@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.UnityFoundation.CameraScripts
+namespace UnityFoundation.Code
 {
     public static class CameraUtils
     {
@@ -42,7 +42,7 @@ namespace Assets.UnityFoundation.CameraScripts
             return Vector3.zero;
         }
 
-        public static Vector2 ScreenCenter() 
+        public static Vector2 ScreenCenter()
             => new Vector2(Screen.width / 2f, Screen.height / 2f);
 
         public static Vector3 GetWorldPosition3D(Vector2 screenPosition)

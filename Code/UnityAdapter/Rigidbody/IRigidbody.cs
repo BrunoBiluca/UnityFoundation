@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.UnityAdapter
+namespace UnityFoundation.Code.UnityAdapter
 {
     public interface IRigidbody
     {

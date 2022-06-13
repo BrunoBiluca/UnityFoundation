@@ -1,10 +1,10 @@
-using UnityFoundation.Code.MonoBehaviourUtils;
+using UnityFoundation.Code.UnityAdapter;
 using System;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Systems.HealthSystem.DamageScripts
 {
-    public class ProjectileController : CustomDestroyMonoBehaviour
+    public class ProjectileController : BilucaMonoBehaviour
     {
         public event EventHandler OnShootDestroy;
 

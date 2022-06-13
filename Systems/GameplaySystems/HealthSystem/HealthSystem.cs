@@ -1,10 +1,10 @@
-using UnityFoundation.Code.MonoBehaviourUtils;
+using UnityFoundation.Code.UnityAdapter;
 using System;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Systems.HealthSystem
 {
-    public class HealthSystem : CustomDestroyMonoBehaviour, IDamageable, IHealable
+    public class HealthSystem : BilucaMonoBehaviour, IDamageable, IHealable
     {
         [SerializeField] private bool setupOnStart = false;
 

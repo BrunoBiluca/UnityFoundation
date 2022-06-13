@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace UnityFoundation.Code.MonoBehaviourUtils
+namespace UnityFoundation.Code.UnityAdapter
 {
-    public class CustomDestroyMonoBehaviour : MonoBehaviour
+    public class BilucaMonoBehaviour : MonoBehaviour
     {
         protected IDestroyBehaviour destroyBehaviour;
 

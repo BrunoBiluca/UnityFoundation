@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.UnityFoundation.UnityAdapter
+namespace UnityFoundation.Code.UnityAdapter
 {
     public class AnimatorController : IAnimator
     {

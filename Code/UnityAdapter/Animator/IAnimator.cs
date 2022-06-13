@@ -1,4 +1,4 @@
-﻿namespace Assets.UnityFoundation.UnityAdapter
+﻿namespace UnityFoundation.Code.UnityAdapter
 {
     public interface IAnimator
     {

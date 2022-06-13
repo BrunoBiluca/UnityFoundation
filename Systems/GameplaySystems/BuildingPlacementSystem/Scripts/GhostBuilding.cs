@@ -1,4 +1,3 @@
-using Assets.UnityFoundation.CameraScripts;
 using UnityFoundation.Code;
 using UnityEngine;
 

@@ -1,7 +1,7 @@
 using Assets.UnityFoundation.Systems.Character3D.Scripts;
-using Assets.UnityFoundation.UnityAdapter;
 using System;
 using UnityEngine;
+using UnityFoundation.Code.UnityAdapter;
 using UnityFoundation.Physics3D.CheckGround;
 using UnityFoundation.Tools.TimeUtils;
 using Zenject;

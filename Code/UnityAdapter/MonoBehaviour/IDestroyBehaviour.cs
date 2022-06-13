@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UnityFoundation.Code.MonoBehaviourUtils
+namespace UnityFoundation.Code.UnityAdapter
 {
     public interface IDestroyBehaviour
     {

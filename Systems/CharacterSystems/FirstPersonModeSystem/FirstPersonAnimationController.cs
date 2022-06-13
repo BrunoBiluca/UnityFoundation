@@ -1,4 +1,4 @@
-using Assets.UnityFoundation.UnityAdapter;
+using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.FirstPersonModeSystem
 {
