@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityFoundation.Code.UnityAdapter;
 using UnityFoundation.Physics3D.CheckGround;
 using UnityFoundation.Tools.TimeUtils;
-using Zenject;
 
 namespace UnityFoundation.FirstPersonModeSystem
 {
@@ -29,8 +28,6 @@ namespace UnityFoundation.FirstPersonModeSystem
         private Camera mainCamera;
         private Timer walkStepTimer;
 
-        // TODO: remover esse inject, deve ter uma forma de chamar esse método do instaler sem ter que definir essa anotação, já que esse código irá para UnityFoundation
-        [Inject]
         public FirstPersonMode Setup(
             FirstPersonModeSettings settings,
             IFirstPersonInputs inputs,
