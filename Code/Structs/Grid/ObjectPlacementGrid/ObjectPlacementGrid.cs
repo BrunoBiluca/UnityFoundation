@@ -9,13 +9,15 @@ namespace UnityFoundation.Code.Grid.ObjectPlacementGrid
         {
         }
 
-        public override bool CanSetGridValue(Int2 gridPosition, GridObject value)
+        public override bool CanSetGridValue(IntXZ gridPosition, GridObject value)
         {
-            var objDimentions = GridObjectDimentions(gridPosition, value);
+            var objDimentions = GridObjectDimentions(
+                new Int2(gridPosition.X, gridPosition.Z), value
+            );
 
             for(int x = gridPosition.X; x < objDimentions.X; x++)
-                for(int y = gridPosition.Y; y < objDimentions.Y; y++)
-                    if(!base.CanSetGridValue(new Int2(x, y), value))
+                for(int y = gridPosition.Z; y < objDimentions.Y; y++)
+                    if(!base.CanSetGridValue(new IntXZ(x, y), value))
                         return false;
 
             return true;
@@ -23,9 +25,10 @@ namespace UnityFoundation.Code.Grid.ObjectPlacementGrid
 
         public override bool TrySetGridValue(Vector3 position, GridObject value)
         {
-            var gridPosition = GetGridPostion(position);
+            var pos = GetGridPosition((int)position.x, (int)position.z);
+            var gridPosition = new Int2(pos.X, pos.Z);
 
-            if(!CanSetGridValue(gridPosition, value))
+            if(!CanSetGridValue(new IntXZ(gridPosition.X, gridPosition.Y), value))
                 return false;
 
             var objDimentions = GridObjectDimentions(gridPosition, value);

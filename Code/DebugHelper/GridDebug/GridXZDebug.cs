@@ -12,22 +12,23 @@ namespace UnityFoundation.Code.DebugHelper
         private readonly TextMeshPro[,] gridTextArray;
 
         public GridXZDebug(GridXZ<TValue> grid)
-            : base(grid.Width, grid.Height, grid.CellSize)
+            : base(grid.Width, grid.Depth, grid.CellSize)
         {
             this.grid = grid;
-            gridTextArray = new TextMeshPro[grid.Width, grid.Height];
+            gridTextArray = new TextMeshPro[grid.Width, grid.Depth];
 
             Display();
         }
 
-        public override bool CanSetGridValue(Int2 gridPosition, TValue value)
+        public override bool CanSetGridValue(IntXZ gridPosition, TValue value)
         {
             return grid.CanSetGridValue(gridPosition, value);
         }
 
-        public override Int2 GetGridPostion(Vector3 position)
+        public Int2 GetGridPostion(Vector3 position)
         {
-            return grid.GetGridPostion(position);
+            var pos = grid.GetGridPosition((int)position.x, (int)position.z);
+            return new Int2(pos.X, pos.Z);
         }
 
         public override Vector3 GetWorldPosition(int x, int y)
@@ -109,14 +110,14 @@ namespace UnityFoundation.Code.DebugHelper
                 }
             }
             Debug.DrawLine(
-                GetWorldPosition(0, grid.Height),
-                GetWorldPosition(grid.Width, grid.Height),
+                GetWorldPosition(0, grid.Depth),
+                GetWorldPosition(grid.Width, grid.Depth),
                 Color.white,
                 100f
             );
             Debug.DrawLine(
                 GetWorldPosition(grid.Width, 0),
-                GetWorldPosition(grid.Width, grid.Height),
+                GetWorldPosition(grid.Width, grid.Depth),
                 Color.white,
                 100f
             );

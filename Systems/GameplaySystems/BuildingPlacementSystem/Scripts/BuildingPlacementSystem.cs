@@ -85,7 +85,9 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
 
         private void CreateBuilding()
         {
-            var position = grid.GetGridPostion(CameraUtils.GetMousePosition3D());
+            var mousePosition = CameraUtils.GetMousePosition3D();
+            var pos = grid.GetGridPosition((int)mousePosition.x, (int)mousePosition.z);
+            var position = new Int2(pos.X, pos.Z);
             if(!grid.IsInsideGrid(position.X, position.Y))
             {
                 DebugPopup.Create("Can't create here.");
@@ -127,19 +129,19 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
 
         public bool CanBuild(Vector3 position, out Vector3 gridPosition, out Quaternion rotation)
         {
-            var gridPos = grid.GetGridPostion(position);
+            var pos = grid.GetGridPosition((int)position.x, (int)position.z);
 
             var newGridObject = new GridObject(
                 CurrentBuilding.Width, CurrentBuilding.Height, currentDirection
             );
-            if(!grid.CanSetGridValue(gridPos, newGridObject))
+            if(!grid.CanSetGridValue(pos, newGridObject))
             {
                 gridPosition = default;
                 rotation = default;
                 return false;
             }
 
-            gridPosition = grid.GetWorldPosition(gridPos.X, gridPos.Y, newGridObject);
+            gridPosition = grid.GetWorldPosition(pos.X, pos.Z, newGridObject);
             rotation = Quaternion.Euler(0f, currentDirection.Rotation, 0f);
             return true;
         }
