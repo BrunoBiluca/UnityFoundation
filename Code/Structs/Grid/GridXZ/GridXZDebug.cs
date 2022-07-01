@@ -1,9 +1,9 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
-using UnityFoundation.Code.Grid;
+using UnityFoundation.Code.DebugHelper;
 
-namespace UnityFoundation.Code.DebugHelper
+namespace UnityFoundation.Code.Grid
 {
     public class GridXZDebug<TValue> : GridXZ<TValue>
     {
@@ -85,12 +85,12 @@ namespace UnityFoundation.Code.DebugHelper
 
             TransformUtils.RemoveChildObjects(parent);
 
-            for(int x = 0; x < grid.GridArray.GetLength(0); x++)
+            for(int x = 0; x < grid.GridMatrix.GetLength(0); x++)
             {
-                for(int z = 0; z < grid.GridArray.GetLength(1); z++)
+                for(int z = 0; z < grid.GridMatrix.GetLength(1); z++)
                 {
                     gridTextArray[x, z] = DebugDraw.DrawWordTextCell(
-                        grid.GridArray[x, z].ToString(),
+                        grid.GridMatrix[x, z].ToString(),
                         GetWorldPosition(x, z),
                         new Vector3(grid.CellSize, 0.5f, grid.CellSize),
                         parent

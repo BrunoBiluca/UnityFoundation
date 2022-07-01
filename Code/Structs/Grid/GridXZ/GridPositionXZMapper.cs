@@ -1,8 +1,6 @@
-﻿using UnityEditor;
-using UnityEngine;
-using UnityFoundation.Code.Grid;
+﻿using UnityEngine;
 
-namespace UnityFoundation.Code
+namespace UnityFoundation.Code.Grid
 {
     public class GridPositionXZMapper
     {

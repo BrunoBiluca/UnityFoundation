@@ -1,8 +1,7 @@
 using NUnit.Framework;
 using System;
-using UnityFoundation.Code.Grid;
 
-namespace UnityFoundation.Code.Tests
+namespace UnityFoundation.Code.Grid.Tests
 {
     public class GridXZTests
     {
@@ -81,6 +80,28 @@ namespace UnityFoundation.Code.Tests
             Assert.AreEqual(123, grid.GetValue(0, 1));
             Assert.AreEqual(123, grid.GetValue(1, 0));
             Assert.AreEqual(123, grid.GetValue(1, 1));
+        }
+
+        [Test]
+        public void ShouldReturnIndexWhenPassXZ()
+        {
+            var grid = new GridXZ<int>(2, 2, 1);
+
+            Assert.AreEqual(0, grid.GridMatrix[0, 0].X);
+            Assert.AreEqual(0, grid.GridMatrix[0, 0].Z);
+            Assert.AreEqual(0, grid.GridMatrix[0, 0].Index);
+
+            Assert.AreEqual(0, grid.GridMatrix[0, 1].X);
+            Assert.AreEqual(1, grid.GridMatrix[0, 1].Z);
+            Assert.AreEqual(1, grid.GridMatrix[0, 1].Index);
+
+            Assert.AreEqual(1, grid.GridMatrix[1, 0].X);
+            Assert.AreEqual(0, grid.GridMatrix[1, 0].Z);
+            Assert.AreEqual(2, grid.GridMatrix[1, 0].Index);
+
+            Assert.AreEqual(1, grid.GridMatrix[1, 1].X);
+            Assert.AreEqual(1, grid.GridMatrix[1, 1].Z);
+            Assert.AreEqual(3, grid.GridMatrix[1, 1].Index);
         }
     }
 }

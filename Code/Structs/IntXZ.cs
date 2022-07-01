@@ -1,5 +1,8 @@
-﻿namespace UnityFoundation.Code.Grid
+﻿using System;
+
+namespace UnityFoundation.Code.Grid
 {
+    [Serializable]
     public class IntXZ
     {
         public int X { get; }

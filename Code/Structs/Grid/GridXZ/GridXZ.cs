@@ -15,7 +15,7 @@ namespace UnityFoundation.Code.Grid
         public int Width => width;
         public int Depth => height;
         public int CellSize => cellSize;
-        public GridPositionXZ<TValue>[,] GridArray => gridArray;
+        public GridPositionXZ<TValue>[,] GridMatrix => gridArray;
 
         public bool ForceSetValue { get; set; } = false;
 
@@ -31,8 +31,19 @@ namespace UnityFoundation.Code.Grid
 
             gridArray = new GridPositionXZ<TValue>[width, height];
             for(int x = 0; x < width; x++)
+            {
                 for(int z = 0; z < height; z++)
-                    gridArray[x, z] = new GridPositionXZ<TValue>(x, z);
+                {
+                    var newPos = new GridPositionXZ<TValue>(x, z);
+                    newPos.SetIndex(GetGridIndex(x, z));
+                    gridArray[x, z] = newPos;
+                }
+            }
+        }
+
+        private int GetGridIndex(int x, int z)
+        {
+            return x * width + z;
         }
 
         public bool TrySetValue(int x, int z, TValue value)
@@ -73,7 +84,7 @@ namespace UnityFoundation.Code.Grid
 
         public void Fill(TValue value)
         {
-            foreach(var gridPos in GridArray)
+            foreach(var gridPos in GridMatrix)
                 gridPos.Value = value;
         }
 

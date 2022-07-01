@@ -21,14 +21,4 @@ namespace UnityFoundation.Code.Grid
         bool ClearGridValue(TValue value);
         void Fill(TValue value);
     }
-
-    public interface IGridXZ<TValue> : IGrid<TValue>
-    {
-        GridPositionXZ<TValue>[,] GridArray { get; }
-        IntXZ GetGridPosition(int x, int z);
-        bool TrySetValue(int x, int z, TValue value);
-        TValue GetValue(int x, int z);
-        bool CanSetGridValue(IntXZ gridPosition, TValue value);
-        bool IsInsideGrid(int x, int z);
-    }
 }

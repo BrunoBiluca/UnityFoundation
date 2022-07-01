@@ -4,8 +4,8 @@ namespace UnityFoundation.Code
 {
     public class Int2
     {
-        private int x;
-        private int y;
+        private readonly int x;
+        private readonly int y;
 
         public int X => x;
         public int Y => y;
@@ -18,8 +18,8 @@ namespace UnityFoundation.Code
 
         public Int2(Vector2 vector)
         {
-            this.x = (int)vector.x;
-            this.y = (int)vector.y;
+            x = (int)vector.x;
+            y = (int)vector.y;
         }
     }
 }
