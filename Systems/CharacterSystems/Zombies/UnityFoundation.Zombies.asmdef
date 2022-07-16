@@ -1,5 +1,5 @@
 {
-    "name": "UnityFoundation",
+    "name": "UnityFoundation.Zombies",
     "rootNamespace": "",
     "references": [
         "GUID:d7d703d7ba19f3c45b01309621aede27"

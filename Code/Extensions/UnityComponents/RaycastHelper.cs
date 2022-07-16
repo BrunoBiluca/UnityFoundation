@@ -40,6 +40,7 @@ public static class RaycastHelper
     public static bool RaycastTypeMousePosition<T>(out T target, LayerMask layerMask)
     {
         var position = Mouse.current.position.ReadValue();
-        return RaycastType<T>(position, out target, layerMask);
+        Debug.Log(position);
+        return RaycastType(position, out target, layerMask);
     }
 }

@@ -5,9 +5,8 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "UnityFoundation.TestUtility",
-        "UnityFoundation",
         "UnityFoundation.Code",
-        "UnityFoundation.UnityAdapter"
+        "UnityFoundation.Zombies"
     ],
     "includePlatforms": [
         "Editor"

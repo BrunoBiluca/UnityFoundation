@@ -6,11 +6,10 @@ using UnityFoundation.Code;
 
 namespace Assets.UnityFoundation.SceneFader
 {
-    public class SceneFader : Singleton<SceneFader> {
-
-        public override bool DestroyOnLoad => false;
-
-        private static class SceneFaderAnimations{
+    public class SceneFader : Singleton<SceneFader>
+    {
+        private static class SceneFaderAnimations
+        {
             public const string fadeIn = "FadeIn";
             public const string fadeOut = "FadeOut";
         }
@@ -30,15 +29,23 @@ namespace Assets.UnityFoundation.SceneFader
                 fadeAnim = fadeCanvas.transform.Find("panel").GetComponent<Animator>();
         }
 
-        public void FadeIn(string levelName) {
+        protected override void ConfigSingleton()
+        {
+            DestroyOnLoad = false;
+        }
+
+        public void FadeIn(string levelName)
+        {
             StartCoroutine(FadeInAnimation(levelName));
         }
 
-        public void FadeOut() {
+        public void FadeOut()
+        {
             StartCoroutine(FadeOutAnimation());
         }
 
-        IEnumerator FadeInAnimation(string sceneName) {
+        IEnumerator FadeInAnimation(string sceneName)
+        {
             fadeCanvas.SetActive(true);
             fadeAnim.Play(SceneFaderAnimations.fadeIn);
             yield return StartCoroutine(WaittingCoroutine.RealSeconds(0.7f));
@@ -48,7 +55,8 @@ namespace Assets.UnityFoundation.SceneFader
             FadeOut();
         }
 
-        IEnumerator FadeOutAnimation() {
+        IEnumerator FadeOutAnimation()
+        {
             fadeAnim.Play(SceneFaderAnimations.fadeOut);
             yield return StartCoroutine(WaittingCoroutine.RealSeconds(1.0f));
             fadeCanvas.SetActive(false);

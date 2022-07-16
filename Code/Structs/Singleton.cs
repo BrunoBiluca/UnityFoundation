@@ -20,11 +20,12 @@ namespace UnityFoundation.Code
             }
         }
 
-        [SerializeField] private bool destroyOnLoad;
-        public virtual bool DestroyOnLoad => destroyOnLoad;
+        [field: SerializeField] public bool DestroyOnLoad { get; set; }
 
         public void Awake()
         {
+            ConfigSingleton();
+
             if(instance == null)
             {
                 instance = this;
@@ -32,13 +33,19 @@ namespace UnityFoundation.Code
             }
             else
             {
+#if !UNITY_EDITOR
                 Destroy(gameObject);
+#else
+                DestroyImmediate(gameObject);
+#endif
             }
 
             OnAwake();
         }
 
         protected virtual void OnAwake() { }
+
+        protected virtual void ConfigSingleton() { }
 
     }
 }

@@ -7,7 +7,7 @@ namespace UnityFoundation.Code
         private readonly int[] dummyValues;
         private int valueIndex;
 
-        public DummyRandomGenerator(int[] dummyValues)
+        public DummyRandomGenerator(params int[] dummyValues)
         {
             valueIndex = 0;
             this.dummyValues = dummyValues;
