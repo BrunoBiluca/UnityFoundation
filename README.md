@@ -33,12 +33,12 @@ Create a folder called `Packages` on Assets folder. Drop all dlls.
 ### Unity Plugins (opcional)
 
 - Nuget for Unity
-  - Used to manage external nuget packages
+  - Used to manage external NuGet packages
   - https://github.com/GlitchEnzo/NuGetForUnity
 
 ### Add Input System testable packages
 
-Add to `Packages/manifest.json` the follow section:
+Add to `Packages/manifest.json` the following section:
 
 ```
 "testables": [
