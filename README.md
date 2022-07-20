@@ -2,6 +2,10 @@
 
 # Installation
 
+From the root of the project folder run the following command
+
+`git submodule add https://github.com/BrunoBiluca/UnityFoundation.git .\Assets\UnityFoundation `
+
 ## Dependencies
 
 ### Unity Registry packages
