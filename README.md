@@ -13,6 +13,8 @@ From the root of the project folder run the following command
 - Cinemachine
 - Core RP
 - Test Framework ^2
+  - package name: com.unity.test-framework
+  - package version: 2.0.1-exp.1
 - Input System
 - Text Mesh Pro (TMP)
 
