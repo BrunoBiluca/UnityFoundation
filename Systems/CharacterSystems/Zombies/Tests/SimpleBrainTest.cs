@@ -1,4 +1,4 @@
-using Assets.UnityFoundation.TestUtility;
+using UnityFoundation.TestUtility;
 using NUnit.Framework;
 using System.Collections;
 using UnityEngine;

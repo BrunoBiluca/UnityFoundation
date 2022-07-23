@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace UnityFoundation.Character3D.Tests
+namespace UnityFoundation.ThirdPersonCharacter.Tests
 {
     public class ProjectileTest
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using N = NUnit.Framework;
 
-namespace Assets.UnityFoundation.TestUtility
+namespace UnityFoundation.TestUtility
 {
     public static class AssertHelper
     {

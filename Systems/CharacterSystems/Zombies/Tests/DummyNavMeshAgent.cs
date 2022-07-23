@@ -3,7 +3,7 @@ using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.Zombies.Tests
 {
-    public class DummyNavMeshAgent : INavMeshAgent
+    public class DummyNavMeshAgent : INavegationAgent
     {
         public Transform Body { get; }
         public float Speed { get ; set ; }

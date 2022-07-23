@@ -1,5 +1,5 @@
 {
-    "name": "UnityFoundation.Character3D",
+    "name": "UnityFoundation.ThirdPersonCharacter",
     "rootNamespace": "UnityFoundation.Character3D",
     "references": [
         "GUID:d7d703d7ba19f3c45b01309621aede27",

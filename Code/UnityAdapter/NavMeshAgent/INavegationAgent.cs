@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UnityFoundation.Code.UnityAdapter
 {
-    public interface INavMeshAgent
+    public interface INavegationAgent
     {
         float Speed { get; set; }
         float StoppingDistance { get; set; }

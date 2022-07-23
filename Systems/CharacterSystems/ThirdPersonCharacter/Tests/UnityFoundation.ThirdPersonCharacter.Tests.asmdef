@@ -1,10 +1,10 @@
 {
-    "name": "UnityFoundation.Character3D.Tests",
+    "name": "UnityFoundation.ThirdPersonCharacter.Tests",
     "rootNamespace": "",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "UnityFoundation.Character3D"
+        "UnityFoundation.ThirdPersonCharacter"
     ],
     "includePlatforms": [
         "Editor"

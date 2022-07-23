@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 namespace UnityFoundation.Code.UnityAdapter
 {
-    public class NavMeshAgentDec : INavMeshAgent
+    public class NavMeshAgentDec : INavegationAgent
     {
         private readonly NavMeshAgent agent;
 
