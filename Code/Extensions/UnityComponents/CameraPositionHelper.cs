@@ -14,6 +14,8 @@ namespace UnityFoundation.Code
         public Optional<Vector3> GetWorldPosition(Vector3 screenPoint)
         {
             var ray = camera.ScreenPointToRay(screenPoint);
+
+            // TODO: substituir Physics.Raycast por interface para possibilitar testes
             if(Physics.Raycast(ray, out RaycastHit hit, float.MaxValue))
                 return Optional<Vector3>.Some(hit.point);
 
