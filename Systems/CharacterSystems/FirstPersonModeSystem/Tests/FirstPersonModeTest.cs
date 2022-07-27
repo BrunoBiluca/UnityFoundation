@@ -50,7 +50,7 @@ namespace UnityFoundation.FirstPersonModeSystem.Tests
 
             rigidBodyMock.Verify(
                 rb => rb.AddForce(It.IsAny<Vector3>(), It.IsAny<ForceMode>()),
-                Times.Never
+                Times.Never()
             );
         }
 
@@ -74,7 +74,7 @@ namespace UnityFoundation.FirstPersonModeSystem.Tests
 
             rigidBodyMock.Verify(
                 rb => rb.AddForce(It.IsAny<Vector3>(), It.IsAny<ForceMode>()),
-                Times.Once
+                Times.Once()
             );
         }
 

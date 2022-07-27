@@ -11,7 +11,10 @@ namespace UnityFoundation.Code.UnityAdapter
             this.transform = transform;
         }
 
-        public Vector3 Foward => transform.forward;
+        public Vector3 Foward {
+            get => transform.forward;
+            set => transform.forward = value;
+        }
 
         public Vector3 Position {
             get => transform.position;

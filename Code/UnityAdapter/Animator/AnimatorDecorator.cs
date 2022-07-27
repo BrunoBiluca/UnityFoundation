@@ -2,11 +2,11 @@
 
 namespace UnityFoundation.Code.UnityAdapter
 {
-    public class AnimatorController : IAnimator
+    public class AnimatorDecorator : IAnimator
     {
         private readonly Animator animator;
 
-        public AnimatorController(Animator animator)
+        public AnimatorDecorator(Animator animator)
         {
             this.animator = animator;
         }

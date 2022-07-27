@@ -5,9 +5,8 @@ namespace UnityFoundation.TestUtility
 {
     public class DummyTransform : ITransform
     {
-        public Vector3 Foward => throw new System.NotImplementedException();
-
         public Vector3 Position { get; set; }
+        Vector3 ITransform.Foward { get; set; }
 
         public ITransform GetTransform()
         {
