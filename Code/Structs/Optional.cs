@@ -68,5 +68,13 @@ namespace UnityFoundation.Code
         {
             return value;
         }
+
+        public override string ToString()
+        {
+            if(IsPresent)
+                return "Present: " + value.ToString();
+            else
+                return $"None of type {typeof(T)}";
+        }
     }
 }
