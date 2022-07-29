@@ -5,7 +5,7 @@ namespace UnityFoundation.Code.UnityAdapter
 {
     public class UnityDestroyBehaviour : MonoBehaviour, IDestroyBehaviour
     {
-        private Action onDestroyAction;
+        public event Action OnDestroyAction;
 
         public void Destroy()
         {
@@ -27,7 +27,7 @@ namespace UnityFoundation.Code.UnityAdapter
 
         public void OnBeforeDestroy(Action preDestroyAction)
         {
-            onDestroyAction = preDestroyAction;
+            OnDestroyAction = preDestroyAction;
         }
 
         ///
@@ -36,7 +36,7 @@ namespace UnityFoundation.Code.UnityAdapter
 
         private void OnDestroy()
         {
-            onDestroyAction?.Invoke();
+            OnDestroyAction?.Invoke();
         }
 
     }

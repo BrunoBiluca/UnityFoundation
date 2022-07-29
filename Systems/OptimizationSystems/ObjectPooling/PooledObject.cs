@@ -8,7 +8,7 @@ namespace Assets.UnityFoundation.Systems.ObjectPooling
 {
     public class PooledObject : MonoBehaviour, IDestroyBehaviour
     {
-        private Action onDestroyAction;
+        public event Action OnDestroyAction;
 
         public bool IsActive => gameObject.activeInHierarchy;
 
@@ -39,7 +39,7 @@ namespace Assets.UnityFoundation.Systems.ObjectPooling
 
         public virtual PooledObject Deactivate()
         {
-            onDestroyAction?.Invoke();
+            OnDestroyAction?.Invoke();
             gameObject.SetActive(false);
             return this;
         }
@@ -62,7 +62,7 @@ namespace Assets.UnityFoundation.Systems.ObjectPooling
 
         public void OnBeforeDestroy(Action p)
         {
-            onDestroyAction = p;
+            OnDestroyAction = p;
         }
 
         ///
