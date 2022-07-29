@@ -2,19 +2,8 @@ using System;
 
 namespace UnityFoundation.Code
 {
-    public class Optional<T>
+    public partial class Optional<T>
     {
-
-        public static Optional<T> Some(T value)
-        {
-            return new Optional<T>(value);
-        }
-
-        public static Optional<T> None()
-        {
-            return new Optional<T>();
-        }
-
         private readonly T value;
 
         public Optional()
@@ -75,6 +64,24 @@ namespace UnityFoundation.Code
                 return "Present: " + value.ToString();
             else
                 return $"None of type {typeof(T)}";
+        }
+    }
+
+    public partial class Optional<T>
+    {
+        public static implicit operator bool?(Optional<T> optional)
+        {
+            return optional.IsPresent;
+        }
+
+        public static Optional<T> Some(T value)
+        {
+            return new Optional<T>(value);
+        }
+
+        public static Optional<T> None()
+        {
+            return new Optional<T>();
         }
     }
 }
