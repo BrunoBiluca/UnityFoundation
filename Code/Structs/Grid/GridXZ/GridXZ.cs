@@ -42,7 +42,6 @@ namespace UnityFoundation.Code.Grid
             return x * Width + z;
         }
 
-
         public bool TrySetValue(int x, int z, TValue value)
         {
             var gridPosition = GetCellPosition(x, z);
@@ -68,7 +67,12 @@ namespace UnityFoundation.Code.Grid
             return true;
         }
 
-        private void SetValue(IntXZ gridPos, TValue value)
+        protected void SetValueDefault(IntXZ gridPos)
+        {
+            SetValue(gridPos, default);
+        }
+
+        protected void SetValue(IntXZ gridPos, TValue value)
         {
             gridArray[gridPos.X, gridPos.Z].Value = value;
         }
@@ -81,10 +85,13 @@ namespace UnityFoundation.Code.Grid
 
         public IntXZ GetCellPosition(int x, int z)
         {
-            if(!IsInsideGrid(x, z))
+            var cellX = x / CellSize;
+            var cellZ = z / CellSize;
+
+            if(!IsInsideGrid(cellX, cellZ))
                 throw new ArgumentOutOfRangeException("Position out of grid");
 
-            return new IntXZ(x / CellSize, z / CellSize);
+            return new IntXZ(cellX, cellZ);
         }
 
         public void Fill(TValue value)
@@ -102,7 +109,7 @@ namespace UnityFoundation.Code.Grid
         public void ClearValue(int x, int z)
         {
             var gridPos = GetCellPosition(x, z);
-            gridArray[gridPos.X, gridPos.Z].Value = default;
+            SetValueDefault(gridPos);
         }
 
         public virtual bool ClearValue(TValue value)

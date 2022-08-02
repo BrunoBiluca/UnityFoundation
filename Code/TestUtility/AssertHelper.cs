@@ -33,6 +33,16 @@ namespace UnityFoundation.TestUtility
             N.Assert.That(distance, N.Is.Not.EqualTo(0f).Within(delta));
         }
 
+        public static void MultiEqual(
+            object expected, string description, params object[] actuals
+        )
+        {
+            foreach(var actual in actuals)
+            {
+                N.Assert.AreEqual(expected, actual, description);
+            }
+        }
+
         public static void Between(
             float expectedBegin,
             float expectedEnd,
