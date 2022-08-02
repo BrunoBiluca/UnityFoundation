@@ -11,7 +11,6 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
 {
     public class BuildingPlacementSystem : Singleton<BuildingPlacementSystem>
     {
-        [SerializeField] private bool debugMode = false;
         [SerializeField] private int width = 10;
         [SerializeField] private int height = 10;
 
@@ -28,7 +27,7 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
 
         private GridObjectDirection currentDirection;
         private GridObjectSO currentBuilding;
-        private GridXZ<GridObject> grid;
+        private ObjectPlacementGrid grid;
 
         private GridObjectSO CurrentBuilding {
             get { return currentBuilding; }
@@ -41,11 +40,6 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
         protected override void OnAwake()
         {
             grid = new ObjectPlacementGrid(width, height, cellSize);
-
-            if(debugMode)
-            {
-                grid = new GridXZDebug<GridObject>(grid);
-            }
 
             CurrentBuilding = buildings[0];
             currentDirection = GridObjectDirection.DOWN;
@@ -86,7 +80,7 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
         private void CreateBuilding()
         {
             var mousePosition = CameraUtils.GetMousePosition3D();
-            var pos = grid.GetGridPosition((int)mousePosition.x, (int)mousePosition.z);
+            var pos = grid.GetCellPosition((int)mousePosition.x, (int)mousePosition.z);
             var position = new Int2(pos.X, pos.Z);
             if(!grid.IsInsideGrid(position.X, position.Y))
             {
@@ -98,7 +92,7 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
                 CurrentBuilding.Width, CurrentBuilding.Height, currentDirection
             );
 
-            if(!grid.TrySetGridValue(grid.GetWorldPosition(position.X, position.Y), gridObject))
+            if(!grid.TrySetGridValue(grid.GetWorldPosition(position.X, position.Y, gridObject), gridObject))
                 return;
 
             var building = buildingPooling.GetAvailableObject(CurrentBuilding.Tag).Get();
@@ -106,9 +100,10 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
                 .GetComponent<Building>()
                 .Setup(gridObject)
                 .Activate((go) => {
+                    var gridPos = grid.GetCellPosition(position.X, position.Y);
                     go
                     .transform
-                    .position = grid.GetWorldPosition(position.X, position.Y, gridObject);
+                    .position = new Vector3(gridPos.X, 0f, gridPos.Z);
 
                     go
                     .transform
@@ -123,13 +118,13 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
 
         public void RemoveBuilding(Building building)
         {
-            grid.ClearGridValue(building.GridObjectRef);
+            grid.ClearValue(building.GridObjectRef);
             building.Deactivate();
         }
 
         public bool CanBuild(Vector3 position, out Vector3 gridPosition, out Quaternion rotation)
         {
-            var pos = grid.GetGridPosition((int)position.x, (int)position.z);
+            var pos = grid.GetCellPosition((int)position.x, (int)position.z);
 
             var newGridObject = new GridObject(
                 CurrentBuilding.Width, CurrentBuilding.Height, currentDirection

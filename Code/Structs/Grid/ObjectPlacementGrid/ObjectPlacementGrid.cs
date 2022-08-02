@@ -23,9 +23,9 @@ namespace UnityFoundation.Code.Grid.ObjectPlacementGrid
             return true;
         }
 
-        public override bool TrySetGridValue(Vector3 position, GridObject value)
+        public bool TrySetGridValue(Vector3 position, GridObject value)
         {
-            var pos = GetGridPosition((int)position.x, (int)position.z);
+            var pos = GetCellPosition((int)position.x, (int)position.z);
             var gridPosition = new Int2(pos.X, pos.Z);
 
             if(!CanSetGridValue(new IntXZ(gridPosition.X, gridPosition.Y), value))
@@ -39,9 +39,10 @@ namespace UnityFoundation.Code.Grid.ObjectPlacementGrid
             return true;
         }
 
-        public override Vector3 GetWorldPosition(int x, int y, GridObject gridObject)
+        public Vector3 GetWorldPosition(int x, int y, GridObject gridObject)
         {
-            return GetWorldPosition(x, y) + CalculatePositionOffset(gridObject);
+            var gridPos = GetCellPosition(x, y);
+            return new Vector3(gridPos.X, 0f, gridPos.Z) + CalculatePositionOffset(gridObject);
         }
 
         private Vector3 CalculatePositionOffset(GridObject gridObject)

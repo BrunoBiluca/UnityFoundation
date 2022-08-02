@@ -96,6 +96,7 @@ namespace UnityFoundation.Code.DebugHelper
             string text,
             Vector3 localPosition,
             Vector3 cellSize,
+            float fontSize = 2f,
             Transform parent = null
         )
         {
@@ -110,7 +111,7 @@ namespace UnityFoundation.Code.DebugHelper
             var textMesh = gameObject.GetComponent<TextMeshPro>();
             textMesh.text = text;
             textMesh.color = Color.white;
-            textMesh.fontSize = 2;
+            textMesh.fontSize = fontSize;
             textMesh.alignment = TextAlignmentOptions.Midline;
 
             return textMesh;

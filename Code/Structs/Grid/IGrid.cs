@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace UnityFoundation.Code.Grid
 {
+    [Obsolete]
     public interface IGrid<TValue>
     {
         int Width { get; }
