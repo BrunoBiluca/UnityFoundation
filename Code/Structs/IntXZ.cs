@@ -13,5 +13,15 @@ namespace UnityFoundation.Code.Grid
             X = x;
             Z = z;
         }
+
+        public IntXZ TranslateX(int amount)
+        {
+            return new IntXZ(X + amount, Z);
+        }
+
+        public IntXZ TranslateZ(int amount)
+        {
+            return new IntXZ(X, Z + amount);
+        }
     }
 }
