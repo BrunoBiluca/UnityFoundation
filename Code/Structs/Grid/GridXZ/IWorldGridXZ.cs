@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UnityFoundation.Code.Grid
 {
@@ -15,5 +16,6 @@ namespace UnityFoundation.Code.Grid
         Vector3 GetCellWorldPosition(IntXZ gridPosition);
         T GetValue(Vector3 worldPosition);
         bool TrySetValue(Vector3 worldPosition, T value);
+        bool TryUpdatValue(Vector3 position, Action<T> updateCallback);
     }
 }

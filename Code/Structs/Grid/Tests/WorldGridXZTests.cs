@@ -127,5 +127,40 @@ namespace UnityFoundation.Code.Grid.Tests
             Assert.AreEqual("filled_before", grid.GetValue(cellWorldPosition));
         }
 
+        [Test]
+        public void Given_position_is_empty_should_not_update_value()
+        {
+            var grid = new WorldGridXZ<string>(Vector3.zero, 2, 2, 1);
+
+            Assert.AreEqual(default(string), grid.GetValue(Vector3.zero));
+
+            var isValueUpdated = grid.TryUpdatValue(
+                Vector3.zero, 
+                (value) => value = "updated " + value.Length 
+            );
+
+            Assert.IsFalse(isValueUpdated);
+            Assert.AreEqual(default(string), grid.GetValue(Vector3.zero));
+        }
+
+        [Test]
+        public void Given_position_is_filled_should_update_value()
+        {
+            var grid = new WorldGridXZ<string>(Vector3.zero, 2, 2, 1);
+
+            var isValueSet = grid.TrySetValue(Vector3.zero, "filled");
+
+            Assert.IsTrue(isValueSet);
+            Assert.AreEqual("filled", grid.GetValue(Vector3.zero));
+
+            var isValueUpdated = grid.TryUpdatValue(
+                Vector3.zero, 
+                (value) => value = "updated"
+            );
+
+            Assert.IsTrue(isValueUpdated);
+            Assert.AreEqual("filled", grid.GetValue(Vector3.zero));
+        }
+
     }
 }

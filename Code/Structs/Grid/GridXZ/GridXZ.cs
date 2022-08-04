@@ -58,13 +58,15 @@ namespace UnityFoundation.Code.Grid
                 return false;
 
             var gridValue = gridArray[gridPosition.X, gridPosition.Z].Value;
-            if(
-                !ForceSetValue
-                && !EqualityComparer<TValue>.Default.Equals(gridValue, default)
-            )
+            if(!ForceSetValue && !IsValueEmpty(gridValue))
                 return false;
 
             return true;
+        }
+
+        protected bool IsValueEmpty(TValue value)
+        {
+            return EqualityComparer<TValue>.Default.Equals(value, default);
         }
 
         protected void SetValueDefault(IntXZ gridPos)

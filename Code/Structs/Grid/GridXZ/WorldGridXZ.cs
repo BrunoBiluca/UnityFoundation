@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace UnityFoundation.Code.Grid
@@ -63,7 +64,6 @@ namespace UnityFoundation.Code.Grid
         public void ClearValue(Vector3 position)
         {
             var cell = MapWorldToGrid(position);
-
             SetValueDefault(cell);
         }
 
@@ -71,6 +71,18 @@ namespace UnityFoundation.Code.Grid
         {
             var cellPos = MapWorldToGrid(worldPosition);
             return GetValue(cellPos.X, cellPos.Z);
+        }
+
+        public bool TryUpdatValue(Vector3 worldPosition, Action<T> updateCallback)
+        {
+            var cellPos = MapWorldToGrid(worldPosition);
+            var value = GetValue(cellPos.X, cellPos.Z);
+
+            if(IsValueEmpty(value))
+                return false;
+                
+            updateCallback(value);
+            return true;
         }
     }
 }
