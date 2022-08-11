@@ -8,12 +8,12 @@ namespace UnityFoundation.Code.Grid.Tests
         [Test]
         public void Given_an_empty_grid_should_initialize_with_type_default()
         {
-            var grid = new GridXZ<int>(4, 4, 1);
+            var grid = new GridXZ<int>(2, 2, 1);
 
-            var gridPos = grid.GetCellPosition(0, 0);
-
-            Assert.AreEqual(0, gridPos.X);
-            Assert.AreEqual(0, gridPos.Z);
+            Assert.AreEqual(default(int), grid.GetValue(0, 0));
+            Assert.AreEqual(default(int), grid.GetValue(0, 1));
+            Assert.AreEqual(default(int), grid.GetValue(1, 0));
+            Assert.AreEqual(default(int), grid.GetValue(1, 1));
         }
 
         [Test]
@@ -87,21 +87,21 @@ namespace UnityFoundation.Code.Grid.Tests
         {
             var grid = new GridXZ<int>(2, 2, 1);
 
-            Assert.AreEqual(0, grid.GridMatrix[0, 0].X);
-            Assert.AreEqual(0, grid.GridMatrix[0, 0].Z);
-            Assert.AreEqual(0, grid.GridMatrix[0, 0].Index);
+            Assert.AreEqual(0, grid.Cells[0, 0].X);
+            Assert.AreEqual(0, grid.Cells[0, 0].Z);
+            Assert.AreEqual(0, grid.Cells[0, 0].Index);
 
-            Assert.AreEqual(0, grid.GridMatrix[0, 1].X);
-            Assert.AreEqual(1, grid.GridMatrix[0, 1].Z);
-            Assert.AreEqual(1, grid.GridMatrix[0, 1].Index);
+            Assert.AreEqual(0, grid.Cells[0, 1].X);
+            Assert.AreEqual(1, grid.Cells[0, 1].Z);
+            Assert.AreEqual(1, grid.Cells[0, 1].Index);
 
-            Assert.AreEqual(1, grid.GridMatrix[1, 0].X);
-            Assert.AreEqual(0, grid.GridMatrix[1, 0].Z);
-            Assert.AreEqual(2, grid.GridMatrix[1, 0].Index);
+            Assert.AreEqual(1, grid.Cells[1, 0].X);
+            Assert.AreEqual(0, grid.Cells[1, 0].Z);
+            Assert.AreEqual(2, grid.Cells[1, 0].Index);
 
-            Assert.AreEqual(1, grid.GridMatrix[1, 1].X);
-            Assert.AreEqual(1, grid.GridMatrix[1, 1].Z);
-            Assert.AreEqual(3, grid.GridMatrix[1, 1].Index);
+            Assert.AreEqual(1, grid.Cells[1, 1].X);
+            Assert.AreEqual(1, grid.Cells[1, 1].Z);
+            Assert.AreEqual(3, grid.Cells[1, 1].Index);
         }
 
         [Test]
@@ -120,6 +120,37 @@ namespace UnityFoundation.Code.Grid.Tests
             Assert.AreEqual("01", grid.GetValue(0, 1));
             Assert.AreEqual(default(string), grid.GetValue(1, 0));
             Assert.AreEqual("11", grid.GetValue(1, 1));
+        }
+
+        [Test]
+        public void Given_position_is_empty_should_not_update_value()
+        {
+            var grid = new GridXZ<string>(2, 2, 1);
+
+            var didUpdateCallbackRun = false;
+            Assert.IsFalse(grid.TryUpdateValue(
+                0, 0,
+                (value) => { didUpdateCallbackRun = true; }
+            ));
+            Assert.IsFalse(didUpdateCallbackRun);
+        }
+
+        class TestValue
+        {
+            public string str;
+        }
+
+        [Test]
+        public void Given_position_is_filled_should_update_value()
+        {
+            var grid = new GridXZ<TestValue>(2, 2, 1);
+            grid.TrySetValue(0, 0, new TestValue());
+
+            Assert.IsTrue(grid.TryUpdateValue(
+                0, 0,
+                (value) => { value.str = "updated"; }
+            ));
+            Assert.AreEqual("updated", grid.GetValue(0, 0).str);
         }
     }
 }

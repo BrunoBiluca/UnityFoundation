@@ -21,6 +21,11 @@ namespace UnityFoundation.Code.UnityAdapter
             set => transform.position = value;
         }
 
+        public string Name {
+            get => transform.name;
+            set => transform.name = value;
+        }
+
         public ITransform GetTransform()
         {
             return this;

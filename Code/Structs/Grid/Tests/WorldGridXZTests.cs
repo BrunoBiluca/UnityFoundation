@@ -9,29 +9,60 @@ namespace UnityFoundation.Code.Grid.Tests
     {
         public static IEnumerable<TestCaseData> MultipleInitialPositions()
         {
-            yield return new TestCaseData(Vector3.zero).SetName("Zero");
-            yield return new TestCaseData(Vector3.one).SetName("One");
-            yield return new TestCaseData(-Vector3.one).SetName("Minus One");
+            yield return new TestCaseData(Vector3.zero, 1).SetName("Zero");
+            yield return new TestCaseData(Vector3.one, 1).SetName("One");
+            yield return new TestCaseData(-Vector3.one, 1).SetName("Minus One");
+            yield return new TestCaseData(Vector3.zero, 2).SetName("Zero with cell size 2");
         }
 
         [Test]
         [TestCaseSource(nameof(MultipleInitialPositions))]
         public void Given_filled_grid_should_return_value_if_world_position_inside_grid(
-            Vector3 initialPosition
+            Vector3 initialPosition, int cellSize
         )
         {
-            var grid = new WorldGridXZ<string>(initialPosition, 2, 2, 1);
-            grid.Fill("filled");
+            var grid = new WorldGridXZ<string>(initialPosition, 2, 2, cellSize);
+            var bottomLeftPositions = GetWorldPositions(initialPosition, cellSize, Vector3.zero);
 
-            var pos00 = new Vector3(0, 0, 0) + initialPosition;
-            var pos01 = new Vector3(0, 0, 1) + initialPosition;
-            var pos10 = new Vector3(1, 0, 0) + initialPosition;
-            var pos11 = new Vector3(1, 0, 1) + initialPosition;
+            foreach(var pos in bottomLeftPositions)
+            {
+                grid.TrySetValue(pos, pos.ToString());
+                Assert.AreEqual(pos, grid.GetCellWorldPosition(pos), "cell bottom left points");
+                Assert.AreEqual(pos.ToString(), grid.GetValue(pos));
+            }
 
-            Assert.AreEqual(pos00, grid.GetCellWorldPosition(pos00));
-            Assert.AreEqual(pos01, grid.GetCellWorldPosition(pos01));
-            Assert.AreEqual(pos10, grid.GetCellWorldPosition(pos10));
-            Assert.AreEqual(pos11, grid.GetCellWorldPosition(pos11));
+            var topRightPositions = GetWorldPositions(
+                initialPosition,
+                cellSize,
+                new Vector3(cellSize - 0.1f, 0, cellSize - 0.1f)
+            );
+
+            var i = 0;
+            foreach(var pos in topRightPositions)
+            {
+                var relativePos = bottomLeftPositions[i];
+                var cellPos = grid.GetCellWorldPosition(pos);
+                Assert.AreEqual(relativePos, cellPos, "cell top right points");
+                Assert.AreEqual(relativePos.ToString(), grid.GetValue(pos));
+                i++;
+            }
+        }
+
+        private List<Vector3> GetWorldPositions(
+            Vector3 initialPosition,
+            int cellSize,
+            Vector3 threshold
+        )
+        {
+            var positions = new List<Vector3> {
+                // cell bottom left points
+                new Vector3(0, 0, 0) + initialPosition + threshold,
+                new Vector3(0, 0, cellSize) + initialPosition + threshold,
+                new Vector3(cellSize, 0, 0) + initialPosition + threshold,
+                new Vector3(cellSize, 0, cellSize) + initialPosition + threshold
+            };
+
+            return positions;
         }
 
         [Test]
@@ -66,7 +97,7 @@ namespace UnityFoundation.Code.Grid.Tests
                 grid.GetCellCenterPosition(new Vector3(0, 0, 1)),
                 grid.GetCellCenterPosition(new Vector3(1, 0, 1))
             );
-            
+
             AssertHelper.MultiEqual(
                 new Vector3(3, 0, 1),
                 "World position x 3 z 1",
@@ -75,14 +106,14 @@ namespace UnityFoundation.Code.Grid.Tests
                 grid.GetCellCenterPosition(new Vector3(3, 0, 0)),
                 grid.GetCellCenterPosition(new Vector3(3, 0, 1))
             );
-            
+
             Assert.AreEqual(
-                new Vector3(3, 0, 1), 
+                new Vector3(3, 0, 1),
                 grid.GetCellCenterPosition(new Vector3(2, 0, 0))
             );
 
             Assert.AreEqual(
-                new Vector3(3, 0, 3), 
+                new Vector3(3, 0, 3),
                 grid.GetCellCenterPosition(new Vector3(2, 0, 2))
             );
         }
@@ -134,9 +165,9 @@ namespace UnityFoundation.Code.Grid.Tests
 
             Assert.AreEqual(default(string), grid.GetValue(Vector3.zero));
 
-            var isValueUpdated = grid.TryUpdatValue(
-                Vector3.zero, 
-                (value) => value = "updated " + value.Length 
+            var isValueUpdated = grid.TryUpdateValue(
+                Vector3.zero,
+                (value) => value = "updated " + value.Length
             );
 
             Assert.IsFalse(isValueUpdated);
@@ -153,8 +184,8 @@ namespace UnityFoundation.Code.Grid.Tests
             Assert.IsTrue(isValueSet);
             Assert.AreEqual("filled", grid.GetValue(Vector3.zero));
 
-            var isValueUpdated = grid.TryUpdatValue(
-                Vector3.zero, 
+            var isValueUpdated = grid.TryUpdateValue(
+                Vector3.zero,
                 (value) => value = "updated"
             );
 

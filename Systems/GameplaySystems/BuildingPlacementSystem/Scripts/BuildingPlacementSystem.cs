@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityFoundation.Code.Grid.ObjectPlacementGrid;
-using UnityFoundation.Code.Grid;
 using UnityFoundation.Code.DebugHelper;
 
 namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
@@ -81,7 +80,7 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
         {
             var mousePosition = CameraUtils.GetMousePosition3D();
             var pos = grid.GetCellPosition((int)mousePosition.x, (int)mousePosition.z);
-            var position = new Int2(pos.X, pos.Z);
+            var position = new Int2(pos.x, pos.z);
             if(!grid.IsInsideGrid(position.X, position.Y))
             {
                 DebugPopup.Create("Can't create here.");
@@ -103,7 +102,7 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
                     var gridPos = grid.GetCellPosition(position.X, position.Y);
                     go
                     .transform
-                    .position = new Vector3(gridPos.X, 0f, gridPos.Z);
+                    .position = new Vector3(gridPos.x, 0f, gridPos.z);
 
                     go
                     .transform
@@ -129,14 +128,14 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
             var newGridObject = new GridObject(
                 CurrentBuilding.Width, CurrentBuilding.Height, currentDirection
             );
-            if(!grid.CanSetGridValue(pos, newGridObject))
+            if(!grid.CanSetGridValue(pos.x, pos.z, newGridObject))
             {
                 gridPosition = default;
                 rotation = default;
                 return false;
             }
 
-            gridPosition = grid.GetWorldPosition(pos.X, pos.Z, newGridObject);
+            gridPosition = grid.GetWorldPosition(pos.x, pos.z, newGridObject);
             rotation = Quaternion.Euler(0f, currentDirection.Rotation, 0f);
             return true;
         }

@@ -9,15 +9,13 @@ namespace UnityFoundation.Code.Grid.ObjectPlacementGrid
         {
         }
 
-        public override bool CanSetGridValue(IntXZ gridPosition, GridObject value)
+        public bool CanSetGridValue(int x, int z, GridObject value)
         {
-            var objDimentions = GridObjectDimentions(
-                new Int2(gridPosition.X, gridPosition.Z), value
-            );
+            var objDimentions = GridObjectDimentions(new Int2(x, z), value);
 
-            for(int x = gridPosition.X; x < objDimentions.X; x++)
-                for(int y = gridPosition.Z; y < objDimentions.Y; y++)
-                    if(!base.CanSetGridValue(new IntXZ(x, y), value))
+            for(int objX = x; x < objDimentions.X; x++)
+                for(int objZ = z; objZ < objDimentions.Y; objZ++)
+                    if(!CanSetGridValue(objX, objZ))
                         return false;
 
             return true;
@@ -25,24 +23,22 @@ namespace UnityFoundation.Code.Grid.ObjectPlacementGrid
 
         public bool TrySetGridValue(Vector3 position, GridObject value)
         {
-            var pos = GetCellPosition((int)position.x, (int)position.z);
-            var gridPosition = new Int2(pos.X, pos.Z);
+            var gridPosition = new Int2((int)position.x, (int)position.z);
 
-            if(!CanSetGridValue(new IntXZ(gridPosition.X, gridPosition.Y), value))
+            if(!CanSetGridValue(gridPosition.X, gridPosition.Y, value))
                 return false;
 
             var objDimentions = GridObjectDimentions(gridPosition, value);
             for(int x = gridPosition.X; x < objDimentions.X; x++)
                 for(int y = gridPosition.Y; y < objDimentions.Y; y++)
-                    gridArray[x, y].Value = value;
+                    TrySetValue(x, y, value);
 
             return true;
         }
 
         public Vector3 GetWorldPosition(int x, int y, GridObject gridObject)
         {
-            var gridPos = GetCellPosition(x, y);
-            return new Vector3(gridPos.X, 0f, gridPos.Z) + CalculatePositionOffset(gridObject);
+            return new Vector3(x, 0f, y) + CalculatePositionOffset(gridObject);
         }
 
         private Vector3 CalculatePositionOffset(GridObject gridObject)

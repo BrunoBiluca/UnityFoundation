@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace UnityFoundation.Code.Grid
 {
-    public class GridXZ<TValue> : IGridXZ<TValue>
+    public partial class GridXZ<TValue> : IGridXZ<TValue>
     {
-        protected readonly GridPositionXZ<TValue>[,] gridArray;
+        private readonly GridCellXZ<TValue>[,] gridArray;
 
         public int Width { get; private set; }
         public int Depth { get; private set; }
         public int CellSize { get; private set; }
-        public GridPositionXZ<TValue>[,] GridMatrix => gridArray;
+        public GridCellXZ<TValue>[,] Cells => gridArray;
 
         public bool ForceSetValue { get; set; } = false;
 
@@ -25,12 +24,12 @@ namespace UnityFoundation.Code.Grid
             Depth = depth;
             CellSize = cellSize;
 
-            gridArray = new GridPositionXZ<TValue>[width, depth];
+            gridArray = new GridCellXZ<TValue>[width, depth];
             for(int x = 0; x < width; x++)
             {
                 for(int z = 0; z < depth; z++)
                 {
-                    var newPos = new GridPositionXZ<TValue>(x, z);
+                    var newPos = new GridCellXZ<TValue>(x, z);
                     newPos.SetIndex(GetGridIndex(x, z));
                     gridArray[x, z] = newPos;
                 }
@@ -44,74 +43,28 @@ namespace UnityFoundation.Code.Grid
 
         public bool TrySetValue(int x, int z, TValue value)
         {
-            var gridPosition = GetCellPosition(x, z);
-            if(!CanSetGridValue(gridPosition, value))
+            var gridPosition = MapToGridPosition(x, z);
+            if(!CanSetGridValue(gridPosition))
                 return false;
 
             SetValue(gridPosition, value);
             return true;
         }
 
-        public virtual bool CanSetGridValue(IntXZ gridPosition, TValue value)
-        {
-            if(!IsInsideGrid(gridPosition.X, gridPosition.Z))
-                return false;
-
-            var gridValue = gridArray[gridPosition.X, gridPosition.Z].Value;
-            if(!ForceSetValue && !IsValueEmpty(gridValue))
-                return false;
-
-            return true;
-        }
-
-        protected bool IsValueEmpty(TValue value)
-        {
-            return EqualityComparer<TValue>.Default.Equals(value, default);
-        }
-
-        protected void SetValueDefault(IntXZ gridPos)
-        {
-            SetValue(gridPos, default);
-        }
-
-        protected void SetValue(IntXZ gridPos, TValue value)
-        {
-            gridArray[gridPos.X, gridPos.Z].Value = value;
-        }
-
         public TValue GetValue(int x, int z)
         {
-            var gridPos = GetCellPosition(x, z);
-            return gridArray[gridPos.X, gridPos.Z].Value;
-        }
-
-        public IntXZ GetCellPosition(int x, int z)
-        {
-            var cellX = x / CellSize;
-            var cellZ = z / CellSize;
-
-            if(!IsInsideGrid(cellX, cellZ))
-                throw new ArgumentOutOfRangeException("Position out of grid");
-
-            return new IntXZ(cellX, cellZ);
+            return GetValue(MapToGridPosition(x, z));
         }
 
         public void Fill(TValue value)
         {
-            foreach(var gridPos in GridMatrix)
+            foreach(var gridPos in Cells)
                 gridPos.Value = value;
         }
 
         public virtual bool IsInsideGrid(int x, int z)
         {
-            return x >= 0 && x < Width
-                && z >= 0 && z < Depth;
-        }
-
-        public void ClearValue(int x, int z)
-        {
-            var gridPos = GetCellPosition(x, z);
-            SetValueDefault(gridPos);
+            return IsInsideGrid(MapToGridPosition(x, z));
         }
 
         public virtual bool ClearValue(TValue value)
@@ -129,9 +82,95 @@ namespace UnityFoundation.Code.Grid
                 }
             }
 
+            return true;
+        }
+
+        public void ClearValue(int x, int z)
+        {
+            SetValueDefault(MapToGridPosition(x, z));
+        }
+
+        public bool CanSetGridValue(int x, int z)
+        {
+            return CanSetGridValue(MapToGridPosition(x, z));
+        }
+
+        public bool TryUpdateValue(int x, int z, Action<TValue> updateCallback)
+        {
+            return TryUpdateValue(MapToGridPosition(x, z), updateCallback);
+        }
+
+        public (int x, int z) GetCellPosition(int x, int z)
+        {
+            return MapToScaled(MapToGridPosition(x, z));
+        }
+
+        // --------------------------------------------------------------------------
+        // --------------             PROTECTED METHODS               ---------------
+        // --------------------------------------------------------------------------
+
+        protected bool IsValueEmpty(TValue value)
+        {
+            return EqualityComparer<TValue>.Default.Equals(value, default);
+        }
+
+        // --------------------------------------------------------------------------
+        // --------------              PRIVATE METHODS                ---------------
+        // --------------------------------------------------------------------------
+        private GridPositionXZ MapToGridPosition(int x, int z)
+        {
+            var cellPos = new GridPositionXZ(x / CellSize, z / CellSize);
+
+            if(!IsInsideGrid(cellPos))
+                throw new ArgumentOutOfRangeException("Position out of grid");
+
+            return cellPos;
+        }
+
+        private (int x, int z) MapToScaled(GridPositionXZ gridPos)
+        {
+            return (gridPos.X * CellSize, gridPos.Z * CellSize);
+        }
+
+        private bool IsInsideGrid(GridPositionXZ cellPos)
+        {
+            return cellPos.X >= 0 && cellPos.X < Width
+                && cellPos.Z >= 0 && cellPos.Z < Depth;
+        }
+
+        private void SetValueDefault(GridPositionXZ cellPos)
+        {
+            SetValue(cellPos, default);
+        }
+
+        private void SetValue(GridPositionXZ cellPos, TValue value)
+        {
+            gridArray[cellPos.X, cellPos.Z].Value = value;
+        }
+
+        private TValue GetValue(GridPositionXZ cellPos)
+        {
+            return gridArray[cellPos.X, cellPos.Z].Value;
+        }
+
+        private bool CanSetGridValue(GridPositionXZ cellPos)
+        {
+            var gridValue = gridArray[cellPos.X, cellPos.Z].Value;
+            if(!ForceSetValue && !IsValueEmpty(gridValue))
+                return false;
 
             return true;
         }
 
+        private bool TryUpdateValue(GridPositionXZ cellPos, Action<TValue> updateCallback)
+        {
+            var value = GetValue(cellPos.X, cellPos.Z);
+
+            if(IsValueEmpty(value))
+                return false;
+
+            updateCallback(value);
+            return true;
+        }
     }
 }
