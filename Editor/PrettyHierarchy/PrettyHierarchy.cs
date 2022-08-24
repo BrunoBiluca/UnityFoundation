@@ -19,9 +19,9 @@ namespace UnityFoundation.Editor.PrettyHierarchy
 
             if(instance is not GameObject go) return;
 
-            if(!go.TryGetComponent(out PrettyObject prettyObj)) return;
+            if(!go.TryGetComponent(out IPrettyable prettyObj)) return;
 
-            var item = new HierarchyItem(instanceID, selectionRect, prettyObj);
+            var item = new HierarchyItem(instanceID, selectionRect, prettyObj.BePretty());
 
             DrawBackground(item);
             DrawText(item);

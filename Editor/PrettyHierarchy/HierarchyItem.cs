@@ -28,15 +28,15 @@ namespace UnityFoundation.Editor.PrettyHierarchy
         {
             Id = instanceID;
             IsSelected = Selection.Contains(instanceID);
-            IsActive = obj.gameObject.activeInHierarchy;
-            HasCollapseToggle = obj.gameObject.transform.childCount > 0;
+            IsActive = obj.GameObject.activeInHierarchy;
+            HasCollapseToggle = obj.GameObject.transform.childCount > 0;
             IsCollapsed = GetIsCollapsed(instanceID);
 
             IsInEditMode = PrefabUtility
-                .GetCorrespondingObjectFromOriginalSource(obj.gameObject) != null
-                && PrefabUtility.IsAnyPrefabInstanceRoot(obj.gameObject);
+                .GetCorrespondingObjectFromOriginalSource(obj.GameObject) != null
+                && PrefabUtility.IsAnyPrefabInstanceRoot(obj.GameObject);
 
-            Name = obj.name;
+            Name = obj.GameObject.name;
 
             CreateReacts(selectionRect);
 
@@ -98,7 +98,7 @@ namespace UnityFoundation.Editor.PrettyHierarchy
             if(IsSelected)
             {
                 return EditorColors
-                    .GetDefaultSelectedTextColor(obj.gameObject.activeInHierarchy);
+                    .GetDefaultSelectedTextColor(obj.GameObject.activeInHierarchy);
             }
 
             if(obj.UseDefault)
