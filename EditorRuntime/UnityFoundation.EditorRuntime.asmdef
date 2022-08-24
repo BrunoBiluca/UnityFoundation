@@ -1,5 +1,5 @@
 {
-    "name": "UnityFoundation.EditorInspector",
+    "name": "UnityFoundation.EditorRuntime",
     "rootNamespace": "",
     "references": [],
     "includePlatforms": [],
