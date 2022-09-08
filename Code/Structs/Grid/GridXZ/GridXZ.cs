@@ -164,7 +164,7 @@ namespace UnityFoundation.Code.Grid
 
         private bool TryUpdateValue(GridPositionXZ cellPos, Action<TValue> updateCallback)
         {
-            var value = GetValue(cellPos.X, cellPos.Z);
+            var value = GetValue(cellPos);
 
             if(IsValueEmpty(value))
                 return false;
