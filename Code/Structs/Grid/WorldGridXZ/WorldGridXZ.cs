@@ -23,9 +23,9 @@ namespace UnityFoundation.Code.Grid
         {
             InitialPosition = initialPosition;
             CellSize = cellSize;
-            WidthPosition = MapGridToWorld(width, 0);
-            DepthPosition = MapGridToWorld(0, depth);
-            WidthAndDepthPosition = MapGridToWorld(width, depth);
+            WidthPosition = MapGridToWorld(width, 0) * CellSize;
+            DepthPosition = MapGridToWorld(0, depth) * CellSize;
+            WidthAndDepthPosition = MapGridToWorld(width, depth) * CellSize;
 
             grid = new GridXZ<T>(width, depth, cellSize);
         }

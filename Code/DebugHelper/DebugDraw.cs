@@ -107,6 +107,7 @@ namespace UnityFoundation.Code.DebugHelper
             transform.SetParent(parent, false);
             transform.localPosition = localPosition
                 + new Vector3(cellSize.x / 2, cellSize.y / 2, cellSize.z / 2);
+            transform.localRotation = Quaternion.Euler(90f, 0, 0);
 
             var textMesh = gameObject.GetComponent<TextMeshPro>();
             textMesh.text = text;
