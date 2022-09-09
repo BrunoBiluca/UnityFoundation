@@ -14,7 +14,8 @@ namespace UnityFoundation.Code.Grid
         public Vector3 WidthAndDepthPosition { get; private set; }
 
         public int CellSize { get; private set; }
-
+        public int Width => grid.Width;
+        public int Depth => grid.Depth;
         public GridCellXZ<T>[,] Cells => grid.Cells;
 
         public WorldGridXZ(

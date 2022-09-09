@@ -11,6 +11,8 @@ namespace UnityFoundation.Code.Grid
         Vector3 DepthPosition { get; }
         Vector3 WidthAndDepthPosition { get; }
         int CellSize { get; }
+        int Width { get; }
+        int Depth { get; }
         GridCellXZ<T>[,] Cells { get; }
 
         void Fill(T value);
