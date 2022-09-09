@@ -14,11 +14,11 @@ namespace UnityFoundation.Code.Grid
 
         public bool ForceSetValue { get; set; } = false;
 
-        public GridXZ(
-            int width,
-            int depth,
-            int cellSize
-        )
+        public GridXZ(int width, int depth, int cellSize)
+            : this(width, depth, cellSize, () => default)
+        { }
+
+        public GridXZ(int width, int depth, int cellSize, Func<TValue> valueFactory)
         {
             Width = width;
             Depth = depth;
@@ -29,16 +29,16 @@ namespace UnityFoundation.Code.Grid
             {
                 for(int z = 0; z < depth; z++)
                 {
-                    var newPos = new GridCellXZ<TValue>(x, z);
-                    newPos.SetIndex(GetGridIndex(x, z));
+                    var newPos = new GridCellXZ<TValue>(x, z, valueFactory());
                     gridArray[x, z] = newPos;
                 }
             }
         }
 
-        private int GetGridIndex(int x, int z)
+        public GridCellXZ<TValue> GetCell(int x, int z)
         {
-            return x * Width + z;
+            var gridPosition = MapToGridPosition(x, z);
+            return gridArray[gridPosition.X, gridPosition.Z];
         }
 
         public bool TrySetValue(int x, int z, TValue value)

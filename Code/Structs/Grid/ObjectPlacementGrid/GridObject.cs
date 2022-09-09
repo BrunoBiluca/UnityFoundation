@@ -10,6 +10,8 @@
         public int Height => height;
         public GridObjectDirection Direction => direction;
 
+        public GridObject() { }
+
         public GridObject(int width, int height, GridObjectDirection direction)
         {
             this.width = width;

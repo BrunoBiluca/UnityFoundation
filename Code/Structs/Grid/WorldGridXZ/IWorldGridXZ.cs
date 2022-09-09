@@ -15,6 +15,7 @@ namespace UnityFoundation.Code.Grid
         int Depth { get; }
         GridCellXZ<T>[,] Cells { get; }
 
+        GridCellXZ<T> GetCell(Vector3 worldPosition);
         void Fill(T value);
         void ClearValue(Vector3 position);
         Vector3 GetCellCenterPosition(Vector3 worldPosition);

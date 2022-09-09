@@ -3,38 +3,30 @@
 namespace UnityFoundation.Code.Grid
 {
     [Serializable]
-    public class GridCellXZ<TValue>
+    public class GridCellXZ<TValue> : IEmptyable
     {
-        // TODO: essa classe pode expor mais informações
-        // que são interessantes para quem a utiliza
-        // - GridPositionXZ
-        // - ScaledPositionXZ
-        // O WorldGridCell pode também expor o WorldPosition da célula
+        // Ter uma interface para GridPosition e ScaledPosition
         public int X { get; private set; }
         public int Z { get; private set; }
-        public int Index { get; set; }
         public TValue Value { get; set; }
 
-        public GridCellXZ(int x, int z)
+        public GridCellXZ(int x, int z) : this(x, z, default)
         {
-            Init(x, z, default);
         }
 
         public GridCellXZ(int x, int z, TValue value)
-        {
-            Init(x, z, value);
-        }
-
-        private void Init(int x, int z, TValue value)
         {
             X = x;
             Z = z;
             Value = value;
         }
 
-        public void SetIndex(int index)
+        public bool IsEmpty()
         {
-            Index = index;
+            if(Value is IEmptyable val)
+                return val.IsEmpty();
+
+            return Equals(Value, default(TValue));
         }
 
         public override string ToString()

@@ -20,6 +20,12 @@ namespace UnityFoundation.Code.Grid
 
         public WorldGridXZ(
             Vector3 initialPosition, int width, int depth, int cellSize
+        ) : this(initialPosition, width, depth, cellSize, () => default)
+        {
+        }
+
+        public WorldGridXZ(
+            Vector3 initialPosition, int width, int depth, int cellSize, Func<T> valueFactory
         )
         {
             InitialPosition = initialPosition;
@@ -28,37 +34,43 @@ namespace UnityFoundation.Code.Grid
             DepthPosition = MapGridToWorld(0, depth) * CellSize;
             WidthAndDepthPosition = MapGridToWorld(width, depth) * CellSize;
 
-            grid = new GridXZ<T>(width, depth, cellSize);
+            grid = new GridXZ<T>(width, depth, cellSize, valueFactory);
+        }
+
+        public GridCellXZ<T> GetCell(Vector3 worldPosition)
+        {
+            var (x, z) = MapWorldToGrid(worldPosition);
+            return grid.GetCell(x, z);
         }
 
         public Vector3 GetCellWorldPosition(Vector3 worldPosition)
         {
-            var cellPos = MapWorldToGrid(worldPosition);
-            return MapGridToWorld(cellPos.x, cellPos.z);
+            var (x, z) = MapWorldToGrid(worldPosition);
+            return MapGridToWorld(x, z);
         }
 
         public Vector3 GetCellCenterPosition(Vector3 worldPosition)
         {
-            var cellPos = MapWorldToGrid(worldPosition);
-            return MapGridToWorldCellCenter(cellPos.x, cellPos.z);
+            var (x, z) = MapWorldToGrid(worldPosition);
+            return MapGridToWorldCellCenter(x, z);
         }
 
         public bool TrySetValue(Vector3 worldPosition, T value)
         {
-            var cellPos = MapWorldToGrid(worldPosition);
-            return grid.TrySetValue(cellPos.x, cellPos.z, value);
+            var (x, z) = MapWorldToGrid(worldPosition);
+            return grid.TrySetValue(x, z, value);
         }
 
         public void ClearValue(Vector3 position)
         {
-            var cell = MapWorldToGrid(position);
-            grid.ClearValue(cell.x, cell.z);
+            var (x, z) = MapWorldToGrid(position);
+            grid.ClearValue(x, z);
         }
 
         public T GetValue(Vector3 worldPosition)
         {
-            var cellPos = MapWorldToGrid(worldPosition);
-            return grid.GetValue(cellPos.x, cellPos.z);
+            var (x, z) = MapWorldToGrid(worldPosition);
+            return grid.GetValue(x, z);
         }
 
         public bool TryUpdateValue(Vector3 worldPosition, Action<T> updateCallback)

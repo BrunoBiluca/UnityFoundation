@@ -2,6 +2,8 @@
 
 namespace UnityFoundation.Code.Grid
 {
+    // TODO: alterar essa interface para receber sempre que x,z um ScaledPosition
+    // O ScaledPosition será sempre a entrada dos métodos, já que o gerenciamento é interno da classe
     /// <summary>
     /// (x, z) is scaled by cell size
     /// </summary>
@@ -12,6 +14,7 @@ namespace UnityFoundation.Code.Grid
         int CellSize { get; }
 
         GridCellXZ<TValue>[,] Cells { get; }
+        GridCellXZ<TValue> GetCell(int x, int z);
         bool IsInsideGrid(int x, int z);
         bool CanSetGridValue(int x, int z);
         TValue GetValue(int x, int z);

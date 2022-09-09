@@ -89,19 +89,15 @@ namespace UnityFoundation.Code.Grid.Tests
 
             Assert.AreEqual(0, grid.Cells[0, 0].X);
             Assert.AreEqual(0, grid.Cells[0, 0].Z);
-            Assert.AreEqual(0, grid.Cells[0, 0].Index);
 
             Assert.AreEqual(0, grid.Cells[0, 1].X);
             Assert.AreEqual(1, grid.Cells[0, 1].Z);
-            Assert.AreEqual(1, grid.Cells[0, 1].Index);
 
             Assert.AreEqual(1, grid.Cells[1, 0].X);
             Assert.AreEqual(0, grid.Cells[1, 0].Z);
-            Assert.AreEqual(2, grid.Cells[1, 0].Index);
 
             Assert.AreEqual(1, grid.Cells[1, 1].X);
             Assert.AreEqual(1, grid.Cells[1, 1].Z);
-            Assert.AreEqual(3, grid.Cells[1, 1].Index);
         }
 
         [Test]
