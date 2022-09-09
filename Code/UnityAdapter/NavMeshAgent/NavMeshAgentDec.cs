@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -20,6 +21,8 @@ namespace UnityFoundation.Code.UnityAdapter
         }
 
         public float RemainingDistance => agent.remainingDistance;
+
+        public event Action OnReachDestination;
 
         public void Disabled() {
             agent.ResetPath();

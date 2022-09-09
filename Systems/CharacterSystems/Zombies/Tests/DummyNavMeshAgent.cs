@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.Zombies.Tests
@@ -12,6 +13,8 @@ namespace UnityFoundation.Zombies.Tests
         public float RemainingDistance => 0f;
 
         private Vector3 destination;
+
+        public event Action OnReachDestination;
 
         public DummyNavMeshAgent(Transform body)
         {
