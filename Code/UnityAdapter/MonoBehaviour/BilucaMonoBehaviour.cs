@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UnityFoundation.Code.UnityAdapter
 {
-    public class BilucaMonoBehaviour : MonoBehaviour, IDestroyable
+    public abstract class BilucaMonoBehaviour : MonoBehaviour, IDestroyable
     {
         protected IDestroyBehaviour destroyBehaviour;
 
@@ -11,8 +11,7 @@ namespace UnityFoundation.Code.UnityAdapter
 
         public void Awake()
         {
-            destroyBehaviour = GetComponent<IDestroyBehaviour>();
-            if(destroyBehaviour == null)
+            if(!TryGetComponent(out destroyBehaviour))
                 destroyBehaviour = gameObject.AddComponent<UnityDestroyBehaviour>();
 
             destroyBehaviour.OnBeforeDestroy(() => OnDestroyAction?.Invoke());
