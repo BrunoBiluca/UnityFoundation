@@ -76,7 +76,7 @@ namespace UnityFoundation.Code.Tests
 
         [Test]
         [TestCaseSource(nameof(TestLerpByAngle))]
-        public void ShouldInterpolateByAngle(
+        public void Given_start_and_end_angles_should_interpolate_between_at_interpolation_rate(
             float startValue, float endValue, float interpolateValue, int expectedSteps
         )
         {

@@ -19,9 +19,11 @@ namespace UnityFoundation.Code
             => TransformUtils.FindComponent<T>(transform, path);
 
         public static T[] FindComponentsInChildren<T>(this Transform transform, string path)
+            where T : Component
             => TransformUtils.FindComponentsInChildren<T>(transform, path.Split('.'));
 
         public static T[] FindComponentsInChildren<T>(this Transform transform, params string[] path)
+            where T : Component
             => TransformUtils.FindComponentsInChildren<T>(transform, path);
 
         public static float Distance(this Transform transA, Transform transB)

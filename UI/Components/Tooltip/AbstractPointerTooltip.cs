@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityFoundation.Tools.TimeUtils;
 
-namespace Assets.UnityFoundation.UI
+namespace UnityFoundation.UI
 {
     public abstract class AbstractPointerTooltip :
         MonoBehaviour,
@@ -11,6 +11,7 @@ namespace Assets.UnityFoundation.UI
         IPointerExitHandler
     {
         [SerializeField] protected GameObject tooltipPrefab;
+        [field: SerializeField] public Transform TooltipTarget { get; set; }
         [SerializeField] private float tooltipScreenTimer = 0;
 
         private GameObject tooltipGO;
@@ -28,7 +29,7 @@ namespace Assets.UnityFoundation.UI
 
         protected virtual void SetupTooltipObject(GameObject tooltipObject) { }
 
-        private void Awake()
+        public void Awake()
         {
             tooltipGO = Instantiate(
                 tooltipPrefab,
@@ -45,7 +46,12 @@ namespace Assets.UnityFoundation.UI
             tooltipTimer.Some(timer => timer.Start());
 
             UpdateTooltip(tooltipGO);
-            tooltipGO.transform.position = transform.position;
+
+            if(TooltipTarget != null)
+                tooltipGO.transform.position = TooltipTarget.position;
+            else 
+                tooltipGO.transform.position = transform.position;
+
             tooltipGO.SetActive(true);
         }
 

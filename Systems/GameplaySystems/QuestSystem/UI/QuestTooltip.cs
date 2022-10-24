@@ -1,7 +1,7 @@
-using Assets.UnityFoundation.UI;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityFoundation.UI;
 
 public class QuestTooltip : AbstractPointerTooltip
 {

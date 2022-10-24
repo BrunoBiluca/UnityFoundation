@@ -13,7 +13,7 @@ namespace UnityFoundation.Code.UnityAdapter
 
         bool SetDestination(Vector3 target);
         void ResetPath();
-        void Update();
+        void Update(float updateTime = 1f);
         void Disabled();
     }
 }

@@ -25,10 +25,19 @@ namespace UnityFoundation.Code.UnityAdapter
             get => transform.name;
             set => transform.name = value;
         }
+        public Quaternion Rotation {
+            get => transform.rotation;
+            set => transform.rotation = value;
+        }
 
         public ITransform GetTransform()
         {
             return this;
+        }
+
+        public void Rotate(Vector3 eulers)
+        {
+            transform.Rotate(eulers);
         }
     }
 }

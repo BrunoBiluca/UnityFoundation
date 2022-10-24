@@ -24,18 +24,20 @@ namespace UnityFoundation.Code.UnityAdapter
 
         public event Action OnReachDestination;
 
-        public void Disabled() {
+        public void Disabled()
+        {
             agent.ResetPath();
             agent.enabled = false;
         }
 
-        public void ResetPath() {
+        public void ResetPath()
+        {
             if(agent.isActiveAndEnabled)
                 agent.ResetPath();
         }
 
         public bool SetDestination(Vector3 target) => agent.SetDestination(target);
 
-        public void Update() { }
+        public void Update(float updateTime = 1) { }
     }
 }

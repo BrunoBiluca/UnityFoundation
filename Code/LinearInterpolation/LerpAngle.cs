@@ -17,7 +17,7 @@ namespace UnityFoundation.Code
         public float InterpolationSpeed => interpolationSpeed;
 
         /// <summary>
-        /// Is enabled evaluate the end value as the closest angle 
+        /// When enabled evaluate the end value as the closest angle 
         /// in the 360 degrees circle from the start value
         /// </summary>
         public bool CheckMinPath { get; set; } = true;

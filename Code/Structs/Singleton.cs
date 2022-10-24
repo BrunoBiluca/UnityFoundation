@@ -4,8 +4,8 @@ namespace UnityFoundation.Code
 {
     public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
-
         private static Singleton<T> instance;
+        public static T I => Instance;
         public static T Instance {
             get {
                 if(instance == null)
@@ -13,9 +13,10 @@ namespace UnityFoundation.Code
                     var className = typeof(T).Name;
                     instance = new GameObject(className)
                         .AddComponent<T>();
+
+                    instance.Awake();
                     Debug.LogWarning($"{className} was created automatically and was not found on scene. Is this the expected behaviour?");
                 }
-
                 return (T)instance;
             }
         }
@@ -24,14 +25,15 @@ namespace UnityFoundation.Code
 
         public void Awake()
         {
-            ConfigSingleton();
+            PreAwake();
 
             if(instance == null)
             {
                 instance = this;
                 if(!DestroyOnLoad) DontDestroyOnLoad(gameObject);
             }
-            else
+
+            if(this != instance)
             {
 #if !UNITY_EDITOR
                 Destroy(gameObject);
@@ -45,7 +47,7 @@ namespace UnityFoundation.Code
 
         protected virtual void OnAwake() { }
 
-        protected virtual void ConfigSingleton() { }
+        protected virtual void PreAwake() { }
 
     }
 }

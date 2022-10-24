@@ -38,15 +38,21 @@ namespace UnityFoundation.Code
         }
 
         public static T[] FindComponentsInChildren<T>(
-            Transform transform, params string[] trasnformNames
-        )
+            Transform transform, params string[] transformNames
+        ) where T : Component
         {
-            var auxTransform = FindComponent<Transform>(transform, trasnformNames);
+            var parent = FindComponent<Transform>(transform, transformNames);
 
-            if(auxTransform != null)
-                return auxTransform.GetComponentsInChildren<T>();
-            else
+            if(parent == null)
                 return default;
+
+            var childrenComponents = new List<T>();
+            foreach(Transform child in parent)
+            {
+                if(child.TryGetComponent(out T comp))
+                    childrenComponents.Add(comp);
+            }
+            return childrenComponents.ToArray();
         }
 
         public static void RemoveChildObjects(Transform parent)

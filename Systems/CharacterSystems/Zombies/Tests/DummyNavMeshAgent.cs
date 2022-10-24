@@ -27,7 +27,7 @@ namespace UnityFoundation.Zombies.Tests
             return true;
         }
 
-        public void Update()
+        public void Update(float updateTime = 1f)
         {
             Body.position += new Vector3(Speed, 0, 0);
         }

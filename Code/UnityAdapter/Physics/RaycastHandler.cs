@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.HID;
 
 namespace UnityFoundation.Code.UnityAdapter
 {

@@ -29,7 +29,7 @@ namespace Assets.UnityFoundation.SceneFader
                 fadeAnim = fadeCanvas.transform.Find("panel").GetComponent<Animator>();
         }
 
-        protected override void ConfigSingleton()
+        protected override void PreAwake()
         {
             DestroyOnLoad = false;
         }
