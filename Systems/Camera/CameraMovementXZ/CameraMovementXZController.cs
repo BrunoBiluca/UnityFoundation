@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityFoundation.Code;
 
 namespace UnityFoundation.CameraMovementXZ
 {
@@ -6,9 +7,9 @@ namespace UnityFoundation.CameraMovementXZ
     {
         [Header("Movement attributes")]
         [SerializeField] private float cameraSpeed = 20f;
-        [SerializeField] private Vector2 moveLimitsX;
-        [SerializeField] private Vector2 moveLimitsY;
-        [SerializeField] private Vector2 moveLimitsZ;
+        [SerializeField] private Rangef moveLimitsX;
+        [SerializeField] private Rangef moveLimitsY;
+        [SerializeField] private Rangef moveLimitsZ;
 
         [Header("Edge Movement")]
         [SerializeField] private bool enableEdgeMovement = false;

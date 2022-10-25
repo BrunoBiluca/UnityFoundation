@@ -10,9 +10,9 @@ namespace UnityFoundation.CameraMovementXZ
         public float CameraSpeed { get; set; } = 20f;
         public bool EnabledEdgeMovement { get; set; }
         public float EdgeOffset { get; set; } = 10f;
-        public Vector2 MoveLimitsX { get; set; }
-        public Vector2 MoveLimitsY { get; set; }
-        public Vector2 MoveLimitsZ { get; set; }
+        public Rangef MoveLimitsX { get; set; }
+        public Rangef MoveLimitsY { get; set; }
+        public Rangef MoveLimitsZ { get; set; }
 
         public bool EnableZoomMovement { get; set; }
         public float ZoomAmount { get; set; } = 2f;
@@ -101,8 +101,8 @@ namespace UnityFoundation.CameraMovementXZ
             targetZoom += zoomInput * ZoomAmount;
             targetZoom = Mathf.Clamp(
                 targetZoom,
-                MoveLimitsY.x != 0f ? MoveLimitsY.x : float.MinValue,
-                MoveLimitsY.y != 0f ? MoveLimitsY.y : float.MaxValue
+                MoveLimitsY.Start != 0f ? MoveLimitsY.Start : float.MinValue,
+                MoveLimitsY.End != 0f ? MoveLimitsY.End : float.MaxValue
             );
 
             var positionY = Mathf.Lerp(
@@ -121,7 +121,7 @@ namespace UnityFoundation.CameraMovementXZ
             var moveDirection = Vector3.forward * zDirection
                 + Vector3.right * xDirection;
 
-            return moveDirection.normalized * CameraSpeed * Time.deltaTime;
+            return CameraSpeed * Time.deltaTime * moveDirection.normalized;
         }
 
         private float EdgeScreenDirectionX()
@@ -151,13 +151,13 @@ namespace UnityFoundation.CameraMovementXZ
         private void UpdatePosition(Vector3 addPosition)
         {
             var newPos = target.position + addPosition;
-            newPos.x = Mathf.Clamp(newPos.x, MoveLimitsX.x, MoveLimitsX.y);
+            newPos.x = Mathf.Clamp(newPos.x, MoveLimitsX.Start, MoveLimitsX.End);
             newPos.y = Mathf.Clamp(
                 newPos.y,
-                MoveLimitsY.x != 0f ? MoveLimitsY.x : float.MinValue,
-                MoveLimitsY.y != 0f ? MoveLimitsY.y : float.MaxValue
+                MoveLimitsY.Start != 0f ? MoveLimitsY.Start : float.MinValue,
+                MoveLimitsY.End != 0f ? MoveLimitsY.End : float.MaxValue
             );
-            newPos.z = Mathf.Clamp(newPos.z, MoveLimitsZ.x, MoveLimitsZ.y);
+            newPos.z = Mathf.Clamp(newPos.z, MoveLimitsZ.Start, MoveLimitsZ.End);
 
             target.position = newPos;
         }
