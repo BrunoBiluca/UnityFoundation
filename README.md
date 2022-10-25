@@ -38,9 +38,25 @@ Create a folder called `Packages` on Assets folder. Drop all dlls.
 
 ### Unity Plugins (opcional)
 
+Other way of import the necessary packages is to download NugetForUnity.
+
 - Nuget for Unity
   - Used to manage external NuGet packages
   - https://github.com/GlitchEnzo/NuGetForUnity
+  
+After downloading it, update the packages.config file in the Assets folder to the follow:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="Castle.Core" version="5.1.0" />
+  <package id="CsvHelper" version="29.0.0" />
+  <package id="Microsoft.Bcl.AsyncInterfaces" version="1.0.0" />
+  <package id="Microsoft.Bcl.HashCode" version="1.0.0" />
+  <package id="Moq" version="4.18.2" />
+  <package id="System.Diagnostics.EventLog" version="4.7.0" />
+</packages>
+```
 
 ### Add Input System testable packages
 
