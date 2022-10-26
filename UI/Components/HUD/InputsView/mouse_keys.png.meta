@@ -1,0 +1,333 @@
+fileFormatVersion: 2
+guid: f7b44fa122355bf418ec6a5a6a940ff7
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: mouse_keys_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 318
+        width: 126
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea3fbad080576a440a63c011c21d42e8
+      internalID: 1538185858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mouse_keys_1
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 318
+        width: 127
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1df53550eee731f42a8baf5b45b2f144
+      internalID: 1156648229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mouse_keys_2
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 318
+        width: 126
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d28200b4d38d98743b3a1654e1305529
+      internalID: 12342901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mouse_keys_3
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 316
+        width: 127
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38307705ff428974c9ba6e50e2ff1bef
+      internalID: -1329428166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: scroll_up_down
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 36
+        width: 127
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b477935b4818764983812a07035f79b
+      internalID: 777434015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mouse_keys_48
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 38
+        width: 126
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 223576fd832ed5e4eb2745f52a936dbc
+      internalID: 559065718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 244a8e1ff4d1a294b8c13c9ae31ed7c8
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      mouse_keys_72: -211196945
+      mouse_keys_35: -733231225
+      mouse_keys_54: -599863276
+      scroll_up_down: 777434015
+      mouse_keys_5: 1018194312
+      mouse_keys_21: -71512718
+      mouse_keys_14: 98315000
+      mouse_keys_42: 1448503331
+      mouse_keys_0: 1538185858
+      mouse_keys_61: -1872811674
+      mouse_keys_46: -1659741143
+      mouse_keys_53: -169615557
+      mouse_keys_51: 966356703
+      mouse_keys_23: 1695431591
+      mouse_keys_1: 1156648229
+      mouse_keys_31: 398297542
+      mouse_keys_6: -1566499782
+      mouse_keys_27: -1515562766
+      mouse_keys_45: -1752243004
+      mouse_keys_50: -1599984050
+      mouse_keys_64: -1678335532
+      mouse_keys_60: -988828045
+      mouse_keys_57: 1270441864
+      mouse_keys_36: 1662733560
+      mouse_keys_25: 1761209703
+      mouse_keys_39: 388591221
+      mouse_keys_49: 1461887567
+      mouse_keys_24: 1246789078
+      mouse_keys_38: 259179567
+      mouse_keys_30: 12342119
+      mouse_keys_48: 559065718
+      mouse_keys_59: 875457419
+      mouse_keys_7: -1218608977
+      mouse_keys_18: 1716216864
+      mouse_keys_65: 620082014
+      mouse_keys_29: 47430549
+      mouse_keys_20: -2067645242
+      mouse_keys_56: -1133829606
+      mouse_keys_2: 12342901
+      mouse_keys_43: -29535943
+      mouse_keys_69: 723502019
+      mouse_keys_8: 956240973
+      mouse_keys_55: -1574643937
+      mouse_keys_58: 1205668338
+      mouse_keys_67: -1395999685
+      mouse_keys_71: -2071507084
+      mouse_keys_13: 433824440
+      mouse_keys_63: 2011059657
+      mouse_keys_3: -1329428166
+      mouse_keys_26: 1843799955
+      mouse_keys_68: -1903002697
+      mouse_keys_17: -964362395
+      mouse_keys_19: 1408002476
+      mouse_keys_4: 1767686601
+      mouse_keys_12: -442434953
+      mouse_keys_34: 1071302627
+      mouse_keys_37: 1211905526
+      mouse_keys_41: -1762244767
+      mouse_keys_33: -228031758
+      mouse_keys_9: 494323720
+      mouse_keys_32: 1978407407
+      mouse_keys_16: -1225749110
+      mouse_keys_28: 207803825
+      mouse_keys_15: -2103987195
+      mouse_keys_40: -1733055846
+      mouse_keys_52: -367648874
+      mouse_keys_11: -1342014996
+      mouse_keys_66: -233713829
+      mouse_keys_62: -2011299270
+      mouse_keys_44: 436090441
+      mouse_keys_70: 26894813
+      mouse_keys_22: 1184701574
+      mouse_keys_10: 123417475
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
