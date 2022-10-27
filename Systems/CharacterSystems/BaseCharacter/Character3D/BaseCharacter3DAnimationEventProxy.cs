@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Assets.UnityFoundation.Systems.Character3D.Scripts.Helpers
@@ -7,6 +8,7 @@ namespace Assets.UnityFoundation.Systems.Character3D.Scripts.Helpers
     /// is in a child object of the Character 3D component. 
     /// Pass through the animation event triggered by the animation of the child object.
     /// </summary>
+    [Obsolete("Should use the AnimationEventProxy class in UnityFoundation.Code.Extensions")]
     public class BaseCharacter3DAnimationEventProxy : MonoBehaviour
     {
         [SerializeField] private BaseCharacter3D baseCharacter;
