@@ -1,14 +1,14 @@
 using Assets.UnityFoundation.Systems.Character3D.Scripts;
 using Assets.UnityFoundation.Systems.HealthSystem;
 using UnityEngine;
-using UnityFoundation.AmmoStorageSystem;
+using UnityFoundation.ResourceManagement;
 
 namespace UnityFoundation.FirstPersonModeSystem
 {
     public class AimPlayerState : BaseCharacterState3D
     {
         private readonly FirstPersonMode player;
-        private readonly IAmmoStorage ammoStorage;
+        private readonly IResourceManager ammoStorage;
 
         private bool isFiring = false;
 
@@ -17,7 +17,7 @@ namespace UnityFoundation.FirstPersonModeSystem
         )
         {
             this.player = player;
-            ammoStorage = player.GetComponent<AmmoStorageMonoBehaviour>();
+            ammoStorage = player.GetComponent<FiniteResourceManagerMono>();
         }
 
         public override void EnterState()
@@ -61,7 +61,7 @@ namespace UnityFoundation.FirstPersonModeSystem
 
         private void Fire()
         {
-            var ammo = ammoStorage.GetAmmo(1);
+            var ammo = ammoStorage.GetAmount(1);
             if(ammo == 0)
             {
                 player.AudioSource.PlayOneShot(player.Settings.FireMissSFX);

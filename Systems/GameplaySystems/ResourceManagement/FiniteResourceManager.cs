@@ -1,8 +1,8 @@
 using UnityFoundation.Code;
 
-namespace UnityFoundation.AmmoStorageSystem
+namespace UnityFoundation.ResourceManagement
 {
-    public class AmmoStorage : IAmmoStorage
+    public class FiniteResourceManager : IResourceManager
     {
         private uint currentAmount;
         public uint CurrentAmount => currentAmount;
@@ -14,7 +14,7 @@ namespace UnityFoundation.AmmoStorageSystem
 
         public bool IsFull => maxAmount == currentAmount;
 
-        public AmmoStorage(uint maxAmount, bool startFull = false)
+        public FiniteResourceManager(uint maxAmount, bool startFull = false)
         {
             this.maxAmount = maxAmount;
 
@@ -22,7 +22,7 @@ namespace UnityFoundation.AmmoStorageSystem
                 currentAmount = maxAmount;
         }
 
-        public void Recover(uint amount)
+        public void Add(uint amount)
         {
             currentAmount += amount;
             currentAmount = currentAmount.Clamp(0, MaxAmount);
@@ -33,7 +33,7 @@ namespace UnityFoundation.AmmoStorageSystem
             currentAmount = maxAmount;
         }
 
-        public uint GetAmmo(uint amount)
+        public uint GetAmount(uint amount)
         {
             if(currentAmount < amount)
             {
