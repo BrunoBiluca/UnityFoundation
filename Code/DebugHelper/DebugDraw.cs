@@ -43,7 +43,7 @@ namespace UnityFoundation.Code.DebugHelper
         )
         {
             const int numberOfSlices = 16;
-            for(int i = 0; i < numberOfSlices; i++)
+            for(var i = 0; i < numberOfSlices; i++)
             {
                 var currentPI = Mathf.PI * i / (numberOfSlices / 2);
                 var nextPI = Mathf.PI * (i + 1) / (numberOfSlices / 2);
@@ -81,7 +81,7 @@ namespace UnityFoundation.Code.DebugHelper
         public static void DrawSphere(Vector3 position, float radius, Color color)
         {
             var interval = radius / 10f;
-            for(float i = 0f; i <= radius; i += interval)
+            for(var i = 0f; i <= radius; i += interval)
             {
                 var lradius = radius - i;
 

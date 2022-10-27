@@ -1,9 +1,9 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityFoundation.Code.Grid;
+using UnityFoundation.Code.DebugHelper;
 
-namespace UnityFoundation.Code.DebugHelper
+namespace UnityFoundation.Code.Grid
 {
     public class GridXYDebug
     {
