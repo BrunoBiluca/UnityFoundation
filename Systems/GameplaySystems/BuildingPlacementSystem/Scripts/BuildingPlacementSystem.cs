@@ -3,6 +3,7 @@ using Assets.UnityFoundation.Systems.ObjectPooling;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityFoundation.Code.Grid;
 using UnityFoundation.Code.Grid.ObjectPlacementGrid;
 using UnityFoundation.Code.DebugHelper;
 
@@ -79,9 +80,10 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
         private void CreateBuilding()
         {
             var mousePosition = CameraUtils.GetMousePosition3D();
-            var pos = grid.GetCellPosition((int)mousePosition.x, (int)mousePosition.z);
-            var position = new Int2(pos.x, pos.z);
-            if(!grid.IsInsideGrid(position.X, position.Y))
+            var position1 = new GridCellPositionScaledXZ((int)mousePosition.x, (int)mousePosition.z);
+            var pos = grid.GetCellPosition(position1);
+            var position = new Int2(pos.X, pos.Z);
+            if(!grid.IsInsideGrid(position1))
             {
                 DebugPopup.Create("Can't create here.");
                 return;
@@ -99,10 +101,10 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
                 .GetComponent<Building>()
                 .Setup(gridObject)
                 .Activate((go) => {
-                    var gridPos = grid.GetCellPosition(position.X, position.Y);
+                    var gridPos = grid.GetCellPosition(new GridCellPositionScaledXZ(position.X, position.Y));
                     go
                     .transform
-                    .position = new Vector3(gridPos.x, 0f, gridPos.z);
+                    .position = new Vector3(gridPos.X, 0f, gridPos.Z);
 
                     go
                     .transform
@@ -123,19 +125,19 @@ namespace Assets.UnityFoundation.Systems.BuildingPlacementSystem
 
         public bool CanBuild(Vector3 position, out Vector3 gridPosition, out Quaternion rotation)
         {
-            var pos = grid.GetCellPosition((int)position.x, (int)position.z);
+            var pos = grid.GetCellPosition(new GridCellPositionScaledXZ((int)position.x, (int)position.z));
 
             var newGridObject = new GridObject(
                 CurrentBuilding.Width, CurrentBuilding.Height, currentDirection
             );
-            if(!grid.CanSetGridValue(pos.x, pos.z, newGridObject))
+            if(!grid.CanSetGridValue(pos.X, pos.Z, newGridObject))
             {
                 gridPosition = default;
                 rotation = default;
                 return false;
             }
 
-            gridPosition = grid.GetWorldPosition(pos.x, pos.z, newGridObject);
+            gridPosition = grid.GetWorldPosition(pos.X, pos.Z, newGridObject);
             rotation = Quaternion.Euler(0f, currentDirection.Rotation, 0f);
             return true;
         }

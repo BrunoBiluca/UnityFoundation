@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace UnityFoundation.Code.Grid
 {
@@ -30,53 +31,62 @@ namespace UnityFoundation.Code.Grid
         {
             InitialPosition = initialPosition;
             CellSize = cellSize;
-            WidthPosition = MapGridToWorld(width, 0) * CellSize;
-            DepthPosition = MapGridToWorld(0, depth) * CellSize;
-            WidthAndDepthPosition = MapGridToWorld(width, depth) * CellSize;
+            WidthPosition = MapGridToWorld(
+                new GridCellPositionXZ(width, 0).MapPostitionToScaled(CellSize)
+            );
+            DepthPosition = MapGridToWorld(
+                new GridCellPositionXZ(0, depth).MapPostitionToScaled(CellSize)
+            );
+            WidthAndDepthPosition = MapGridToWorld(
+                new GridCellPositionXZ(width, depth).MapPostitionToScaled(CellSize)
+            );
 
             grid = new GridXZ<T>(width, depth, cellSize, valueFactory);
         }
 
         public GridCellXZ<T> GetCell(Vector3 worldPosition)
         {
-            var (x, z) = MapWorldToGrid(worldPosition);
-            return grid.GetCell(x, z);
+            return grid.GetCell(MapWorldToGrid(worldPosition));
         }
 
         public Vector3 GetCellWorldPosition(Vector3 worldPosition)
         {
-            var (x, z) = MapWorldToGrid(worldPosition);
-            return MapGridToWorld(x, z);
+            return MapGridToWorld(MapWorldToGrid(worldPosition));
         }
 
         public Vector3 GetCellCenterPosition(Vector3 worldPosition)
         {
-            var (x, z) = MapWorldToGrid(worldPosition);
-            return MapGridToWorldCellCenter(x, z);
+            return MapGridToWorldCellCenter(MapWorldToGrid(worldPosition));
+        }
+
+        public Vector3 GetCellCenterPosition(int x, int z)
+        {
+            return GetCellCenterPosition(new GridCellPositionXZ(x, z));
+        }
+
+        public Vector3 GetCellCenterPosition(GridCellPositionXZ position)
+        {
+            return MapGridToWorldCellCenter(position.MapPostitionToScaled(CellSize));
         }
 
         public bool TrySetValue(Vector3 worldPosition, T value)
         {
-            var (x, z) = MapWorldToGrid(worldPosition);
-            return grid.TrySetValue(x, z, value);
+            return grid.TrySetValue(MapWorldToGrid(worldPosition), value);
         }
 
         public void ClearValue(Vector3 position)
         {
-            var (x, z) = MapWorldToGrid(position);
-            grid.ClearValue(x, z);
+            grid.ClearValue(MapWorldToGrid(position));
         }
 
         public T GetValue(Vector3 worldPosition)
         {
-            var (x, z) = MapWorldToGrid(worldPosition);
-            return grid.GetValue(x, z);
+            return grid.GetValue(MapWorldToGrid(worldPosition));
         }
 
         public bool TryUpdateValue(Vector3 worldPosition, Action<T> updateCallback)
         {
-            var cellPos = MapWorldToGrid(worldPosition);
-            return grid.TryUpdateValue(cellPos.x, cellPos.z, updateCallback);
+            return grid.TryUpdateValue(MapWorldToGrid(worldPosition), updateCallback);
         }
 
         public void Fill(T value)
@@ -88,22 +98,29 @@ namespace UnityFoundation.Code.Grid
         // --------------              PRIVATE METHODS                ---------------
         // --------------------------------------------------------------------------
 
-        private (int x, int z) MapWorldToGrid(Vector3 worldPosition)
+        /// <summary>
+        /// Returns a Scaled Grid Position
+        /// </summary>
+        /// <param name="worldPosition"></param>
+        /// <returns></returns>
+        private GridCellPositionScaledXZ MapWorldToGrid(Vector3 worldPosition)
         {
             return grid.GetCellPosition(
-                (int)(worldPosition.x - InitialPosition.x),
-                (int)(worldPosition.z - InitialPosition.z)
+                new GridCellPositionScaledXZ(
+                    (int)(worldPosition.x - InitialPosition.x),
+                    (int)(worldPosition.z - InitialPosition.z)
+                )
             );
         }
 
-        private Vector3 MapGridToWorld(int x, int z)
+        private Vector3 MapGridToWorld(GridCellPositionScaledXZ position)
         {
-            return new Vector3(x, 0, z) + InitialPosition;
+            return new Vector3(position.X, 0, position.Z) + InitialPosition;
         }
 
-        private Vector3 MapGridToWorldCellCenter(int x, int z)
+        private Vector3 MapGridToWorldCellCenter(GridCellPositionScaledXZ position)
         {
-            return MapGridToWorld(x, z) + new Vector3(CellSize / 2f, 0f, CellSize / 2f);
+            return MapGridToWorld(position) + new Vector3(CellSize / 2f, 0f, CellSize / 2f);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityFoundation.Code;
 
 namespace UnityFoundation.ResourceManagement
@@ -44,6 +45,15 @@ namespace UnityFoundation.ResourceManagement
 
             currentAmount -= amount;
             return amount;
+        }
+
+        public bool TrySubtract(uint amount)
+        {
+            if(amount > currentAmount)
+                return false;
+
+            currentAmount -= amount;
+            return true;
         }
     }
 }

@@ -87,17 +87,17 @@ namespace UnityFoundation.Code.Grid.Tests
         {
             var grid = new GridXZ<int>(2, 2, 1);
 
-            Assert.AreEqual(0, grid.Cells[0, 0].X);
-            Assert.AreEqual(0, grid.Cells[0, 0].Z);
+            Assert.AreEqual(0, grid.Cells[0, 0].Position.X);
+            Assert.AreEqual(0, grid.Cells[0, 0].Position.Z);
 
-            Assert.AreEqual(0, grid.Cells[0, 1].X);
-            Assert.AreEqual(1, grid.Cells[0, 1].Z);
+            Assert.AreEqual(0, grid.Cells[0, 1].Position.X);
+            Assert.AreEqual(1, grid.Cells[0, 1].Position.Z);
 
-            Assert.AreEqual(1, grid.Cells[1, 0].X);
-            Assert.AreEqual(0, grid.Cells[1, 0].Z);
+            Assert.AreEqual(1, grid.Cells[1, 0].Position.X);
+            Assert.AreEqual(0, grid.Cells[1, 0].Position.Z);
 
-            Assert.AreEqual(1, grid.Cells[1, 1].X);
-            Assert.AreEqual(1, grid.Cells[1, 1].Z);
+            Assert.AreEqual(1, grid.Cells[1, 1].Position.X);
+            Assert.AreEqual(1, grid.Cells[1, 1].Position.Z);
         }
 
         [Test]

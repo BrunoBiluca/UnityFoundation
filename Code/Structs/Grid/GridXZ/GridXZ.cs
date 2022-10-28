@@ -35,15 +35,20 @@ namespace UnityFoundation.Code.Grid
             }
         }
 
-        public GridCellXZ<TValue> GetCell(int x, int z)
+        public GridCellXZ<TValue> GetCell(GridCellPositionScaledXZ position)
         {
-            var gridPosition = MapToGridPosition(x, z);
+            var gridPosition = MapToGridPosition(position);
             return gridArray[gridPosition.X, gridPosition.Z];
         }
 
         public bool TrySetValue(int x, int z, TValue value)
         {
-            var gridPosition = MapToGridPosition(x, z);
+            return TrySetValue(new GridCellPositionScaledXZ(x, z), value);
+        }
+
+        public bool TrySetValue(GridCellPositionScaledXZ position, TValue value)
+        {
+            var gridPosition = MapToGridPosition(position);
             if(!CanSetGridValue(gridPosition))
                 return false;
 
@@ -53,7 +58,12 @@ namespace UnityFoundation.Code.Grid
 
         public TValue GetValue(int x, int z)
         {
-            return GetValue(MapToGridPosition(x, z));
+            return GetValue(new GridCellPositionScaledXZ(x, z));
+        }
+
+        public TValue GetValue(GridCellPositionScaledXZ position)
+        {
+            return GetValue(MapToGridPosition(position));
         }
 
         public void Fill(TValue value)
@@ -62,9 +72,9 @@ namespace UnityFoundation.Code.Grid
                 gridPos.Value = value;
         }
 
-        public virtual bool IsInsideGrid(int x, int z)
+        public virtual bool IsInsideGrid(GridCellPositionScaledXZ position)
         {
-            return IsInsideGrid(MapToGridPosition(x, z));
+            return IsInsideGrid(MapToGridPosition(position));
         }
 
         public virtual bool ClearValue(TValue value)
@@ -78,31 +88,45 @@ namespace UnityFoundation.Code.Grid
                     if(!gridArray[x, y].Value.Equals(value))
                         continue;
 
-                    ClearValue(x, y);
+                    ClearValue(MapToScaled(new GridCellPositionXZ(x, y)));
                 }
             }
 
             return true;
         }
-
         public void ClearValue(int x, int z)
         {
-            SetValueDefault(MapToGridPosition(x, z));
+            ClearValue(new GridCellPositionScaledXZ(x, z));
         }
 
-        public bool CanSetGridValue(int x, int z)
+        public void ClearValue(GridCellPositionScaledXZ position)
         {
-            return CanSetGridValue(MapToGridPosition(x, z));
+            SetValueDefault(MapToGridPosition(position));
+        }
+
+        public bool CanSetGridValue(GridCellPositionScaledXZ position)
+        {
+            return CanSetGridValue(MapToGridPosition(position));
         }
 
         public bool TryUpdateValue(int x, int z, Action<TValue> updateCallback)
         {
-            return TryUpdateValue(MapToGridPosition(x, z), updateCallback);
+            return TryUpdateValue(new GridCellPositionScaledXZ(x, z), updateCallback);
         }
 
-        public (int x, int z) GetCellPosition(int x, int z)
+        public bool TryUpdateValue(GridCellPositionScaledXZ position, Action<TValue> updateCallback)
         {
-            return MapToScaled(MapToGridPosition(x, z));
+            return TryUpdateValue(MapToGridPosition(position), updateCallback);
+        }
+
+        public GridCellPositionScaledXZ GetCellPosition(int x, int z)
+        {
+            return GetCellPosition(new GridCellPositionScaledXZ(x, z));
+        }
+
+        public GridCellPositionScaledXZ GetCellPosition(GridCellPositionScaledXZ position)
+        {
+            return MapToScaled(MapToGridPosition(position));
         }
 
         // --------------------------------------------------------------------------
@@ -117,9 +141,9 @@ namespace UnityFoundation.Code.Grid
         // --------------------------------------------------------------------------
         // --------------              PRIVATE METHODS                ---------------
         // --------------------------------------------------------------------------
-        private GridPositionXZ MapToGridPosition(int x, int z)
+        private GridCellPositionXZ MapToGridPosition(GridCellPositionScaledXZ position)
         {
-            var cellPos = new GridPositionXZ(x / CellSize, z / CellSize);
+            var cellPos = new GridCellPositionXZ(position.X / CellSize, position.Z / CellSize);
 
             if(!IsInsideGrid(cellPos))
                 throw new ArgumentOutOfRangeException("Position out of grid");
@@ -127,33 +151,33 @@ namespace UnityFoundation.Code.Grid
             return cellPos;
         }
 
-        private (int x, int z) MapToScaled(GridPositionXZ gridPos)
+        private GridCellPositionScaledXZ MapToScaled(GridCellPositionXZ gridPos)
         {
-            return (gridPos.X * CellSize, gridPos.Z * CellSize);
+            return new GridCellPositionScaledXZ(gridPos.X * CellSize, gridPos.Z * CellSize);
         }
 
-        private bool IsInsideGrid(GridPositionXZ cellPos)
+        private bool IsInsideGrid(GridCellPositionXZ cellPos)
         {
             return cellPos.X >= 0 && cellPos.X < Width
                 && cellPos.Z >= 0 && cellPos.Z < Depth;
         }
 
-        private void SetValueDefault(GridPositionXZ cellPos)
+        private void SetValueDefault(GridCellPositionXZ cellPos)
         {
             SetValue(cellPos, default);
         }
 
-        private void SetValue(GridPositionXZ cellPos, TValue value)
+        private void SetValue(GridCellPositionXZ cellPos, TValue value)
         {
             gridArray[cellPos.X, cellPos.Z].Value = value;
         }
 
-        private TValue GetValue(GridPositionXZ cellPos)
+        private TValue GetValue(GridCellPositionXZ cellPos)
         {
             return gridArray[cellPos.X, cellPos.Z].Value;
         }
 
-        private bool CanSetGridValue(GridPositionXZ cellPos)
+        private bool CanSetGridValue(GridCellPositionXZ cellPos)
         {
             var gridValue = gridArray[cellPos.X, cellPos.Z].Value;
             if(!ForceSetValue && !IsValueEmpty(gridValue))
@@ -162,7 +186,7 @@ namespace UnityFoundation.Code.Grid
             return true;
         }
 
-        private bool TryUpdateValue(GridPositionXZ cellPos, Action<TValue> updateCallback)
+        private bool TryUpdateValue(GridCellPositionXZ cellPos, Action<TValue> updateCallback)
         {
             var value = GetValue(cellPos);
 

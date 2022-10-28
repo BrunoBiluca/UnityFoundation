@@ -48,5 +48,21 @@ namespace UnityFoundation.ResourceManagement.Tests
             Assert.AreEqual(requestAmmo, ammo);
             Assert.IsTrue(storage.Empty);
         }
+
+        [Test]
+        [TestCase(4u, 10u, 6u, true)]
+        [TestCase(10u, 10u, 0u, true)]
+        [TestCase(15u, 10u, 10u, false)]
+        public void Given_an_amount_should_return_if_has_amount_to_subtract(
+            uint subtractAmount, uint initialAmount, uint expectedEndAmount, bool expected
+        )
+        {
+            var resourceManager = new FiniteResourceManager(initialAmount, startFull: true);
+
+            var hasAmount = resourceManager.TrySubtract(subtractAmount);
+
+            Assert.That(hasAmount, Is.EqualTo(expected));
+            Assert.That(resourceManager.CurrentAmount, Is.EqualTo(expectedEndAmount));
+        }
     }
 }

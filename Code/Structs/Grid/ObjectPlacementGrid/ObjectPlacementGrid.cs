@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UnityFoundation.Code.Grid.ObjectPlacementGrid
 {
@@ -15,7 +16,7 @@ namespace UnityFoundation.Code.Grid.ObjectPlacementGrid
 
             for(int objX = x; x < objDimentions.X; x++)
                 for(int objZ = z; objZ < objDimentions.Y; objZ++)
-                    if(!CanSetGridValue(objX, objZ))
+                    if(!CanSetGridValue(new GridCellPositionScaledXZ(objX, objZ)))
                         return false;
 
             return true;
@@ -31,7 +32,7 @@ namespace UnityFoundation.Code.Grid.ObjectPlacementGrid
             var objDimentions = GridObjectDimentions(gridPosition, value);
             for(int x = gridPosition.X; x < objDimentions.X; x++)
                 for(int y = gridPosition.Y; y < objDimentions.Y; y++)
-                    TrySetValue(x, y, value);
+                    TrySetValue(new GridCellPositionScaledXZ(x, y), value);
 
             return true;
         }
@@ -77,5 +78,9 @@ namespace UnityFoundation.Code.Grid.ObjectPlacementGrid
             return new Int2(objectDimensionX, objectDimensionY);
         }
 
+        public bool IsInsideGrid(int x, int y)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

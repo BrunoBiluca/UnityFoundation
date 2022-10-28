@@ -193,5 +193,22 @@ namespace UnityFoundation.Code.Grid.Tests
             Assert.AreEqual("filled", grid.GetValue(Vector3.zero));
         }
 
+        [Test]
+        public void Given_grid_cell_position_should_return_world_grid_cell_center_position()
+        {
+            var grid = new WorldGridXZ<string>(Vector3.zero, 3, 3, 2);
+
+            Assert.That(grid.GetCellCenterPosition(0, 0), Is.EqualTo(new Vector3(1, 0, 1)));
+            Assert.That(grid.GetCellCenterPosition(0, 1), Is.EqualTo(new Vector3(1, 0, 3)));
+            Assert.That(grid.GetCellCenterPosition(0, 2), Is.EqualTo(new Vector3(1, 0, 5)));
+            
+            Assert.That(grid.GetCellCenterPosition(1, 0), Is.EqualTo(new Vector3(3, 0, 1)));
+            Assert.That(grid.GetCellCenterPosition(1, 1), Is.EqualTo(new Vector3(3, 0, 3)));
+            Assert.That(grid.GetCellCenterPosition(1, 2), Is.EqualTo(new Vector3(3, 0, 5)));
+
+            Assert.That(grid.GetCellCenterPosition(2, 0), Is.EqualTo(new Vector3(5, 0, 1)));
+            Assert.That(grid.GetCellCenterPosition(2, 1), Is.EqualTo(new Vector3(5, 0, 3)));
+            Assert.That(grid.GetCellCenterPosition(2, 2), Is.EqualTo(new Vector3(5, 0, 5)));
+        }
     }
 }

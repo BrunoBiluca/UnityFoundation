@@ -5,9 +5,7 @@ namespace UnityFoundation.Code.Grid
     [Serializable]
     public class GridCellXZ<TValue> : IEmptyable
     {
-        // Ter uma interface para GridPosition e ScaledPosition
-        public int X { get; private set; }
-        public int Z { get; private set; }
+        public GridCellPositionXZ Position { get; private set; }
         public TValue Value { get; set; }
 
         public GridCellXZ(int x, int z) : this(x, z, default)
@@ -16,8 +14,7 @@ namespace UnityFoundation.Code.Grid
 
         public GridCellXZ(int x, int z, TValue value)
         {
-            X = x;
-            Z = z;
+            Position = new GridCellPositionXZ(x, z);
             Value = value;
         }
 
@@ -31,7 +28,7 @@ namespace UnityFoundation.Code.Grid
 
         public override string ToString()
         {
-            return $"(x: {X}, z: {Z}) => {Value}";
+            return $"(x: {Position.X}, z: {Position.Z}) => {Value}";
         }
     }
 }
