@@ -30,5 +30,16 @@ namespace UnityFoundation.Code.Grid
         {
             return $"(x: {Position.X}, z: {Position.Z}) => {Value}";
         }
+
+        public void Clear()
+        {
+            if(Value is IEmptyable val)
+            {
+                val.Clear();
+                return;
+            }
+
+            Value = default;
+        }
     }
 }

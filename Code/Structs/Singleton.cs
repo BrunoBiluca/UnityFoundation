@@ -49,5 +49,12 @@ namespace UnityFoundation.Code
 
         protected virtual void PreAwake() { }
 
+        public void Start()
+        {
+            OnStart();
+        }
+
+        protected virtual void OnStart() { }
+
     }
 }
