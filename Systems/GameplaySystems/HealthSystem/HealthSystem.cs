@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.UnityFoundation.Systems.HealthSystem
 {
-    public class HealthSystem : BilucaMonoBehaviour, IDamageable, IHealable
+    public class HealthSystem : BilucaMono, IDamageable, IHealable
     {
         [SerializeField] private bool setupOnStart = false;
 
@@ -122,7 +122,7 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
 
             if(
                 damageableLayerManager != null
-                && !damageableLayerManager.HasRelationship(layer, Layer)
+                && !damageableLayerManager.LayerCanDamage(layer, Layer)
             )
                 return false;
 

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 294fdaf86be732241a3269cb783c567c, type: 3}
   m_Name: enemy_damageable_layer_so
   m_EditorClassIdentifier: 
-  layerName: Enemy
+  <LayerName>k__BackingField: Enemy

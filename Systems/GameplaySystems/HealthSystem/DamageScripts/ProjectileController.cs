@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.UnityFoundation.Systems.HealthSystem.DamageScripts
 {
-    public class ProjectileController : BilucaMonoBehaviour
+    public class ProjectileController : BilucaMono
     {
         public event EventHandler OnShootDestroy;
 

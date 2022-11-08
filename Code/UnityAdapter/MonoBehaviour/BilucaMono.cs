@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UnityFoundation.Code.UnityAdapter
 {
-    public abstract class BilucaMonoBehaviour : MonoBehaviour, IDestroyable
+    public abstract class BilucaMono : MonoBehaviour, IDestroyable
     {
         protected IDestroyBehaviour destroyBehaviour;
 

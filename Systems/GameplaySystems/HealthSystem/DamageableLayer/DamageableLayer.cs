@@ -9,9 +9,7 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
     )]
     public class DamageableLayer : ScriptableObject
     {
-        [SerializeField] private string layerName;
-
-        public string LayerName => layerName;
+        [field: SerializeField] public string LayerName { get; set; }
 
         private List<DamageableLayer> InteractiveLayers { get; }
             = new List<DamageableLayer>();
