@@ -11,5 +11,6 @@ namespace UnityFoundation.Code.UnityAdapter
         Quaternion Rotation { get; set; }
         void Rotate(Vector3 eulers);
         ITransform GetTransform();
+        void LookAt(Vector3 position);
     }
 }

@@ -5,35 +5,35 @@ namespace UnityFoundation.Code.UnityAdapter
 {
     public class TransformDecorator : ITransform
     {
-        private readonly Transform transform;
+        private readonly UnityComponentRef<Transform> comp;
 
-        public bool IsValid { get; private set; }
+        public bool IsValid => comp.IsValid;
 
         public event Action OnInvalidState;
 
         public TransformDecorator(Transform transform)
         {
-            IsValid = true;
-            this.transform = transform;
+            comp = new UnityComponentRef<Transform>(transform);
+            comp.OnInvalidState += () => OnInvalidState?.Invoke();
         }
 
         public Vector3 Foward {
-            get => TransformRef(t => t.forward);
-            set => TransformRef(t => t.forward = value);
+            get => comp.Ref(t => t.forward);
+            set => comp.Ref(t => t.forward = value);
         }
 
         public Vector3 Position {
-            get => TransformRef(t => t.position);
-            set => TransformRef(t => t.position = value);
+            get => comp.Ref(t => t.position);
+            set => comp.Ref(t => t.position = value);
         }
 
         public string Name {
-            get => TransformRef(t => t.name);
-            set => TransformRef(t => t.name = value);
+            get => comp.Ref(t => t.name);
+            set => comp.Ref(t => t.name = value);
         }
         public Quaternion Rotation {
-            get => TransformRef(t => t.rotation);
-            set => TransformRef(t => t.rotation = value);
+            get => comp.Ref(t => t.rotation);
+            set => comp.Ref(t => t.rotation = value);
         }
 
         public ITransform GetTransform()
@@ -43,38 +43,12 @@ namespace UnityFoundation.Code.UnityAdapter
 
         public void Rotate(Vector3 eulers)
         {
-            TransformRef(t => t.Rotate(eulers));
+            comp.Ref(t => t.Rotate(eulers));
         }
 
-        private void TransformRef(Action<Transform> call)
+        public void LookAt(Vector3 position)
         {
-            try
-            {
-                call(transform);
-            }
-            catch(MissingReferenceException)
-            {
-                SetInvalidState();
-            }
-        }
-
-        private T TransformRef<T>(Func<Transform, T> call)
-        {
-            try
-            {
-                return call(transform);
-            }
-            catch(MissingReferenceException)
-            {
-                SetInvalidState();
-                return default;
-            }
-        }
-
-        private void SetInvalidState()
-        {
-            IsValid = false;
-            OnInvalidState?.Invoke();
+            comp.Ref(t => t.LookAt(position));
         }
     }
 }
