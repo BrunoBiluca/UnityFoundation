@@ -18,7 +18,7 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
         public float BaseHealth { get { return baseHealth; } }
 
         [SerializeField] private bool destroyHealthBarOnDied = false;
-        
+
         [SerializeField] private float currentHealth;
         public float CurrentHealth {
             get { return currentHealth; }
@@ -31,7 +31,7 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
             set { layer = value; }
         }
 
-        public bool DestroyOnDied { get; set; } = false;
+        [field: SerializeField] public bool DestroyOnDied { get; set; } = false;
 
         public bool IsDead { get; private set; }
 
@@ -117,7 +117,7 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
 
         private bool CanInflictDamage(DamageableLayer layer)
         {
-            if(IsDead) 
+            if(IsDead)
                 return false;
 
             if(

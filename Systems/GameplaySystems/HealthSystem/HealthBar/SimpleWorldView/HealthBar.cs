@@ -45,12 +45,13 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
             if(separationValue == 0) return;
 
             var separatorCount = Mathf.FloorToInt(baseHealth / separationValue) - 1;
+            var separatorDistance = 1f / baseHealth * 2f;
             for(int i = 1; i <= separatorCount; i++)
             {
                 var separator = Instantiate(separationTemplate, separatorsHolder);
                 separator.name = $"separator_{i}";
 
-                var normalizedPosition = -(1 - i * 0.2f) / 200f;
+                var normalizedPosition = -(1 - i * separatorDistance) / 200f;
                 separator.transform.localPosition = new Vector3(normalizedPosition, bar.localPosition.y);
             }
         }
