@@ -19,6 +19,11 @@ namespace UnityFoundation.Code.UnityAdapter
             OnAwake();
         }
 
+        public void Destroy()
+        {
+            Destroy(gameObject);
+        }
+
         protected virtual void OnAwake() { }
     }
 }
