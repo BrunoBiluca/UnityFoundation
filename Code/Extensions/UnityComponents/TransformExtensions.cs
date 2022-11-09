@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace UnityFoundation.Code
 {
@@ -28,5 +29,11 @@ namespace UnityFoundation.Code
 
         public static float Distance(this Transform transA, Transform transB)
             => Vector3.Distance(transA.position, transB.position);
+
+        public static IEnumerable<Transform> GetChildren(this Transform transform)
+        {
+            foreach(Transform child in transform)
+                yield return child;
+        }
     }
 }

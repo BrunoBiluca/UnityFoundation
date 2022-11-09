@@ -105,7 +105,7 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
                 OnDied?.Invoke(this, EventArgs.Empty);
 
                 if(destroyHealthBarOnDied) Destroy(healthBarComponent);
-                if(DestroyOnDied) destroyBehaviour.Destroy();
+                if(DestroyOnDied) Destroy();
                 return;
             }
 

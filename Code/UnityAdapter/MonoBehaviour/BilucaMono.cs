@@ -21,7 +21,7 @@ namespace UnityFoundation.Code.UnityAdapter
 
         public void Destroy()
         {
-            Destroy(gameObject);
+            destroyBehaviour.Destroy();
         }
 
         protected virtual void OnAwake() { }

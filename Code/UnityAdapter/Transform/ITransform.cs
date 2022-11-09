@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityFoundation.Code.UnityAdapter
@@ -12,5 +13,7 @@ namespace UnityFoundation.Code.UnityAdapter
         void Rotate(Vector3 eulers);
         ITransform GetTransform();
         void LookAt(Vector3 position);
+        IEnumerable<ITransform> GetChildren();
+        ITransform Find(string name);
     }
 }

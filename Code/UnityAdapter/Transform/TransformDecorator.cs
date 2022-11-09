@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityFoundation.Code.UnityAdapter
@@ -49,6 +50,17 @@ namespace UnityFoundation.Code.UnityAdapter
         public void LookAt(Vector3 position)
         {
             comp.Ref(t => t.LookAt(position));
+        }
+
+        public IEnumerable<ITransform> GetChildren()
+        {
+            foreach(var c in comp.Ref(t => t.GetChildren()))
+                yield return new TransformDecorator(c);
+        }
+
+        public ITransform Find(string name)
+        {
+            return comp.Ref(t => new TransformDecorator(t.Find(name)));
         }
     }
 }
