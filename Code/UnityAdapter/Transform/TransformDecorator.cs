@@ -62,5 +62,10 @@ namespace UnityFoundation.Code.UnityAdapter
         {
             return comp.Ref(t => new TransformDecorator(t.Find(name)));
         }
+
+        public bool TryGetComponent<T>(out T component) where T : Component
+        {
+            return comp.Ref(t => t).TryGetComponent(out component);
+        }
     }
 }

@@ -15,5 +15,6 @@ namespace UnityFoundation.Code.UnityAdapter
         void LookAt(Vector3 position);
         IEnumerable<ITransform> GetChildren();
         ITransform Find(string name);
+        bool TryGetComponent<T>(out T component) where T : Component;
     }
 }
