@@ -7,16 +7,35 @@ namespace UnityFoundation.Code
 
     public class AsyncProcessor : Singleton<AsyncProcessor>, IAsyncProcessor
     {
-        public void ProcessAsync(Action action, float startTime)
+        // TOOD: funciona apenas para um callback por vez,
+        // essa lógica deve permitir executar para múltiplos callbacks
+        private Action<float> callbackEveryFrame;
+
+        public void ExecuteEveryFrame(Action<float> callback)
         {
-            StartCoroutine(Callback(action, startTime));
+            callbackEveryFrame = callback;
         }
 
-        private IEnumerator Callback(Action action, float startTime)
+        public void ProcessAsync(Action action, float delay)
         {
-            yield return new WaitForSecondsRealtime(startTime);
+            StartCoroutine(Callback(action, delay));
+        }
+
+        public void ResetCallbackEveryFrame()
+        {
+            callbackEveryFrame = null;
+        }
+
+        private IEnumerator Callback(Action action, float delay)
+        {
+            yield return new WaitForSecondsRealtime(delay);
 
             action();
+        }
+
+        public void Update()
+        {
+            callbackEveryFrame?.Invoke(Time.deltaTime);
         }
     }
 }

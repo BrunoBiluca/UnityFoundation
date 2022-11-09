@@ -8,11 +8,21 @@ namespace UnityFoundation.Code
         float startTime;
         Action action;
 
+        public void ExecuteEveryFrame(Action<float> rotateUnit)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ProcessAsync(Action action, float startTime)
         {
             timePassed = 0f;
             this.startTime = startTime;
             this.action = action;
+        }
+
+        public void ResetCallbackEveryFrame()
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(float timePassed)
