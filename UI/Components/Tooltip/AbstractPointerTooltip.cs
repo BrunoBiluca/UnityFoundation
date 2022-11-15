@@ -1,7 +1,7 @@
 using UnityFoundation.Code;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityFoundation.Tools.TimeUtils;
+using UnityFoundation.Code.Timer;
 
 namespace UnityFoundation.UI
 {

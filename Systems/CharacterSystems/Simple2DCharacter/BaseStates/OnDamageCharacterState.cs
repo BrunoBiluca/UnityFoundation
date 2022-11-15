@@ -1,5 +1,5 @@
-using UnityFoundation.Tools.TimeUtils;
 using UnityEngine;
+using UnityFoundation.Code.Timer;
 
 namespace Assets.UnityFoundation.Code.Character2D
 {

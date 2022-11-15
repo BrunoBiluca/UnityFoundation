@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using UnityFoundation.Code;
+using UnityFoundation.Code.UnityAdapter;
 using UnityFoundation.TestUtility;
 
 namespace UnityFoundation.DiceSystem.Tests

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using UnityFoundation.Code;
-using UnityFoundation.Tools.TimeUtils;
+using UnityFoundation.Code.Timer;
 
 namespace UnityFoundation.Physics2D.Finder
 {

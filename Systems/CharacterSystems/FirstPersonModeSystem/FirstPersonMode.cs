@@ -1,9 +1,9 @@
 using Assets.UnityFoundation.Systems.Character3D.Scripts;
 using System;
 using UnityEngine;
+using UnityFoundation.Code.Timer;
 using UnityFoundation.Code.UnityAdapter;
 using UnityFoundation.Physics3D.CheckGround;
-using UnityFoundation.Tools.TimeUtils;
 
 namespace UnityFoundation.FirstPersonModeSystem
 {

@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using UnityFoundation.Code;
+using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.DiceSystem.Tests
 {

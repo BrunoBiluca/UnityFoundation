@@ -1,6 +1,6 @@
-using UnityFoundation.Tools.TimeUtils;
 using UnityEngine;
 using Assets.UnityFoundation.Systems.Character3D.Scripts;
+using UnityFoundation.Code.Timer;
 
 namespace UnityFoundation.FirstPersonModeSystem
 {

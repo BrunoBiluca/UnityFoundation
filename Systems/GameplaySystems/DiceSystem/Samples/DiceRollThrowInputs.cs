@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityFoundation.Code;
+using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.DiceSystem
 {

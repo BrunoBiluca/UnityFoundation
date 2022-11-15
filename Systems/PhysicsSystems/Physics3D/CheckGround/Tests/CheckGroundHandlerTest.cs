@@ -2,8 +2,8 @@ using UnityFoundation.Physics3D.CheckGround;
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityFoundation.Tools.TimeUtils;
 using Moq;
+using UnityFoundation.Code.Timer;
 
 public class CheckGroundHandlerTest
 {

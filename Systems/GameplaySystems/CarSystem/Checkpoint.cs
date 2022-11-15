@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityFoundation.Tools.TimeUtils;
 using System;
+using UnityFoundation.Code.Timer;
 
 namespace UnityFoundation.CarSystem
 {

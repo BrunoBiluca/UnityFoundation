@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using UnityFoundation.Code;
+using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.DiceSystem
 {

@@ -1,6 +1,6 @@
-using UnityFoundation.Tools.TimeUtils;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityFoundation.Code.Timer;
 
 public class CooldownIndicator : MonoBehaviour
 {

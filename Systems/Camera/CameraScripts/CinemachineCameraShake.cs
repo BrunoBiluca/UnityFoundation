@@ -1,7 +1,7 @@
 using UnityFoundation.Code;
 using Cinemachine;
 using UnityEngine;
-using UnityFoundation.Tools.TimeUtils;
+using UnityFoundation.Code.Timer;
 
 public class CinemachineCameraShake : Singleton<CinemachineCameraShake>
 {
