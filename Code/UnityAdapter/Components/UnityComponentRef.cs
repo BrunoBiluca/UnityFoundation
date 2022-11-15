@@ -3,7 +3,12 @@ using UnityEngine;
 
 namespace UnityFoundation.Code.UnityAdapter
 {
-    public class UnityComponentRef<T> : IValidState
+    /// <summary>
+    /// Class responsable for controle Unity components states.
+    /// When the referenced component is destroyed trigger an OnInvalidState event.
+    /// </summary>
+    /// <typeparam name="T">Unity component</typeparam>
+    public class UnityComponentRef<T> : IComponentState where T : Component
     {
         private readonly T reference;
 

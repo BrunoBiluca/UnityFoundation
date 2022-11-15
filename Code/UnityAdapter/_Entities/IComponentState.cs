@@ -2,7 +2,7 @@
 
 namespace UnityFoundation.Code.UnityAdapter
 {
-    public interface IValidState
+    public interface IComponentState
     {
         bool IsValid { get; }
         event Action OnInvalidState;

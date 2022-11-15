@@ -3,7 +3,7 @@ using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.Code
 {
-    public interface IGameObject : IValidState
+    public interface IGameObject : IComponentState
     {
         string Name { get; }
         bool IsActiveInHierarchy { get; }
