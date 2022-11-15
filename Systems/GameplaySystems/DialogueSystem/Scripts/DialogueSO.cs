@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Assets.UnityFoundation.EditorInspector;
 using UnityFoundation.Code;
 
 namespace Assets.UnityFoundation.DialogueSystem

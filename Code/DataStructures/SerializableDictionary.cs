@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.EditorInspector
+namespace UnityFoundation.Code
 {
     public abstract class SerializableDictionaryBase
     {
@@ -54,8 +54,8 @@ namespace Assets.UnityFoundation.EditorInspector
             if(m_keys != null && m_values != null && m_keys.Length == m_values.Length)
             {
                 m_dict.Clear();
-                int n = m_keys.Length;
-                for(int i = 0; i < n; ++i)
+                var n = m_keys.Length;
+                for(var i = 0; i < n; ++i)
                 {
                     m_dict[m_keys[i]] = GetValue(m_values, i);
                 }
@@ -67,11 +67,11 @@ namespace Assets.UnityFoundation.EditorInspector
 
         public void OnBeforeSerialize()
         {
-            int n = m_dict.Count;
+            var n = m_dict.Count;
             m_keys = new TKey[n];
             m_values = new TValueStorage[n];
 
-            int i = 0;
+            var i = 0;
             foreach(var kvp in m_dict)
             {
                 m_keys[i] = kvp.Key;

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Reflection;
 using System;
-using Assets.UnityFoundation.EditorInspector;
+using UnityFoundation.Code;
 
 namespace Assets.UnityFoundation.Editor
 {

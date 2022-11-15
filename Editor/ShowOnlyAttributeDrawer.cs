@@ -1,6 +1,6 @@
 using UnityEditor;
 using UnityEngine;
-using Assets.UnityFoundation.EditorInspector;
+using UnityFoundation.Code.UnityAdapter;
 
 namespace Assets.UnityFoundation.Editor
 {

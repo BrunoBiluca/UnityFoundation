@@ -1,5 +1,4 @@
 ﻿using UnityFoundation.Code.UnityAdapter;
-using Assets.UnityFoundation.EditorInspector;
 using System;
 using System.Collections;
 using UnityEngine;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityFoundation.Code;
+using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.Tools.Spline
 {

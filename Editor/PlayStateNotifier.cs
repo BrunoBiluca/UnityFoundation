@@ -1,5 +1,5 @@
 using UnityEditor;
-using Assets.UnityFoundation.EditorInspector;
+using UnityFoundation.Code.UnityAdapter;
 
 namespace Assets.UnityFoundation.Editor
 {

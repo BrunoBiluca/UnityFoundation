@@ -1,5 +1,5 @@
-using Assets.UnityFoundation.EditorInspector;
 using UnityEngine;
+using UnityFoundation.Code.UnityAdapter;
 using static UnityEngine.InputSystem.InputAction;
 
 namespace UnityFoundation.CarSystem

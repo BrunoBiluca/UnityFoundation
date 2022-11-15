@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnityFoundation.Editor.Hierarchy
+namespace UnityFoundation.Code
 {
     public class PrettyObject
     {
@@ -10,8 +10,8 @@ namespace UnityFoundation.Editor.Hierarchy
         public GameObject GameObject { get; }
 
         public PrettyObject(
-            bool useDefault, 
-            Color backgroundColor, 
+            bool useDefault,
+            Color backgroundColor,
             Color fontColor,
             GameObject gameObject
         )

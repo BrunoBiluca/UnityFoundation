@@ -1,6 +1,6 @@
-using Assets.UnityFoundation.EditorInspector;
 using System;
 using UnityEngine;
+using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.Code.Timer
 {

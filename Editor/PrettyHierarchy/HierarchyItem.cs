@@ -2,6 +2,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using UnityFoundation.Code;
 using UnityFoundation.Editor.Hierarchy;
 
 namespace UnityFoundation.Editor.PrettyHierarchy

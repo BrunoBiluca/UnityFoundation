@@ -1,4 +1,4 @@
-namespace UnityFoundation.Editor.Hierarchy
+namespace UnityFoundation.Code
 {
     public interface IPrettyable
     {

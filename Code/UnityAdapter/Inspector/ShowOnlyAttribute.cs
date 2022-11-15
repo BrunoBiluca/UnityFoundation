@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.UnityFoundation.EditorInspector
+namespace UnityFoundation.Code.UnityAdapter
 {
     public class ShowOnlyAttribute : PropertyAttribute
     {

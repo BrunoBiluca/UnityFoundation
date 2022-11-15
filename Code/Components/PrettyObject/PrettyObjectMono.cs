@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityFoundation.Editor.Hierarchy;
 
-namespace UnityFoundation.Editor.PrettyHierarchy
+namespace UnityFoundation.Code
 {
     public class PrettyObjectMono : MonoBehaviour, IPrettyable
     {

@@ -1,4 +1,4 @@
-namespace Assets.UnityFoundation.EditorInspector
+namespace UnityFoundation.Code.UnityAdapter
 {
     public static class PlayState
     {
