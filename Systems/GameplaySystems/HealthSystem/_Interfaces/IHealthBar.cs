@@ -1,4 +1,4 @@
-namespace Assets.UnityFoundation.Systems.HealthSystem
+namespace UnityFoundation.HealthSystem
 {
     public interface IHealthBar
     {

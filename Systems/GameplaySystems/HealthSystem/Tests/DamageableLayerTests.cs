@@ -1,4 +1,3 @@
-using Assets.UnityFoundation.Systems.HealthSystem;
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;

@@ -1,6 +1,6 @@
 using Assets.UnityFoundation.Systems.Character3D.Scripts;
-using Assets.UnityFoundation.Systems.HealthSystem;
 using UnityEngine;
+using UnityFoundation.HealthSystem;
 using UnityFoundation.ResourceManagement;
 
 namespace UnityFoundation.FirstPersonModeSystem

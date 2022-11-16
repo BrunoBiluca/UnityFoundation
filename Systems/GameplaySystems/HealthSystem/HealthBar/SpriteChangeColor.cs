@@ -1,6 +1,6 @@
-using Assets.UnityFoundation.Systems.HealthSystem;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityFoundation.HealthSystem;
 
 namespace Assets.UnityFoundation.Systems.HealthSystem
 {

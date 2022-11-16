@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityFoundation.Code;
 
-namespace Assets.UnityFoundation.Systems.HealthSystem.Tests
+namespace UnityFoundation.HealthSystem.Tests
 {
     public class SimpleHealthBarViewTests
     {

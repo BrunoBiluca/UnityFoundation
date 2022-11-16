@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Systems.HealthSystem
+namespace UnityFoundation.HealthSystem
 {
     [Serializable]
     public class DamageableLayerRelationship

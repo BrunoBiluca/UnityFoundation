@@ -1,4 +1,6 @@
-﻿namespace Assets.UnityFoundation.Systems.HealthSystem.HealthSystemEditor
+﻿using UnityFoundation.HealthSystem;
+
+namespace Assets.UnityFoundation.Systems.HealthSystem.HealthSystemEditor
 {
     public class UpdateLayerEntity
     {

@@ -1,159 +1,77 @@
-using UnityFoundation.Code.UnityAdapter;
 using System;
 using UnityEngine;
+using UnityFoundation.Code;
 
-namespace Assets.UnityFoundation.Systems.HealthSystem
+namespace UnityFoundation.HealthSystem
 {
-    public class HealthSystem : BilucaMono, IDamageable, IHealable
+    public class HealthSystem : IHealthSystem
     {
-        [SerializeField] private bool setupOnStart = false;
+        public float BaseHealth { get; private set; }
 
-        // TODO: criar aqui uma annotation de restrição
-        // para elementos que possui um component IHealthBar
-        [SerializeField]
-        private GameObject healthBarComponent;
-        private IHealthBar healthBar;
+        public float CurrentHealth { get; private set; }
 
-        [SerializeField] private float baseHealth;
-        public float BaseHealth { get { return baseHealth; } }
-
-        [SerializeField] private bool destroyHealthBarOnDied = false;
-
-        [SerializeField] private float currentHealth;
-        public float CurrentHealth {
-            get { return currentHealth; }
-            private set { currentHealth = value; }
-        }
-
-        [SerializeField] private DamageableLayer layer;
-        public DamageableLayer Layer {
-            get { return layer; }
-            set { layer = value; }
-        }
-
-        [field: SerializeField] public bool DestroyOnDied { get; set; } = false;
+        private Evaluation<float> currentHealthEval;
 
         public bool IsDead { get; private set; }
 
-        public event EventHandler OnTakeDamage;
-        public event EventHandler OnFullyHeal;
-        public event EventHandler OnDied;
+        public DamageableLayer Layer { get; private set; }
 
-        private DamageableLayerManager damageableLayerManager;
-        private Func<bool> guardDamageCallback;
-
-        public void Start()
-        {
-            if(setupOnStart)
-                Setup(baseHealth);
-        }
-
-        private void HealthBarReference()
-        {
-            if(healthBar == null && healthBarComponent != null)
-            {
-                healthBar = healthBarComponent.GetComponent<IHealthBar>();
-                return;
-            }
-
-            if(healthBar == null)
-            {
-                healthBar = gameObject.GetComponentInChildren<IHealthBar>();
-            }
-        }
-
-        public void SetHealthBar(IHealthBar bar)
-        {
-            healthBar = bar;
-        }
-
-        public void Setup(float baseHealth)
-        {
-            this.baseHealth = baseHealth;
-            CurrentHealth = baseHealth;
-
-            IsDead = false;
-
-            HealthBarReference();
-            healthBar?.Setup(baseHealth);
-
-            damageableLayerManager = DamageableLayerManager.Instance;
-
-            OnFullyHeal?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void SetDestroyHealthbar(bool value) => destroyHealthBarOnDied = value;
-
-
-        public void SetGuardDamage(Func<bool> callback)
-        {
-            guardDamageCallback = callback;
-        }
+        public event Action OnFullyHeal;
+        public event Action OnDied;
+        public event Action OnTakeDamage;
 
         public void Damage(float amount, DamageableLayer layer = null)
         {
-            if(!CanInflictDamage(layer))
-                return;
+            UpdateHealth(-Mathf.Abs(EvaluateDamage(amount)));
 
-            CurrentHealth -= Mathf.Abs(EvaluateDamage(amount));
-
-            healthBar?.SetCurrentHealth(CurrentHealth);
-
-            if(CurrentHealth <= 0f)
-            {
-                IsDead = true;
-                OnDied?.Invoke(this, EventArgs.Empty);
-
-                if(destroyHealthBarOnDied) Destroy(healthBarComponent);
-                if(DestroyOnDied) Destroy();
-                return;
-            }
-
-            if(CurrentHealth < baseHealth)
-            {
-                OnTakeDamage?.Invoke(this, EventArgs.Empty);
-            }
+            if(!IsDead)
+                OnTakeDamage?.Invoke();
         }
-
-        private bool CanInflictDamage(DamageableLayer layer)
-        {
-            if(IsDead)
-                return false;
-
-            if(
-                damageableLayerManager != null
-                && !damageableLayerManager.LayerCanDamage(layer, Layer)
-            )
-                return false;
-
-            if(guardDamageCallback != null && guardDamageCallback())
-                return false;
-
-            return true;
-        }
-
-        protected virtual float EvaluateDamage(float amount) => amount;
 
         public void Heal(float amount)
         {
-            CurrentHealth += amount;
-            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, baseHealth);
-
-            healthBar?.SetCurrentHealth(CurrentHealth);
-
-            if(CurrentHealth == baseHealth)
-            {
-                OnFullyHeal?.Invoke(this, EventArgs.Empty);
-            }
+            UpdateHealth(Mathf.Abs(amount));
         }
 
         public void HealFull()
         {
+            UpdateHealth(BaseHealth);
+        }
+
+        public void Setup(float baseHealth)
+        {
+            BaseHealth = baseHealth;
             CurrentHealth = baseHealth;
 
-            healthBar?.SetCurrentHealth(CurrentHealth);
+            currentHealthEval = Evaluation<float>.Create(() => CurrentHealth);
+            currentHealthEval
+                .If((health) => health <= 0f)
+                .Do(() => {
+                    IsDead = true;
+                    OnDied?.Invoke();
+                });
 
-            OnFullyHeal?.Invoke(this, EventArgs.Empty);
+            currentHealthEval
+                .If((health) => CurrentHealth == BaseHealth)
+                .Do(() => {
+                    OnFullyHeal?.Invoke();
+                });
         }
+
+        protected virtual float EvaluateDamage(float amount)
+        {
+            return amount;
+        }
+
+        private void UpdateHealth(float amount)
+        {
+            if(IsDead) return;
+
+            CurrentHealth += amount;
+            CurrentHealth = Mathf.Clamp(CurrentHealth, 0f, BaseHealth);
+
+            currentHealthEval.Eval();
+        }
+
     }
 }

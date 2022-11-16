@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityFoundation.Code;
 
-namespace Assets.UnityFoundation.Systems.HealthSystem
+namespace UnityFoundation.HealthSystem
 {
     [RequireComponent(typeof(RectTransform))]
     public class SimpleHealthBarView : MonoBehaviour, IHealthBar

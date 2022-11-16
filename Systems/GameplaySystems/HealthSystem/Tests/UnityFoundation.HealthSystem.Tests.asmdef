@@ -5,7 +5,8 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "UnityFoundation.HealthSystem",
-        "UnityFoundation.Code"
+        "UnityFoundation.Code",
+        "UnityFoundation.TestUtility"
     ],
     "includePlatforms": [
         "Editor"

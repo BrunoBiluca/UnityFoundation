@@ -2,7 +2,7 @@ using UnityFoundation.Code;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.UnityFoundation.Systems.HealthSystem
+namespace UnityFoundation.HealthSystem
 {
     public class HeartHealthBar : MonoBehaviour, IHealthBar
     {
@@ -24,7 +24,7 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
             this.baseHealth = baseHealth;
 
             TransformUtils.RemoveChildObjects(hearts);
-            for(int i = 1; i <= baseHealth; i++)
+            for(var i = 1; i <= baseHealth; i++)
             {
                 var go = Instantiate(heartTemplate, hearts);
                 go.name = $"heart_{i}";
@@ -33,7 +33,7 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
 
         public void SetCurrentHealth(float currentHealth)
         {
-            for(float currHeart = baseHealth; currHeart >= 1; currHeart--)
+            for(var currHeart = baseHealth; currHeart >= 1; currHeart--)
             {
                 if(currHeart <= 0) break;
 

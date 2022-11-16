@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Systems.HealthSystem
+namespace UnityFoundation.HealthSystem
 {
     [CreateAssetMenu(
-        fileName = "damageable_layer", 
+        fileName = "damageable_layer",
         menuName = "HealthSystem/DamageableLayer"
     )]
     public class DamageableLayer : ScriptableObject

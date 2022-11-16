@@ -1,7 +1,7 @@
 ﻿using UnityFoundation.Code;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Systems.HealthSystem
+namespace UnityFoundation.HealthSystem
 {
     public class HealthBar : MonoBehaviour, IHealthBar
     {
@@ -46,7 +46,7 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
 
             var separatorCount = Mathf.FloorToInt(baseHealth / separationValue) - 1;
             var separatorDistance = 1f / baseHealth * 2f;
-            for(int i = 1; i <= separatorCount; i++)
+            for(var i = 1; i <= separatorCount; i++)
             {
                 var separator = Instantiate(separationTemplate, separatorsHolder);
                 separator.name = $"separator_{i}";

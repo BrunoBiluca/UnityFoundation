@@ -1,7 +1,7 @@
 using UnityFoundation.Code;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Systems.HealthSystem
+namespace UnityFoundation.HealthSystem
 {
     public class DamageableLayerManager : Singleton<DamageableLayerManager>
     {
@@ -25,8 +25,8 @@ namespace Assets.UnityFoundation.Systems.HealthSystem
             {
                 var relationship = config.relationships
                     .Find(r =>
-                    (r.layer1 == testingLayer && r.layer2 == otherLayer)
-                    || (r.layer1 == otherLayer && r.layer2 == testingLayer)
+                    r.layer1 == testingLayer && r.layer2 == otherLayer
+                    || r.layer1 == otherLayer && r.layer2 == testingLayer
                 );
 
                 if(relationship == null)
