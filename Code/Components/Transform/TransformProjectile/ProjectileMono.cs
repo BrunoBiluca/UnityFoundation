@@ -11,7 +11,7 @@ namespace UnityFoundation.Code
         private Transform trail;
         private Transform impactEffect;
 
-        public event Action OnDestroyAction;
+        public event Action OnObjectDestroyed;
 
         public ITransform Transform { get; private set; }
 

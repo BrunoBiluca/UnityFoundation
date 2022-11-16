@@ -7,14 +7,14 @@ namespace UnityFoundation.Code.UnityAdapter
     {
         protected IDestroyBehaviour destroyBehaviour;
 
-        public event Action OnDestroyAction;
+        public event Action OnObjectDestroyed;
 
         public void Awake()
         {
             if(!TryGetComponent(out destroyBehaviour))
                 destroyBehaviour = gameObject.AddComponent<UnityDestroyBehaviour>();
 
-            destroyBehaviour.OnBeforeDestroy(() => OnDestroyAction?.Invoke());
+            destroyBehaviour.OnBeforeDestroy(() => OnObjectDestroyed?.Invoke());
 
             OnAwake();
         }

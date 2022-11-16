@@ -4,7 +4,7 @@ namespace UnityFoundation.Code.UnityAdapter
 {
     public interface IDestroyable
     {
-        event Action OnDestroyAction;
+        event Action OnObjectDestroyed;
 
         void Destroy();
     }

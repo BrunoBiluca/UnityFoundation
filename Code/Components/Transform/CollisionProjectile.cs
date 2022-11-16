@@ -2,24 +2,19 @@ using UnityFoundation.Code.UnityAdapter;
 using System;
 using UnityEngine;
 
-namespace Assets.UnityFoundation.Systems.HealthSystem.DamageScripts
+namespace UnityFoundation.Code
 {
-    public class ProjectileController : BilucaMono
+    public class CollisionProjectile : BilucaMono
     {
-        public event EventHandler OnShootDestroy;
+        public event Action<IGameObject> OnHit;
 
         [SerializeField] private float projectileDamage = 1f;
         [SerializeField] private float projectileSpeed;
 
         private Vector3 direction;
-        private GameObject player;
 
         protected override void OnAwake()
         {
-            destroyBehaviour.OnBeforeDestroy(
-                () => OnShootDestroy?.Invoke(this, EventArgs.Empty)
-            );
-
             if(projectileSpeed == 0)
                 Debug.LogWarning("Projectile speed was not configure");
         }
@@ -29,25 +24,21 @@ namespace Assets.UnityFoundation.Systems.HealthSystem.DamageScripts
             destroyBehaviour.Destroy(1f);
         }
 
-        public void Setup(int direction, GameObject player)
+        public void Setup(int direction)
         {
             this.direction = new Vector3(direction, 0, 0);
-            this.player = player;
         }
 
         void Update()
         {
-            transform.position += direction * projectileSpeed * Time.deltaTime;
+            transform.position += projectileSpeed * Time.deltaTime * direction;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
             destroyBehaviour.Destroy();
 
-            if(!collision.gameObject.TryGetComponent(out IDamageable entity))
-                return;
-
-            entity.Damage(projectileDamage, player.GetComponent<IDamageable>().Layer);
+            OnHit?.Invoke(new GameObjectDecorator(collision.gameObject));
         }
     }
 }
