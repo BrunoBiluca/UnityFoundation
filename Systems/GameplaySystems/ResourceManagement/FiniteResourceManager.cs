@@ -43,7 +43,7 @@ namespace UnityFoundation.ResourceManagement
                 return auxResult;
             }
 
-            currentAmount -= amount;
+            Subtract(amount);
             return amount;
         }
 
@@ -52,8 +52,13 @@ namespace UnityFoundation.ResourceManagement
             if(amount > currentAmount)
                 return false;
 
-            currentAmount -= amount;
+            Subtract(amount);
             return true;
+        }
+
+        private void Subtract(uint amount)
+        {
+            currentAmount -= amount;
         }
     }
 }

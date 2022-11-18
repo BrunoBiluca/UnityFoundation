@@ -23,5 +23,7 @@ namespace UnityFoundation.ResourceManagement
         public void FullReffil() => storage.FullReffil();
 
         public uint GetAmount(uint amount) => storage.GetAmount(amount);
+
+        public bool TrySubtract(uint amount) => storage.TrySubtract(amount);
     }
 }

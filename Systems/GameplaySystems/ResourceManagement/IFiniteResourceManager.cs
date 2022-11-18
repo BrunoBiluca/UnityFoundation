@@ -1,5 +1,8 @@
 ﻿namespace UnityFoundation.ResourceManagement
 {
+    // TODO: definir a diferenção entre os métodos GetAmount e TrySubstract
+    // ambos métodos fazem a mesma coisa de formas diferentes.
+
     public interface IResourceManager
     {
         uint CurrentAmount { get; }
@@ -8,7 +11,9 @@
         bool IsFull { get; }
 
         void FullReffil();
+
         uint GetAmount(uint amount);
         void Add(uint amount);
+        bool TrySubtract(uint amount);
     }
 }
