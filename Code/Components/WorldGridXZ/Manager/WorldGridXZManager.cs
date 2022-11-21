@@ -50,7 +50,7 @@ namespace UnityFoundation.Code.Grid
             return this;
         }
 
-        public virtual void ResetRangeValidation()
+        public virtual void ResetValidation()
         {
             gridValidations.Clear();
         }
