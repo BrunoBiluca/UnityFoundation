@@ -110,7 +110,9 @@ namespace UnityFoundation.HealthSystem
                 return;
 
             healthSystem.Damage(amount, layer);
-            healthBar?.SetCurrentHealth(CurrentHealth);
+
+            if(healthBarComponent != null)
+                healthBar?.SetCurrentHealth(CurrentHealth);
         }
 
         private bool CanInflictDamage(DamageableLayer layer)

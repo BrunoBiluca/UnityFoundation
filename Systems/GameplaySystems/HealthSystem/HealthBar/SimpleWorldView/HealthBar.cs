@@ -99,18 +99,31 @@ namespace UnityFoundation.HealthSystem
 
         public void SlowBarReduction()
         {
-            var newBarSize = bar.localScale.x - 0.01f;
-
-            if(newBarSize <= NormalizedBarSize)
+            try
             {
-                BarDimension(NormalizedBarSize);
+                if(bar == null)
+                {
+                    CancelInvoke();
+                    return;
+                }
 
-                if(useMultipleColors) ChangeColor();
-                CancelInvoke();
-                return;
+                var newBarSize = bar.localScale.x - 0.01f;
+
+                if(newBarSize <= NormalizedBarSize)
+                {
+                    BarDimension(NormalizedBarSize);
+
+                    if(useMultipleColors) ChangeColor();
+                    CancelInvoke();
+                    return;
+                }
+
+                BarDimension(newBarSize);
             }
-
-            BarDimension(newBarSize);
+            catch(MissingComponentException)
+            {
+                CancelInvoke();
+            }
         }
 
         private void BarDimension(float size)

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UFEC = UnityFoundation.Code.UnityAdapter.UnityFoundationEditorConfig;
 
 namespace UnityFoundation.HealthSystem
 {
     [CreateAssetMenu(
         fileName = "damageable_layer",
-        menuName = "HealthSystem/DamageableLayer"
+        menuName = UFEC.BASE_CONTEXT_MENU_PATH + "HealthSystem/DamageableLayer"
     )]
     public class DamageableLayer : ScriptableObject
     {

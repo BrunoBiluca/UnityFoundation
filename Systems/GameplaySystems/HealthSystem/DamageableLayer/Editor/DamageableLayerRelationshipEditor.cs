@@ -142,12 +142,15 @@ namespace Assets.UnityFoundation.Systems.HealthSystem.HealthSystemEditor
 
             foreach(var layer in currentRelationship.layers)
             {
-                currentRelationship.relationships
-                    .Add(new DamageableLayerRelationship() {
-                        layer1 = currentRelationship.layers[updateLayer.index],
-                        layer2 = layer,
-                        hasRelation = true
-                    });
+                var firstLayer = currentRelationship.layers[updateLayer.index];
+
+                var rel = CreateInstance<DamageableLayerRelationship>();
+                rel.name = $"{firstLayer.LayerName}_{layer.LayerName}";
+                rel.layer1 = firstLayer;
+                rel.layer2 = layer;
+                rel.hasRelation = true;
+
+                currentRelationship.relationships.Add(rel);
             }
         }
     }

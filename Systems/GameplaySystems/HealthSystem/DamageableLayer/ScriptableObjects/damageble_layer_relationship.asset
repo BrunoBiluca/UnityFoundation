@@ -1,0 +1,180 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6303512301388595229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c1e93507421645a87108a970b5ed3, type: 3}
+  m_Name: Player_Enemy
+  m_EditorClassIdentifier: 
+  layer1: {fileID: 11400000, guid: c258ff300bd8e0f45b65828596fd9792, type: 2}
+  layer2: {fileID: 11400000, guid: 26064a55faaffcb4f8547757acdf1dc7, type: 2}
+  hasRelation: 1
+--- !u!114 &-3351319353493848421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c1e93507421645a87108a970b5ed3, type: 3}
+  m_Name: Player_Furniture
+  m_EditorClassIdentifier: 
+  layer1: {fileID: 11400000, guid: c258ff300bd8e0f45b65828596fd9792, type: 2}
+  layer2: {fileID: 11400000, guid: 7903485cdb1b37745bdd58ce35fdd61a, type: 2}
+  hasRelation: 1
+--- !u!114 &-3267617704614108470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c1e93507421645a87108a970b5ed3, type: 3}
+  m_Name: Furniture_Furniture
+  m_EditorClassIdentifier: 
+  layer1: {fileID: 11400000, guid: 7903485cdb1b37745bdd58ce35fdd61a, type: 2}
+  layer2: {fileID: 11400000, guid: 7903485cdb1b37745bdd58ce35fdd61a, type: 2}
+  hasRelation: 1
+--- !u!114 &-2231410218670166889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c1e93507421645a87108a970b5ed3, type: 3}
+  m_Name: Player_Player
+  m_EditorClassIdentifier: 
+  layer1: {fileID: 11400000, guid: c258ff300bd8e0f45b65828596fd9792, type: 2}
+  layer2: {fileID: 11400000, guid: c258ff300bd8e0f45b65828596fd9792, type: 2}
+  hasRelation: 1
+--- !u!114 &-2229805764541119888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c1e93507421645a87108a970b5ed3, type: 3}
+  m_Name: Player_Default
+  m_EditorClassIdentifier: 
+  layer1: {fileID: 11400000, guid: c258ff300bd8e0f45b65828596fd9792, type: 2}
+  layer2: {fileID: 11400000, guid: c0bfe452f9f7dae49b03462c2ba0c58c, type: 2}
+  hasRelation: 1
+--- !u!114 &-1092027013670064884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c1e93507421645a87108a970b5ed3, type: 3}
+  m_Name: Furniture_Enemy
+  m_EditorClassIdentifier: 
+  layer1: {fileID: 11400000, guid: 7903485cdb1b37745bdd58ce35fdd61a, type: 2}
+  layer2: {fileID: 11400000, guid: 26064a55faaffcb4f8547757acdf1dc7, type: 2}
+  hasRelation: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea272dd27f12274582642f3ea5d0731, type: 3}
+  m_Name: damageble_layer_relationship
+  m_EditorClassIdentifier: 
+  layers:
+  - {fileID: 11400000, guid: c0bfe452f9f7dae49b03462c2ba0c58c, type: 2}
+  - {fileID: 11400000, guid: 26064a55faaffcb4f8547757acdf1dc7, type: 2}
+  - {fileID: 11400000, guid: 7903485cdb1b37745bdd58ce35fdd61a, type: 2}
+  - {fileID: 11400000, guid: c258ff300bd8e0f45b65828596fd9792, type: 2}
+  relationships:
+  - {fileID: 445350049974481752}
+  - {fileID: 5835344068080289888}
+  - {fileID: 8947213900806546586}
+  - {fileID: 5649927933816248300}
+  - {fileID: -1092027013670064884}
+  - {fileID: -3267617704614108470}
+  - {fileID: -2229805764541119888}
+  - {fileID: -6303512301388595229}
+  - {fileID: -3351319353493848421}
+  - {fileID: -2231410218670166889}
+--- !u!114 &445350049974481752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c1e93507421645a87108a970b5ed3, type: 3}
+  m_Name: Default_Default
+  m_EditorClassIdentifier: 
+  layer1: {fileID: 11400000, guid: c0bfe452f9f7dae49b03462c2ba0c58c, type: 2}
+  layer2: {fileID: 11400000, guid: c0bfe452f9f7dae49b03462c2ba0c58c, type: 2}
+  hasRelation: 1
+--- !u!114 &5649927933816248300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c1e93507421645a87108a970b5ed3, type: 3}
+  m_Name: Furniture_Default
+  m_EditorClassIdentifier: 
+  layer1: {fileID: 11400000, guid: 7903485cdb1b37745bdd58ce35fdd61a, type: 2}
+  layer2: {fileID: 11400000, guid: c0bfe452f9f7dae49b03462c2ba0c58c, type: 2}
+  hasRelation: 1
+--- !u!114 &5835344068080289888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c1e93507421645a87108a970b5ed3, type: 3}
+  m_Name: Enemy_Default
+  m_EditorClassIdentifier: 
+  layer1: {fileID: 11400000, guid: 26064a55faaffcb4f8547757acdf1dc7, type: 2}
+  layer2: {fileID: 11400000, guid: c0bfe452f9f7dae49b03462c2ba0c58c, type: 2}
+  hasRelation: 1
+--- !u!114 &8947213900806546586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c1e93507421645a87108a970b5ed3, type: 3}
+  m_Name: Enemy_Enemy
+  m_EditorClassIdentifier: 
+  layer1: {fileID: 11400000, guid: 26064a55faaffcb4f8547757acdf1dc7, type: 2}
+  layer2: {fileID: 11400000, guid: 26064a55faaffcb4f8547757acdf1dc7, type: 2}
+  hasRelation: 1

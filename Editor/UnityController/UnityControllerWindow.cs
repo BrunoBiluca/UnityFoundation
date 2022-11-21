@@ -1,12 +1,13 @@
 using UnityEditor;
 using UnityEngine;
+using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.Editor
 {
     public class UnityControllerWindow : EditorWindow
     {
         private const string windowName = "Unity Controller";
-        private const string path = UnityFoundationWindowConfig.BASE_PATH + windowName;
+        private const string path = UnityFoundationEditorConfig.BASE_WINDOW_PATH + windowName;
         private const string EDITOR_PREFS_AUTO_REFRESH = "kAutoRefresh";
 
         [MenuItem(path)]
