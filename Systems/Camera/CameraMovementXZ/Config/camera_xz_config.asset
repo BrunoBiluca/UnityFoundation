@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2847324cd9524948aea5ad93934396b, type: 3}
+  m_Name: camera_xz_config
+  m_EditorClassIdentifier: 
+  <CameraSpeed>k__BackingField: 20
+  <MoveLimitsX>k__BackingField:
+    start: -20
+    end: 20
+  <MoveLimitsY>k__BackingField:
+    start: 2
+    end: 10
+  <MoveLimitsZ>k__BackingField:
+    start: -20
+    end: 20
+  <EnableEdgeMovement>k__BackingField: 0
+  <EdgeOffset>k__BackingField: 10
+  <EnableZoom>k__BackingField: 1
+  <ZoomAmount>k__BackingField: 2
+  <ZoomSpeed>k__BackingField: 5
+  <EnabledXRotation>k__BackingField: 1
+  <XRotationAngle>k__BackingField:
+    start: 15
+    end: 50
+  <EnabledYRotation>k__BackingField: 1
+  <YRotationSpeed>k__BackingField: 10
