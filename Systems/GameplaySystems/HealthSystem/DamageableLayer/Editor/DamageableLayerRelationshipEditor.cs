@@ -54,6 +54,12 @@ namespace Assets.UnityFoundation.Systems.HealthSystem.HealthSystemEditor
                 currentRelationship.layers.Add(CreateInstance<DamageableLayer>());
             }
 
+            if(GUILayout.Button("Remove Layer"))
+            {
+                Undo.RecordObject(currentRelationship, "Remove new layer");
+                currentRelationship.layers.Remove(currentRelationship.layers.Last());
+            }
+
             EditorGUILayout.LabelField("Relationships");
 
             GUILayout.BeginHorizontal();
