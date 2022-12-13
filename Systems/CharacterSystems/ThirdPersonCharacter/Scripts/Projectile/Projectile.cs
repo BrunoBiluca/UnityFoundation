@@ -19,6 +19,8 @@ namespace UnityFoundation.ThirdPersonCharacter
         public void Awake()
         {
             rb = GetComponent<Rigidbody>();
+            rb.mass = 0f;
+            rb.useGravity = false;
             capsuleCollider = GetComponent<CapsuleCollider>();
             capsuleCollider.isTrigger = true;
         }

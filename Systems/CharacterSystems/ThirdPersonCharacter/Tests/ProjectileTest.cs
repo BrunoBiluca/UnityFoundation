@@ -47,7 +47,7 @@ namespace UnityFoundation.ThirdPersonCharacter.Tests
         [UnityTest]
         [RequiresPlayMode]
         [TestCaseSource(nameof(ShouldHitTestCaseSource))]
-        public IEnumerator ShouldHitBeforeHitCollider(
+        public IEnumerator Should_hit_collider_when(
             float speed, float colliderPos, float waitForSeconds
         )
         {
