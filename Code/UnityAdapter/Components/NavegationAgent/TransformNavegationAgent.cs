@@ -56,8 +56,8 @@ namespace UnityFoundation.Code.UnityAdapter
 
             if(DistanceMagnitude() <= StoppingDistance)
             {
-                OnReachDestination?.Invoke();
                 ResetPath();
+                OnReachDestination?.Invoke();
                 return;
             }
         }

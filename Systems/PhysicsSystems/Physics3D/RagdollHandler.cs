@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityFoundation.Code.UnityAdapter;
-using static UnityEngine.GraphicsBuffer;
 
 namespace UnityFoundation.Physics3D
 {

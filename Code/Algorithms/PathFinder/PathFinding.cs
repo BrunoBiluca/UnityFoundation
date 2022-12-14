@@ -6,61 +6,41 @@ using Unity.Collections;
 
 namespace UnityFoundation.Code.Algorithms
 {
-    public class PathFinding {
-
+    public partial class PathFinding
+    {
         public const int MOVE_DIAGONAL_COST = 14;
         public const int MOVE_STRAIGHT_COST = 10;
 
         public bool debug;
 
-        public Int2 grid;
+        public GridSize grid;
 
         public List<int> blockablePosisitions;
 
         public Int2 startPosition;
         public Int2 endPosition;
 
-        public PathFinding(Int2 grid, bool debug = false) {
+        public PathFinding(GridSize grid, bool debug = false)
+        {
             this.grid = grid;
             blockablePosisitions = new List<int>();
             this.debug = debug;
         }
 
-        public struct PathNode {
-            public int x;
-            public int y;
-
-            public int index;
-
-            // Custo de andar um nó
-            public int gCost;
-            // Custo da heurística até o endNode
-            public int hCost;
-            // Custo total do nó
-            private int fCost;
-            public int FCost {
-                get { return gCost + hCost; }
-            }
-
-            public bool isWalkable;
-
-            public int cameFromNodeIndex;
-
-            public override string ToString() {
-                return $"index: {index}\n - x: {x} - y: {y}\n - gCost: {gCost} - hCost: {hCost}\n - fCost: {FCost}";
-            }
+        public void AddBlocked(Int2 position)
+        {
+            blockablePosisitions.Add(GridIndex(position.X, position.Y));
         }
 
-        public void SetIsWalkable(Vector2 position, bool v) {
-            blockablePosisitions.Add(GridIndex((int)position.x, (int)position.y));
-        }
+        public IEnumerable<Int2> FindPath(Int2 startPosition, Int2 endPosition)
+        {
+            var gridNodes = new NativeArray<PathNode>(grid.Height * grid.Width, Allocator.Temp);
 
-        public IEnumerable<Int2> FindPath(Int2 startPosition, Int2 endPosition) {
-            var gridNodes = new NativeArray<PathNode>(grid.Y * grid.X, Allocator.Temp);
-
-            for(int x = 0; x < grid.X; x++) {
-                for(int y = 0; y < grid.Y; y++) {
-                    var gridIndex = y + x * grid.Y;
+            for(int x = 0; x < grid.Width; x++)
+            {
+                for(int y = 0; y < grid.Height; y++)
+                {
+                    var gridIndex = y + x * grid.Height;
                     var pathNode = new PathNode() {
                         x = x,
                         y = y,
@@ -87,7 +67,8 @@ namespace UnityFoundation.Code.Algorithms
             openNodes.Add(startNode.index);
 
             var endNodeIndex = GridIndex(endPosition.X, endPosition.Y);
-            while(openNodes.Count > 0) {
+            while(openNodes.Count > 0)
+            {
                 var currentNode = GetNodeWithLowestCost(gridNodes, openNodes);
 
                 if(currentNode.index == endNodeIndex)
@@ -96,14 +77,16 @@ namespace UnityFoundation.Code.Algorithms
                 openNodes.Remove(currentNode.index);
                 closedNodes.Add(currentNode.index);
 
-                foreach(var item in OpenNeighbors(currentNode, gridNodes, closedNodes)) {
+                foreach(var item in OpenNeighbors(currentNode, gridNodes, closedNodes))
+                {
                     var neighbor = item;
 
                     if(!openNodes.Contains(neighbor.index))
                         openNodes.Add(neighbor.index);
 
                     var tentativeCost = currentNode.gCost + CalculateDistanceCost(currentNode, neighbor);
-                    if(neighbor.gCost > tentativeCost) {
+                    if(neighbor.gCost > tentativeCost)
+                    {
                         neighbor.gCost = tentativeCost;
                         neighbor.cameFromNodeIndex = currentNode.index;
                     }
@@ -112,19 +95,22 @@ namespace UnityFoundation.Code.Algorithms
                 }
             }
 
-            if(gridNodes[endNodeIndex].cameFromNodeIndex == -1) {
+            if(gridNodes[endNodeIndex].cameFromNodeIndex == -1)
+            {
                 yield return new Int2(-1, -1);
                 yield break;
             }
 
             var nodeIndex = endNodeIndex;
             var path = new List<int>();
-            while(nodeIndex != -1) {
+            while(nodeIndex != -1)
+            {
                 path.Insert(0, nodeIndex);
                 nodeIndex = gridNodes[nodeIndex].cameFromNodeIndex;
             }
 
-            if(debug) {
+            if(debug)
+            {
                 Debug.Log(
                     path.Aggregate(
                         "",
@@ -133,20 +119,23 @@ namespace UnityFoundation.Code.Algorithms
                 );
             }
 
-            foreach(var node in path) {
+            foreach(var node in path)
+            {
                 yield return GridPosition(node);
             }
         }
 
-        public Int2 GridPosition(int nodeIndex) {
-            var xPos = nodeIndex / grid.Y;
+        public Int2 GridPosition(int nodeIndex)
+        {
+            var xPos = nodeIndex / grid.Height;
             return new Int2(
                 xPos,
-                nodeIndex - xPos * grid.Y
+                nodeIndex - xPos * grid.Height
             );
         }
 
-        private IEnumerable<PathNode> OpenNeighbors(PathNode currentNode, NativeArray<PathNode> gridNodes, List<int> closedNodes) {
+        private IEnumerable<PathNode> OpenNeighbors(PathNode currentNode, NativeArray<PathNode> gridNodes, List<int> closedNodes)
+        {
             var neighbors = new List<Int2>() {
             new Int2(1, 0), // up
             new Int2(0, 1), // right
@@ -157,9 +146,10 @@ namespace UnityFoundation.Code.Algorithms
             new Int2(-1, -1), // down left
             new Int2(1, -1) // up left
         };
-            foreach(var neighbor in neighbors) {
+            foreach(var neighbor in neighbors)
+            {
                 var neighborPos = new Int2(
-                    currentNode.x + neighbor.X, 
+                    currentNode.x + neighbor.X,
                     currentNode.y + neighbor.Y
                 );
                 if(!IsInsideGrid(neighborPos.X, neighborPos.Y)) continue;
@@ -172,16 +162,20 @@ namespace UnityFoundation.Code.Algorithms
             }
         }
 
-        private bool IsInsideGrid(int x, int y) {
-            return x >= 0 && x < grid.X
-                && y >= 0 && y < grid.Y;
+        private bool IsInsideGrid(int x, int y)
+        {
+            return x >= 0 && x < grid.Width
+                && y >= 0 && y < grid.Height;
         }
 
-        public PathNode GetNodeWithLowestCost(NativeArray<PathNode> gridNodes, List<int> openNodes) {
+        public PathNode GetNodeWithLowestCost(NativeArray<PathNode> gridNodes, List<int> openNodes)
+        {
             var node = gridNodes[openNodes.First()];
-            for(int index = 0; index < openNodes.Count; index++) {
+            for(int index = 0; index < openNodes.Count; index++)
+            {
                 var gridIndex = openNodes[index];
-                if(gridNodes[gridIndex].FCost < node.FCost) {
+                if(gridNodes[gridIndex].FCost < node.FCost)
+                {
                     node = gridNodes[gridIndex];
                 }
             }
@@ -191,11 +185,13 @@ namespace UnityFoundation.Code.Algorithms
             return node;
         }
 
-        private int GridIndex(int x, int y) {
-            return y + x * grid.Y;
+        private int GridIndex(int x, int y)
+        {
+            return y + x * grid.Height;
         }
 
-        private int CalculateDistanceCost(Int2 startPosition, Int2 endPosition) {
+        private int CalculateDistanceCost(Int2 startPosition, Int2 endPosition)
+        {
             var distanceX = Math.Abs(endPosition.X - startPosition.X);
             var distanceY = Math.Abs(endPosition.Y - startPosition.Y);
 
@@ -204,13 +200,33 @@ namespace UnityFoundation.Code.Algorithms
             return MOVE_DIAGONAL_COST * Math.Min(distanceX, distanceY) + MOVE_STRAIGHT_COST * distanceStraight;
         }
 
-        private int CalculateDistanceCost(PathNode startNode, PathNode endNode) {
+        private int CalculateDistanceCost(PathNode startNode, PathNode endNode)
+        {
             var distanceX = Math.Abs(endNode.x - startNode.x);
             var distanceY = Math.Abs(endNode.y - startNode.y);
 
             var distanceStraight = Math.Abs(distanceX - distanceY);
 
             return MOVE_DIAGONAL_COST * Math.Min(distanceX, distanceY) + MOVE_STRAIGHT_COST * distanceStraight;
+        }
+
+        public string GetStringRepresentation()
+        {
+            var str = "Grid representation\n";
+            str += "=>  _ is walkable\n";
+            str += "=>  # is blocked\n\n";
+
+            for(int y = 0; y < grid.Height; y++)
+            {
+                var line = "";
+                for(int x = 0; x < grid.Width; x++)
+                {
+                    line += blockablePosisitions.Contains(GridIndex(x, y)) ? "# " : "_  ";
+                }
+                str += line + "\n";
+            }
+            
+            return str;
         }
     }
 }

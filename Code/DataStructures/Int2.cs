@@ -21,5 +21,18 @@ namespace UnityFoundation.Code
             x = (int)vector.x;
             y = (int)vector.y;
         }
+
+        public override string ToString()
+        {
+            return $"({x}, {y})";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if(obj is Int2 other)
+                return other.x == x && other.y == y;
+
+            return base.Equals(obj);
+        }
     }
 }
