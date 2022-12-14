@@ -9,6 +9,7 @@
 
         uint MaxAmount { get; }
         bool IsFull { get; }
+        bool IsEmpty { get; }
 
         void FullReffil();
 

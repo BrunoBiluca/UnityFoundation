@@ -11,7 +11,7 @@ namespace UnityFoundation.ResourceManagement
         private readonly uint maxAmount;
         public uint MaxAmount => maxAmount;
 
-        public bool Empty => currentAmount == 0;
+        public bool IsEmpty => currentAmount == 0;
 
         public bool IsFull => maxAmount == currentAmount;
 

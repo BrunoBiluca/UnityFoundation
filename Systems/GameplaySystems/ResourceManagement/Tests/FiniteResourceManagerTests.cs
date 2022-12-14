@@ -46,7 +46,7 @@ namespace UnityFoundation.ResourceManagement.Tests
             var ammo = storage.GetAmount(requestAmmo);
 
             Assert.AreEqual(requestAmmo, ammo);
-            Assert.IsTrue(storage.Empty);
+            Assert.IsTrue(storage.IsEmpty);
         }
 
         [Test]

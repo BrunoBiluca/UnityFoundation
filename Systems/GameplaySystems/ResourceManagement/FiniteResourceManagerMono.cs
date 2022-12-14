@@ -18,6 +18,8 @@ namespace UnityFoundation.ResourceManagement
 
         public bool IsFull => storage.IsFull;
 
+        public bool IsEmpty => storage.IsEmpty;
+
         public void Add(uint amount) => storage.Add(amount);
 
         public void FullReffil() => storage.FullReffil();
