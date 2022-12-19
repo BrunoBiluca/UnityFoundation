@@ -8,6 +8,8 @@ namespace UnityFoundation.Code
         where TProjectile : IProjectile, new()
     {
         [SerializeField] private GameObject projectilePrefab;
+        [SerializeField] private GameObject explosionPrefab;
+
         private GameObject projObj;
         private IProjectile proj;
 
@@ -39,6 +41,9 @@ namespace UnityFoundation.Code
         private void ResetProjectile()
         {
             proj = null;
+            if(explosionPrefab != null)
+                Instantiate(explosionPrefab, projObj.transform.position, Quaternion.identity);
+
             Destroy(projObj);
         }
 
