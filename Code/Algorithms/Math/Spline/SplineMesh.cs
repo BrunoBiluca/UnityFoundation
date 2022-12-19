@@ -6,7 +6,7 @@ namespace UnityFoundation.Code.Spline
 {
     public class SplineMesh : MonoBehaviour
     {
-        [SerializeField] private SplineMonoBehaviour spline;
+        [SerializeField] private SplineMono spline;
 
         [Range(min: 10, max: 200)]
         [SerializeField] private float meshSubdivisions = 100f;
@@ -17,7 +17,7 @@ namespace UnityFoundation.Code.Spline
 
         private void Awake()
         {
-            if(spline == null) spline = GetComponent<SplineMonoBehaviour>();
+            if(spline == null) spline = GetComponent<SplineMono>();
             meshFilter = GetComponent<MeshFilter>();
         }
 

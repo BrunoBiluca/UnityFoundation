@@ -25,7 +25,7 @@ namespace UnityFoundation.Code.Grid.Tests
         public void Should_return_all_cells_when_grid_was_only_initialized()
         {
             var grid = new WorldGridXZ<string>(Vector3.zero, 2, 2, 1);
-            var gridManager = new WorldGridXZManager<string>(grid);
+            var gridManager = new WorldGridManager<string>(grid);
 
             var cells = gridManager.GetAllAvailableCells().Count();
 
@@ -38,7 +38,7 @@ namespace UnityFoundation.Code.Grid.Tests
             var grid = new WorldGridXZ<string>(Vector3.zero, 2, 2, 1);
             grid.Fill("filled");
 
-            var gridManager = new WorldGridXZManager<string>(grid)
+            var gridManager = new WorldGridManager<string>(grid)
                 .ApplyValidator(new EmptyCellGridValidation<string>());
 
             var cells = gridManager.GetAllAvailableCells().Count();
@@ -50,7 +50,7 @@ namespace UnityFoundation.Code.Grid.Tests
         public void Should_return_some_cells_when_values_are_set()
         {
             var grid = new WorldGridXZ<TestGridValue>(Vector3.zero, 2, 2, 1);
-            var gridManager = new WorldGridXZManager<TestGridValue>(grid)
+            var gridManager = new WorldGridManager<TestGridValue>(grid)
                 .ApplyValidator(new EmptyCellGridValidation<TestGridValue>());
 
             grid.TrySetValue(Vector3.zero, new TestGridValue() { text = "zero" });
@@ -65,7 +65,7 @@ namespace UnityFoundation.Code.Grid.Tests
         public void Should_return_some_cells_when_values_are_updated()
         {
             var grid = new WorldGridXZ<TestGridValue>(Vector3.zero, 2, 2, 1);
-            var gridManager = new WorldGridXZManager<TestGridValue>(grid)
+            var gridManager = new WorldGridManager<TestGridValue>(grid)
                 .ApplyValidator(new EmptyCellGridValidation<TestGridValue>());
 
             grid.TrySetValue(Vector3.zero, new TestGridValue());
@@ -83,7 +83,7 @@ namespace UnityFoundation.Code.Grid.Tests
         public void Should_return_cell_available_when_cell_is_empty_and_in_range()
         {
             var grid = new WorldGridXZ<string>(Vector3.zero, 2, 2, 1);
-            var gridManager = new WorldGridXZManager<string>(grid);
+            var gridManager = new WorldGridManager<string>(grid);
 
             gridManager.ApplyValidator(
                 new EmptyCellGridValidation<string>(),

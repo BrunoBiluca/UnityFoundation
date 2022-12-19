@@ -5,7 +5,7 @@ using UnityFoundation.Code;
 
 namespace UnityFoundation.Tools.Spline
 {
-    public class SplineMonoBehaviour : MonoBehaviour
+    public class SplineMono : MonoBehaviour
     {
         [SerializeField] private bool closedLoop;
 

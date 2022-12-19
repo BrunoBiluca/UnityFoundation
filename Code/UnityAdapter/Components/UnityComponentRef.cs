@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityFoundation.Code.DebugHelper;
 
 namespace UnityFoundation.Code.UnityAdapter
 {
@@ -11,6 +12,7 @@ namespace UnityFoundation.Code.UnityAdapter
     public class UnityComponentRef<T> : IComponentState where T : Component
     {
         private readonly T reference;
+        private string referenceName;
 
         public event Action OnInvalidState;
 
@@ -19,6 +21,8 @@ namespace UnityFoundation.Code.UnityAdapter
         public UnityComponentRef(T reference)
         {
             this.reference = reference;
+            referenceName = reference.name;
+            IsValid = reference != null;
         }
 
         public void Ref(Action<T> call)
@@ -48,6 +52,7 @@ namespace UnityFoundation.Code.UnityAdapter
 
         private void SetInvalidState()
         {
+            UnityDebug.I.LogHighlight(referenceName, "Reference state is invalid");
             IsValid = false;
             OnInvalidState?.Invoke();
         }

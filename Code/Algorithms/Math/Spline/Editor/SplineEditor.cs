@@ -4,14 +4,14 @@ using UnityFoundation.Tools.Spline;
 
 namespace UnityFoundation.Tools.SplineEditor
 {
-    [CustomEditor(typeof(SplineMonoBehaviour))]
+    [CustomEditor(typeof(SplineMono))]
     public class SplineEditor : Editor
     {
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
 
-            var currentSpline = (SplineMonoBehaviour)target;
+            var currentSpline = (SplineMono)target;
 
             if(GUILayout.Button("Add Anchor"))
             {
@@ -53,7 +53,7 @@ namespace UnityFoundation.Tools.SplineEditor
 
         private void OnSceneGUI()
         {
-            var currentSpline = (SplineMonoBehaviour)target;
+            var currentSpline = (SplineMono)target;
             foreach(var anchor in currentSpline.Anchors)
             {
                 DrawAnchor(currentSpline, anchor);
@@ -62,7 +62,7 @@ namespace UnityFoundation.Tools.SplineEditor
             DrawBezierCurve(currentSpline);
         }
 
-        private void DrawBezierCurve(SplineMonoBehaviour spline)
+        private void DrawBezierCurve(SplineMono spline)
         {
             for(int i = 0; i < spline.Anchors.Count - 1; i++)
             {
@@ -98,7 +98,7 @@ namespace UnityFoundation.Tools.SplineEditor
         }
 
         private void DrawAnchor(
-            SplineMonoBehaviour spline,
+            SplineMono spline,
             SplineAnchor anchor
         )
         {
@@ -125,7 +125,7 @@ namespace UnityFoundation.Tools.SplineEditor
         }
 
         private void DrawAnchorSidePoints(
-            SplineMonoBehaviour spline, SplinePoint point, Color sphereColor
+            SplineMono spline, SplinePoint point, Color sphereColor
         )
         {
             Handles.color = sphereColor;
@@ -139,7 +139,7 @@ namespace UnityFoundation.Tools.SplineEditor
         }
 
         private static void SplinePointPositionHandler(
-            SplineMonoBehaviour currentSpline,
+            SplineMono currentSpline,
             SplinePoint point
         )
         {

@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace UnityFoundation.Code.Grid
 {
-    public class WorldGridXZManager<T>
+    public class WorldGridManager<T>
     {
         public IWorldGridXZ<T> Grid { get; private set; }
 
         public List<IGridValidation<T>> gridValidations;
 
-        public WorldGridXZManager(
+        public WorldGridManager(
             IWorldGridXZ<T> worldGrid
         )
         {
@@ -44,7 +44,7 @@ namespace UnityFoundation.Code.Grid
             return default;
         }
 
-        public WorldGridXZManager<T> ApplyValidator(params IGridValidation<T>[] gridValidations)
+        public WorldGridManager<T> ApplyValidator(params IGridValidation<T>[] gridValidations)
         {
             this.gridValidations = gridValidations.ToList();
             return this;

@@ -6,7 +6,7 @@ namespace UnityFoundation.Tools.Spline
 {
     public class SplineFollower : MonoBehaviour
     {
-        [SerializeField] private SplineMonoBehaviour spline;
+        [SerializeField] private SplineMono spline;
 
         [SerializeField] private float followDuration = 1f;
 
@@ -20,7 +20,7 @@ namespace UnityFoundation.Tools.Spline
         private float backAndForthDirection = 1;
 
         public SplineFollower Setup(
-            SplineMonoBehaviour spline,
+            SplineMono spline,
             SplineFollowBehaviour followBehaviour
         )
         {
