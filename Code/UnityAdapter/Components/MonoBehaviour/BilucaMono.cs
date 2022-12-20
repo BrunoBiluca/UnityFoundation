@@ -9,10 +9,14 @@ namespace UnityFoundation.Code.UnityAdapter
 
         public event Action OnObjectDestroyed;
 
+        public ITransform Transform { get; private set; }
+
         public void Awake()
         {
             if(!TryGetComponent(out destroyBehaviour))
                 destroyBehaviour = gameObject.AddComponent<UnityDestroyBehaviour>();
+
+            Transform = new TransformDecorator(transform);
 
             OnAwake();
         }
