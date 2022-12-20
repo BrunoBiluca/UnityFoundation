@@ -14,12 +14,15 @@ namespace UnityFoundation.Code.Grid
 
         public bool ForceSetValue { get; set; } = false;
 
+        public GridXZConfig Config { get; private set; }
+
         public GridXZ(int width, int depth, int cellSize)
             : this(width, depth, cellSize, () => default)
         { }
 
         public GridXZ(int width, int depth, int cellSize, Func<TValue> valueFactory)
         {
+            Config = new GridXZConfig() { Width = width, Depth = depth, CellSize = cellSize };
             Width = width;
             Depth = depth;
             CellSize = cellSize;

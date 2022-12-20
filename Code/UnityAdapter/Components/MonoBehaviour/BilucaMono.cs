@@ -14,13 +14,12 @@ namespace UnityFoundation.Code.UnityAdapter
             if(!TryGetComponent(out destroyBehaviour))
                 destroyBehaviour = gameObject.AddComponent<UnityDestroyBehaviour>();
 
-            destroyBehaviour.OnBeforeDestroy(() => OnObjectDestroyed?.Invoke());
-
             OnAwake();
         }
 
         public void Destroy()
         {
+            OnObjectDestroyed?.Invoke();
             destroyBehaviour.Destroy();
         }
 

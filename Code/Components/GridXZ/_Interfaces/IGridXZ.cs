@@ -2,7 +2,7 @@
 
 namespace UnityFoundation.Code.Grid
 {
-    public interface IGridXZ<TValue>
+    public interface IGridXZ<TValue> : IGridXZBase
     {
         int Width { get; }
         int Depth { get; }

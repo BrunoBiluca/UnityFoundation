@@ -5,7 +5,7 @@ using UnityFoundation.Tools.Spline;
 namespace UnityFoundation.Tools.SplineEditor
 {
     [CustomEditor(typeof(SplineMono))]
-    public class SplineEditor : Editor
+    public class SplineEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

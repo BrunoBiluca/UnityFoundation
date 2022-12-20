@@ -19,6 +19,8 @@ namespace UnityFoundation.Code.Grid
         public int Depth => grid.Depth;
         public GridCellXZ<T>[,] Cells => grid.Cells;
 
+        public GridXZConfig Config { get; private set; }
+
         public WorldGridXZ(
             Vector3 initialPosition, int width, int depth, int cellSize
         ) : this(initialPosition, width, depth, cellSize, () => default)
@@ -29,6 +31,7 @@ namespace UnityFoundation.Code.Grid
             Vector3 initialPosition, int width, int depth, int cellSize, Func<T> valueFactory
         )
         {
+            Config = new GridXZConfig() { Width = width, Depth = depth, CellSize = cellSize };
             InitialPosition = initialPosition;
             CellSize = cellSize;
             WidthPosition = MapGridToWorld(

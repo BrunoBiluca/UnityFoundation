@@ -1,17 +1,18 @@
 using UnityEngine;
+using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.Code.Grid
 {
-    public abstract class WorldGridXZMono<T> : MonoBehaviour
+    public abstract class WorldGridXZMono<T> : BilucaMono, IGridXZBase
     {
         public IWorldGridXZ<T> Grid { get; private set; }
 
-        [SerializeField] private GridXZConfig config;
+        [field: SerializeField] public GridXZConfig Config { get; private set; }
 
-        public void Awake()
+        protected override void OnAwake()
         {
             if(Grid == null)
-                Setup(config);
+                Setup(Config);
         }
 
         public void Setup(GridXZConfig config)

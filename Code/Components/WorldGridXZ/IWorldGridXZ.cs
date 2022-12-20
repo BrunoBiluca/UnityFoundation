@@ -3,8 +3,12 @@ using UnityEngine;
 
 namespace UnityFoundation.Code.Grid
 {
+    public interface IGridXZBase
+    {
+        GridXZConfig Config { get; }
+    }
 
-    public interface IWorldGridXZ<T>
+    public interface IWorldGridXZ<T> : IGridXZBase
     {
         Vector3 InitialPosition { get; }
         Vector3 WidthPosition { get; }
