@@ -46,6 +46,7 @@ namespace UnityFoundation.WorldCursors
 
             EvaluateWorldPosition();
 
+            // TODO: configurar essas ações de acordo com a configuração do Input Actions
             if(Mouse.current.leftButton.wasPressedThisFrame)
                 OnClick?.Invoke();
 
