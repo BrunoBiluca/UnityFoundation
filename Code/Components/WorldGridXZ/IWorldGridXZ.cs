@@ -8,6 +8,9 @@ namespace UnityFoundation.Code.Grid
         GridXZConfig Config { get; }
     }
 
+    // TODO: separar o que é valor T do que é implementação sem o valor da célula
+    // dessa forma podemos ter IWorldGridXZ e IWorldGridXZ<>
+    // onde o IWorldGridXZ normal não tem valor contido
     public interface IWorldGridXZ<T> : IGridXZBase
     {
         Vector3 InitialPosition { get; }
