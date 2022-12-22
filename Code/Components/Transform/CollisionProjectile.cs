@@ -21,7 +21,7 @@ namespace UnityFoundation.Code
 
         public void OnEnable()
         {
-            destroyBehaviour.Destroy(1f);
+            Obj.DestroyBehaviour.Destroy(1f);
         }
 
         public void Setup(int direction)
@@ -36,7 +36,7 @@ namespace UnityFoundation.Code
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            destroyBehaviour.Destroy();
+            Obj.DestroyBehaviour.Destroy();
 
             OnHit?.Invoke(new GameObjectDecorator(collision.gameObject));
         }

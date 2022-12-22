@@ -3,13 +3,15 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace UnityFoundation.UI.Menus.GameOverMenu
+namespace UnityFoundation.UI
 {
     public class GameOverMenu : MonoBehaviour
     {
         private Transform menu;
         private TextMeshProUGUI winnerText;
         private Button actionButton;
+        private TextMeshProUGUI actionButtonText;
+
         protected virtual void OnAwake() { }
         protected virtual void OnStart() { }
 
@@ -17,13 +19,12 @@ namespace UnityFoundation.UI.Menus.GameOverMenu
         {
             menu = transform.Find("menu");
 
-            winnerText = menu
-                .Find("winner_text")
-                .GetComponent<TextMeshProUGUI>();
+            winnerText = menu.Find("winner_text").GetComponent<TextMeshProUGUI>();
 
-            actionButton = menu
-                .Find("action_button")
-                .GetComponent<Button>();
+            var actionButtonGO = menu.Find("action_button");
+            actionButton = actionButtonGO.GetComponent<Button>();
+            actionButtonText = actionButtonGO.Find("text").GetComponent<TextMeshProUGUI>();
+            actionButton.onClick.AddListener(Hide);
 
             Hide();
 
@@ -33,22 +34,28 @@ namespace UnityFoundation.UI.Menus.GameOverMenu
         private void Start()
         {
             OnStart();
+
+            SetupByAnnexedComponent();
         }
 
-        public virtual GameOverMenu Setup(
+        public void SetupByAnnexedComponent()
+        {
+            if(!TryGetComponent(out IGameOverAction action))
+                return;
+
+            actionButtonText.text = action.Name;
+            actionButton.onClick.AddListener(action.Execute);
+        }
+
+        public GameOverMenu Setup(
             string actionButtonName,
             UnityAction actionButtonBehaviour
         )
         {
-            actionButton.transform
-                .Find("text")
-                .GetComponent<TextMeshProUGUI>()
-                .text = actionButtonName;
+            actionButtonText.text = actionButtonName;
 
-            actionButton.onClick.AddListener(() => {
-                Hide();
-                actionButtonBehaviour();
-            });
+            actionButton.onClick.RemoveAllListeners();
+            actionButton.onClick.AddListener(actionButtonBehaviour);
 
             return this;
         }

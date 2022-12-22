@@ -96,7 +96,7 @@ namespace UnityFoundation.HealthSystem
             OnDied?.Invoke();
 
             if(DestroyHealthBarOnDied) Destroy(healthBarComponent);
-            if(DestroyOnDied) Destroy();
+            if(DestroyOnDied) Obj.Destroy();
         }
 
         public void SetGuardDamage(Func<bool> callback)

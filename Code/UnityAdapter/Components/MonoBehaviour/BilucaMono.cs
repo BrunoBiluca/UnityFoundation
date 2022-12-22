@@ -1,32 +1,24 @@
-using System;
-using UnityEngine;
+using UnityFoundation.Code.DebugHelper;
 
 namespace UnityFoundation.Code.UnityAdapter
 {
-    public abstract class BilucaMono : MonoBehaviour, IDestroyable
+
+    public abstract class BilucaMono : ObjectSingleton<BilucaMonoInstance>, IBilucaLoggable
     {
-        protected IDestroyBehaviour destroyBehaviour;
+        public ITransform Transform => Obj.Transform;
+        public IBilucaLogger Logger { get => Obj.Logger; set => Obj.Logger = value; }
 
-        public event Action OnObjectDestroyed;
-
-        public ITransform Transform { get; private set; }
-
-        public void Awake()
+        protected override BilucaMonoInstance CreateInstance()
         {
-            if(!TryGetComponent(out destroyBehaviour))
-                destroyBehaviour = gameObject.AddComponent<UnityDestroyBehaviour>();
+            var inst = new BilucaMonoInstance();
 
-            Transform = new TransformDecorator(transform);
+            if(TryGetComponent(out IDestroyBehaviour destroyBehaviour))
+                inst.DestroyBehaviour = destroyBehaviour;
+            else
+                inst.DestroyBehaviour = gameObject.AddComponent<UnityDestroyBehaviour>();
 
-            OnAwake();
+            inst.Transform = new TransformDecorator(transform);
+            return inst;
         }
-
-        public void Destroy()
-        {
-            OnObjectDestroyed?.Invoke();
-            destroyBehaviour.Destroy();
-        }
-
-        protected virtual void OnAwake() { }
     }
 }
