@@ -9,20 +9,12 @@ namespace UnityFoundation.Code.UnityAdapter
 
         public void Destroy()
         {
-#if !UNITY_EDITOR
             Destroy(gameObject);
-#else
-            DestroyImmediate(gameObject);
-#endif
         }
 
         public void Destroy(float time)
         {
-#if !UNITY_EDITOR
             Destroy(gameObject, time);
-#else
-            DestroyImmediate(gameObject);
-#endif
         }
 
         public void OnBeforeDestroy(Action preDestroyAction)
