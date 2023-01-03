@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityFoundation.HealthSystem;
 
-namespace Assets.UnityFoundation.Systems.HealthSystem
+namespace UnityFoundation.UI.Components
 {
     public class SpriteChangeColor : MonoBehaviour, IHealthBar
     {

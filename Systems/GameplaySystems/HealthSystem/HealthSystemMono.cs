@@ -8,16 +8,9 @@ namespace UnityFoundation.HealthSystem
     {
         [SerializeField] private bool setupOnStart = false;
 
-        // TODO: criar aqui uma annotation de restrição
-        // para elementos que possui um component IHealthBar
-        [SerializeField]
-        private GameObject healthBarComponent;
-        private IHealthBar healthBar;
-
         [SerializeField] private float baseHealth;
 
         [SerializeField] private float currentHealth;
-        [field: SerializeField] public bool DestroyHealthBarOnDied { get; set; }
 
         public float BaseHealth => healthSystem.BaseHealth;
         public float CurrentHealth => healthSystem.CurrentHealth;
@@ -47,22 +40,6 @@ namespace UnityFoundation.HealthSystem
                 Setup(baseHealth);
         }
 
-        private void HealthBarReference()
-        {
-            if(healthBar == null && healthBarComponent != null)
-            {
-                healthBar = healthBarComponent.GetComponent<IHealthBar>();
-                return;
-            }
-
-            healthBar ??= gameObject.GetComponentInChildren<IHealthBar>();
-        }
-
-        public void SetHealthBar(IHealthBar bar)
-        {
-            healthBar = bar;
-        }
-
         public void SetDamageableLayerManager(DamageableLayerManager manager)
         {
             damageableLayerManager = manager;
@@ -77,8 +54,6 @@ namespace UnityFoundation.HealthSystem
 
             healthSystem.Setup(baseHealth);
 
-            HealthBarReference();
-            healthBar?.Setup(baseHealth);
         }
 
         private void FullyHealHandler()
@@ -95,7 +70,6 @@ namespace UnityFoundation.HealthSystem
         {
             OnDied?.Invoke();
 
-            if(DestroyHealthBarOnDied) Destroy(healthBarComponent);
             if(DestroyOnDied) Obj.Destroy();
         }
 
@@ -110,9 +84,6 @@ namespace UnityFoundation.HealthSystem
                 return;
 
             healthSystem.Damage(amount, layer);
-
-            if(healthBarComponent != null)
-                healthBar?.SetCurrentHealth(CurrentHealth);
         }
 
         private bool CanInflictDamage(DamageableLayer layer)
@@ -135,13 +106,11 @@ namespace UnityFoundation.HealthSystem
         public void Heal(float amount)
         {
             healthSystem.Heal(amount);
-            healthBar?.SetCurrentHealth(CurrentHealth);
         }
 
         public void HealFull()
         {
             healthSystem.HealFull();
-            healthBar?.SetCurrentHealth(CurrentHealth);
         }
     }
 }

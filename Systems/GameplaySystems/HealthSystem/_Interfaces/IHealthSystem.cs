@@ -1,10 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
 namespace UnityFoundation.HealthSystem
 {
-    public interface IHealthSystem : IHasHealth, IDamageable, IHealable
+    public interface IHealthSystem : IDamageable, IHealable
     {
+        float BaseHealth { get; }
+        float CurrentHealth { get; }
+        bool IsDead { get; }
+
+        event Action OnDied;
+
+        void Setup(float baseHealth);
     }
 }
