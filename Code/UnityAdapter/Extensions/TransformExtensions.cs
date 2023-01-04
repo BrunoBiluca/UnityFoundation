@@ -1,4 +1,5 @@
 ﻿using Codice.Client.Common.GameUI;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,17 +13,17 @@ namespace UnityFoundation.Code
             => FindTransform(transform, SplitPath(path));
 
         public static Transform FindTransform(this Transform transform, params string[] path)
-            => TransformUtils.FindComponent<Transform>(transform, path);
+            => FindComponent<Transform>(transform, path);
 
         public static T FindComponent<T>(this Transform transform, string path)
-            => TransformUtils.FindComponent<T>(transform, path.Split('.'));
+            => FindComponent<T>(transform, SplitPath(path));
 
         public static T FindComponent<T>(this Transform transform, params string[] path)
             => TransformUtils.FindComponent<T>(transform, path);
 
         public static T[] FindComponentsInChildren<T>(this Transform transform, string path)
             where T : Component
-            => TransformUtils.FindComponentsInChildren<T>(transform, path.Split('.'));
+            => FindComponentsInChildren<T>(transform, SplitPath(path));
 
         public static T[] FindComponentsInChildren<T>(this Transform transform, params string[] path)
             where T : Component
@@ -36,6 +37,9 @@ namespace UnityFoundation.Code
             foreach(Transform child in transform)
                 yield return child;
         }
+
+        public static void Setup<T>(this Transform transform, string path, Action<T> setupCallback)
+            => setupCallback(FindComponent<T>(transform, path));
 
         private static string[] SplitPath(string path) => path.Split('.');
     }
