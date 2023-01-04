@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Codice.Client.Common.GameUI;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityFoundation.Code
@@ -8,7 +9,7 @@ namespace UnityFoundation.Code
         public static Vector3 Down(this Transform transform) => transform.up * -1f;
 
         public static Transform FindTransform(this Transform transform, string path)
-            => TransformUtils.FindComponent<Transform>(transform, path.Split('.'));
+            => FindTransform(transform, SplitPath(path));
 
         public static Transform FindTransform(this Transform transform, params string[] path)
             => TransformUtils.FindComponent<Transform>(transform, path);
@@ -35,5 +36,7 @@ namespace UnityFoundation.Code
             foreach(Transform child in transform)
                 yield return child;
         }
+
+        private static string[] SplitPath(string path) => path.Split('.');
     }
 }
