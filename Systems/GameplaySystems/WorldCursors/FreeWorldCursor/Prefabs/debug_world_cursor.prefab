@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <DestroyOnLoad>k__BackingField: 1
-  worldCursorObj: {fileID: 9084109615034568914}
+  worldCursorObj: {fileID: 0}
   <DebugMode>k__BackingField: 1
 --- !u!1 &9084109616055054540
 GameObject:

@@ -2,17 +2,15 @@ using UnityEngine;
 
 namespace UnityFoundation.Code.UnityAdapter
 {
-    public class VisibilityHandlerMono : MonoBehaviour, IVisible
+    public class ViewerMono : MonoBehaviour, IVisible
     {
-        private VisibilityHandler visibility;
+        private Viewer visibility;
 
         [field: SerializeField] public bool StartVisible { get; set; }
 
         public void Awake()
         {
-            visibility = new VisibilityHandler(
-                new GameObjectDecorator(gameObject)
-            ) {
+            visibility = new Viewer(gameObject.Decorate()) {
                 StartVisible = StartVisible
             };
         }

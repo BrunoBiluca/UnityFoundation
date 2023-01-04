@@ -2,13 +2,13 @@ using UnityFoundation.Code;
 
 namespace UnityFoundation.Code.UnityAdapter
 {
-    public class VisibilityHandler : IVisible
+    public class Viewer : IVisible
     {
         public IGameObject gameObject;
 
         public bool StartVisible { get; set; }
 
-        public VisibilityHandler(IGameObject gameObject)
+        public Viewer(IGameObject gameObject)
         {
             this.gameObject = gameObject;
 

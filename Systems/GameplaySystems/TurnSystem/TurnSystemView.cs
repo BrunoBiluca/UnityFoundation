@@ -11,7 +11,7 @@ namespace UnityFoundation.TurnSystem
         private ITurnSystem turnSystem;
         private TextMeshProUGUI text;
         private Button endTurnButton;
-        private VisibilityHandlerMono enemyTurnDisplay;
+        private ViewerMono enemyTurnDisplay;
 
         public void Awake()
         {
@@ -19,12 +19,12 @@ namespace UnityFoundation.TurnSystem
 
             endTurnButton = transform
                 .FindComponent<Button>("end_turn_button");
-            endTurnButton.gameObject.AddComponent<VisibilityHandlerMono>().Show();
+            endTurnButton.gameObject.AddComponent<ViewerMono>().Show();
 
             endTurnButton.onClick.AddListener(EndPlayerTurn);
 
             enemyTurnDisplay = transform
-                .FindComponent<VisibilityHandlerMono>("enemy_turn_display");
+                .FindComponent<ViewerMono>("enemy_turn_display");
         }
 
         public void Setup(ITurnSystem turnSystem)
@@ -41,13 +41,13 @@ namespace UnityFoundation.TurnSystem
         {
             turnSystem.EndPlayerTurn();
 
-            endTurnButton.GetComponent<VisibilityHandlerMono>().Hide();
+            endTurnButton.GetComponent<ViewerMono>().Hide();
             enemyTurnDisplay.Show();
         }
 
         private void EndEnemyTurn()
         {
-            endTurnButton.GetComponent<VisibilityHandlerMono>().Show();
+            endTurnButton.GetComponent<ViewerMono>().Show();
             enemyTurnDisplay.Hide();
         }
 

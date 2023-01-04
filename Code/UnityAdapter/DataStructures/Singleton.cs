@@ -11,9 +11,7 @@ namespace UnityFoundation.Code
                 if(instance == null)
                 {
                     var className = typeof(T).Name;
-                    instance = new GameObject(className)
-                        .AddComponent<T>();
-
+                    instance = new GameObject(className).AddComponent<T>();
                     instance.Awake();
                     Debug.LogWarning($"{className} was created automatically and was not found on scene. Is this the expected behaviour?");
                 }

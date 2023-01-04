@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.ComponentModel;
+using UnityEngine;
 using UnityFoundation.Code;
 
 namespace UnityFoundation.WorldCursors
@@ -11,9 +13,16 @@ namespace UnityFoundation.WorldCursors
         [SerializeField] private GameObject worldCursorObj;
         [field: SerializeField] private bool DebugMode { get; set; }
 
-        public void Start()
+        protected override void OnStart()
         {
-            worldCursor = worldCursorObj.GetComponent<IWorldCursor>();
+            worldCursor = worldCursorObj != null
+                ? worldCursorObj.GetComponent<IWorldCursor>()
+                : GameObjectUtils.FindInScene<IWorldCursor>();
+
+            if(worldCursor == null)
+                throw new ArgumentException(
+                    $"{nameof(FreeWorldCursorDebug)} not found a {nameof(IWorldCursor)}"
+                );
 
             debugVisual = transform.Find("debug_visual").gameObject;
             debugVisual.SetActive(DebugMode);
@@ -21,16 +30,14 @@ namespace UnityFoundation.WorldCursors
 
         public void Update()
         {
-            if(worldCursor == null) return;
+            if(!DebugMode) return;
+            if(worldCursor != null) return;
 
-            if(DebugMode)
-            {
-                worldCursor.WorldPosition.Some(pos => {
-                    debugVisual.SetActive(true);
-                    transform.position = pos;
-                })
-                .OrElse(() => debugVisual.SetActive(false));
-            }
+            worldCursor.WorldPosition.Some(pos => {
+                debugVisual.SetActive(true);
+                transform.position = pos;
+            })
+            .OrElse(() => debugVisual.SetActive(false));
         }
     }
 }

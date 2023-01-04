@@ -1,12 +1,5 @@
-using log4net.Util;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
-using UnityEngine;
-using UnityFoundation.Code.DebugHelper;
 using UnityFoundation.Code.Grid;
-using UnityFoundation.Tools.Spline;
 
 namespace UnityFoundation.Editor
 {

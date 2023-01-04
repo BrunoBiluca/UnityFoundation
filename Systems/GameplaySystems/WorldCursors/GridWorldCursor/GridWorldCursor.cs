@@ -35,6 +35,9 @@ namespace UnityFoundation.WorldCursors
 
         public void Update()
         {
+            if(raycastHandler == null) return;
+            if(worldGrid == null) return;
+
             UpdateCursor();
         }
 

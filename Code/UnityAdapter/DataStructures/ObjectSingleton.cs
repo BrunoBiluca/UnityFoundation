@@ -18,7 +18,7 @@ namespace UnityFoundation.Code.UnityAdapter
             if(!TryGetComponent(out ObjectSingletonInstance instance))
             {
                 instance = gameObject.AddComponent<ObjectSingletonInstance>();
-                instance.Set<T>(CreateInstance());
+                instance.Set(CreateInstance());
             }
             Obj = instance.Get<T>();
         }
