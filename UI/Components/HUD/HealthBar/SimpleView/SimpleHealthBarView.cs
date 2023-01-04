@@ -36,9 +36,14 @@ namespace UnityFoundation.UI.Components
             var healthRatio = 1f - currHealth / baseHealth;
 
             progressBar.sizeDelta = new Vector2(
-                - healthRatio * baseRect.sizeDelta.x,
+                - healthRatio * baseRect.rect.width,
                 progressBar.sizeDelta.y
             );
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
         }
     }
 }
