@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace UnityFoundation.Code
 {
+    /// <summary>
+    /// Class responsible to evaluate simple expressions.
+    /// Should be used to hold references for evaluations that will be used over the same code.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public sealed partial class Evaluation<T>
     {
         public static Evaluation<T> Create(Func<T> callback)
