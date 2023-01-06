@@ -1,0 +1,24 @@
+{
+    "name": "UnityFoundation.ActorSystem.Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:203209f72313a6749b2a25387aebaa5c",
+        "GUID:3375a51da77e5794fa6b41d2598ad8d9",
+        "GUID:d7d703d7ba19f3c45b01309621aede27",
+        "GUID:56de67b70740b014a8b08bb241006e29"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Moq.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
