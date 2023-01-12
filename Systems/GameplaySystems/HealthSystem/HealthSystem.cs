@@ -10,7 +10,7 @@ namespace UnityFoundation.HealthSystem
 
         public float CurrentHealth { get; private set; }
 
-        private Evaluation<float> currentHealthEval;
+        private ValueEvaluation<float> currentHealthEval;
 
         public bool IsDead { get; private set; }
 
@@ -43,7 +43,7 @@ namespace UnityFoundation.HealthSystem
             BaseHealth = baseHealth;
             CurrentHealth = baseHealth;
 
-            currentHealthEval = Evaluation<float>.Create(() => CurrentHealth);
+            currentHealthEval = ValueEvaluation<float>.Create(() => CurrentHealth);
             currentHealthEval
                 .If((health) => health <= 0f)
                 .Do(() => {

@@ -9,7 +9,7 @@ namespace UnityFoundation.CharacterSystem.ActorSystem.Tests
     {
         public class ContextBuilder
         {
-            public Mock<IAPActionIntent> MockIntent { get; private set; }
+            public Mock<IAPIntent> MockIntent { get; private set; }
 
             public EventTest CantExecuteAction { get; private set; }
 
@@ -20,7 +20,7 @@ namespace UnityFoundation.CharacterSystem.ActorSystem.Tests
             public ContextBuilder()
             {
                 isActionSet = false;
-                MockIntent = new Mock<IAPActionIntent>();
+                MockIntent = new Mock<IAPIntent>();
                 var action = new Mock<IAction>();
                 action.Setup(a => a.Execute()).Raises(a => a.OnFinishAction += null);
                 MockIntent.Setup(i => i.Create()).Returns(action.Object);

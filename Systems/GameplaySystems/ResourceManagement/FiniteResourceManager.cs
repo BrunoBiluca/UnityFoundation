@@ -60,5 +60,10 @@ namespace UnityFoundation.ResourceManagement
         {
             currentAmount -= amount;
         }
+
+        public void Emptify()
+        {
+            currentAmount = 0;
+        }
     }
 }

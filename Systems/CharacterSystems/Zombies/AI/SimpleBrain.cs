@@ -128,7 +128,7 @@ namespace UnityFoundation.Zombies
 
             try
             {
-                Update(context);
+                EvaluateDecisions(context);
             }
             catch(MissingReferenceException)
             {

@@ -12,7 +12,7 @@ namespace UnityFoundation.Zombies
             this.player = player;
         }
 
-        public override bool OnHandle(SimpleBrainContext context)
+        protected override bool OnDecide(SimpleBrainContext context)
         {
             if(player == null)
                 return false;

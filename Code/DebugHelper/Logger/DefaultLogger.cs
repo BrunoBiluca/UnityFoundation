@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace UnityFoundation.Code.DebugHelper
 {
@@ -46,6 +47,12 @@ namespace UnityFoundation.Code.DebugHelper
         {
             if(!CanLogWarn) return;
             Handler.Warn(string.Join(" ", message));
+        }
+
+        public void Error(Exception exception)
+        {
+            if(!CanLogError) return;
+            Handler.Error(exception.Message);
         }
     }
 }

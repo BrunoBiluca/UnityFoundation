@@ -1,6 +1,6 @@
 namespace UnityFoundation.CharacterSystem.ActorSystem
 {
-    public interface IAPActionIntent : IActionIntent
+    public interface IAPIntent : IIntent
     {
         int ActionPointsCost { get; set; }
     }

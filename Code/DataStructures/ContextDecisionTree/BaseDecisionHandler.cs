@@ -17,19 +17,17 @@
             return this;
         }
 
-        public void Handle(TContext context)
+        public void Decide(TContext context)
         {
-            if(OnHandle(context))
+            if(OnDecide(context))
             {
-                if(nextHandler != null)
-                    nextHandler.Handle(context);
+                nextHandler?.Decide(context);
                 return;
             }
 
-            if(failedHandler != null)
-                failedHandler.Handle(context);
+            failedHandler?.Decide(context);
         }
 
-        public abstract bool OnHandle(TContext context);
+        protected abstract bool OnDecide(TContext context);
     }
 }

@@ -12,6 +12,7 @@
         bool IsEmpty { get; }
 
         void FullReffil();
+        void Emptify();
 
         uint GetAmount(uint amount);
         void Add(uint amount);

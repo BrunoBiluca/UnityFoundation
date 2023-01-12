@@ -14,7 +14,7 @@ namespace UnityFoundation.Zombies
             this.player = player;
         }
 
-        public override bool OnHandle(SimpleBrainContext context)
+        protected override bool OnDecide(SimpleBrainContext context)
         {
             var distance = Vector3.Distance(context.Body.position, player.position);
             return distance <= minDistance;

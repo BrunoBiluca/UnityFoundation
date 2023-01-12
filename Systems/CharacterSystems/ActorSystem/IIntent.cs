@@ -1,6 +1,6 @@
 namespace UnityFoundation.CharacterSystem.ActorSystem
 {
-    public interface IActionIntent
+    public interface IIntent
     {
         bool ExecuteImmediatly { get; }
 

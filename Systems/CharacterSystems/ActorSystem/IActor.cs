@@ -3,7 +3,7 @@ using UnityFoundation.Code;
 
 namespace UnityFoundation.CharacterSystem.ActorSystem
 {
-    public partial interface IActor<TFactory> where TFactory : IActionIntent
+    public partial interface IActor<TFactory> where TFactory : IIntent
     {
         event Action OnCantExecuteAction;
         event Action OnActionFinished;

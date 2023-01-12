@@ -27,5 +27,7 @@ namespace UnityFoundation.ResourceManagement
         public uint GetAmount(uint amount) => storage.GetAmount(amount);
 
         public bool TrySubtract(uint amount) => storage.TrySubtract(amount);
+
+        public void Emptify() => storage.Emptify();
     }
 }

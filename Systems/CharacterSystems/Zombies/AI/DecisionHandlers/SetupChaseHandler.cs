@@ -12,7 +12,7 @@ namespace UnityFoundation.Zombies
             this.player = player;
         }
 
-        public override bool OnHandle(SimpleBrainContext context)
+        protected override bool OnDecide(SimpleBrainContext context)
         {
             context.IsChasing = true;
             context.IsRunning = true;

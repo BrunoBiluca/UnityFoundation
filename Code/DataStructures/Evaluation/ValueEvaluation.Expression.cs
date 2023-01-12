@@ -2,16 +2,16 @@
 
 namespace UnityFoundation.Code
 {
-    public sealed partial class Evaluation<T>
+    public sealed partial class ValueEvaluation<T>
     {
         public sealed class Expression
         {
-            private readonly Evaluation<T> evaluate;
+            private readonly ValueEvaluation<T> evaluate;
 
             public Func<T, bool> Condition { get; private set; }
             public Action Action { get; private set; }
 
-            public Expression(Evaluation<T> evaluate)
+            public Expression(ValueEvaluation<T> evaluate)
             {
                 this.evaluate = evaluate;
             }
@@ -22,7 +22,7 @@ namespace UnityFoundation.Code
                 return this;
             }
 
-            public Evaluation<T> Do(Action action)
+            public ValueEvaluation<T> Do(Action action)
             {
                 Action = action;
                 return evaluate;

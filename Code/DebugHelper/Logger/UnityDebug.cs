@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace UnityFoundation.Code.DebugHelper
@@ -37,6 +38,12 @@ namespace UnityFoundation.Code.DebugHelper
         {
             logger.Setup(LogLevel);
             logger.LogWarning(message);
+        }
+
+        public void Error(Exception exception)
+        {
+            logger.Setup(LogLevel);
+            logger.Error(exception);
         }
     }
 }

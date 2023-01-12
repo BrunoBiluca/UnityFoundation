@@ -5,10 +5,11 @@ using UnityFoundation.ResourceManagement;
 
 namespace UnityFoundation.CharacterSystem.ActorSystem
 {
-    public class APActor : IAPActor
+    public class APActor : IAPActor, IBilucaLoggable
     {
-        public Optional<IAPActionIntent> Intent { get; private set; }
+        public Optional<IAPIntent> Intent { get; private set; }
         public IResourceManager ActionPoints { get; private set; }
+        public IBilucaLogger Logger { get; set; }
 
         public event Action OnCantExecuteAction;
         public event Action OnActionFinished;
@@ -17,13 +18,13 @@ namespace UnityFoundation.CharacterSystem.ActorSystem
 
         public APActor(IResourceManager actionPoints)
         {
-            Intent = Optional<IAPActionIntent>.None();
+            Intent = Optional<IAPIntent>.None();
             ActionPoints = actionPoints;
         }
 
         public void Execute()
         {
-            if(!Intent.IsPresentAndGet(out IAPActionIntent intent))
+            if(!Intent.IsPresentAndGet(out IAPIntent intent))
                 return;
 
             if(ActionPoints.CurrentAmount < (uint)intent.ActionPointsCost)
@@ -57,26 +58,26 @@ namespace UnityFoundation.CharacterSystem.ActorSystem
 
         public void InvokeFinishAction()
         {
-            UnityDebug.I.Log(nameof(currentAction.OnFinishAction));
+            Logger?.Log(nameof(currentAction.OnFinishAction));
             ActionPoints.TrySubtract((uint)Intent.Get().ActionPointsCost);
             OnActionFinished?.Invoke();
         }
 
-        public void Set(IAPActionIntent intent)
+        public void Set(IAPIntent intent)
         {
             if(intent == null)
                 throw new ArgumentNullException(
                     "Set action factory should not be null, use UnsetAction instead."
                 );
 
-            Intent = Optional<IAPActionIntent>.Some(intent);
+            Intent = Optional<IAPIntent>.Some(intent);
             if(intent.ExecuteImmediatly)
                 Execute();
         }
 
         public void UnsetAction()
         {
-            Intent = Optional<IAPActionIntent>.None();
+            Intent = Optional<IAPIntent>.None();
         }
     }
 }

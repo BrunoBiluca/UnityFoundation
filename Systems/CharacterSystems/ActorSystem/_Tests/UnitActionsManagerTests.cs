@@ -54,7 +54,7 @@ namespace UnityFoundation.CharacterSystem.ActorSystem.Tests
         {
             var actionManager = context.WithInitialActionPoints(0).Build();
 
-            var mockAction = new Mock<IAPActionIntent>();
+            var mockAction = new Mock<IAPIntent>();
             mockAction.SetupGet(a => a.ActionPointsCost).Returns(2);
             mockAction.SetupGet(a => a.ExecuteImmediatly).Returns(true);
             actionManager.Set(mockAction.Object);

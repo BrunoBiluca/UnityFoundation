@@ -8,23 +8,23 @@ namespace UnityFoundation.Code
     /// Should be used to hold references for evaluations that will be used over the same code.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public sealed partial class Evaluation<T>
+    public sealed partial class ValueEvaluation<T>
     {
-        public static Evaluation<T> Create(Func<T> callback)
+        public static ValueEvaluation<T> Create(Func<T> callback)
         {
-            return new Evaluation<T>(callback);
+            return new ValueEvaluation<T>(callback);
         }
 
         private readonly List<Expression> expressions;
 
         public Func<T> Callback { get; }
 
-        public Evaluation()
+        public ValueEvaluation()
         {
             expressions = new List<Expression>();
         }
 
-        public Evaluation(Func<T> callback) : this()
+        public ValueEvaluation(Func<T> callback) : this()
         {
             Callback = callback;
         }

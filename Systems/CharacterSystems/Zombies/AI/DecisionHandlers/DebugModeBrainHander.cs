@@ -12,7 +12,7 @@ namespace UnityFoundation.Zombies
         {
             this.settings = settings;
         }
-        public override bool OnHandle(SimpleBrainContext context)
+        protected override bool OnDecide(SimpleBrainContext context)
         {
             if(!context.DebugMode)
                 return true;
