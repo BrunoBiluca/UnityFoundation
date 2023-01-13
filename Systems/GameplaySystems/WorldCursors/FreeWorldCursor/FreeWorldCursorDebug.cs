@@ -15,23 +15,26 @@ namespace UnityFoundation.WorldCursors
 
         protected override void OnStart()
         {
+            GetWorldCursorRef();
+            debugVisual = transform.Find("debug_visual").gameObject;
+            debugVisual.SetActive(DebugMode);
+        }
+
+        private void GetWorldCursorRef()
+        {
             worldCursor = worldCursorObj != null
                 ? worldCursorObj.GetComponent<IWorldCursor>()
                 : GameObjectUtils.FindInScene<IWorldCursor>();
-
-            if(worldCursor == null)
-                throw new ArgumentException(
-                    $"{nameof(FreeWorldCursorDebug)} not found a {nameof(IWorldCursor)}"
-                );
-
-            debugVisual = transform.Find("debug_visual").gameObject;
-            debugVisual.SetActive(DebugMode);
         }
 
         public void Update()
         {
             if(!DebugMode) return;
-            if(worldCursor != null) return;
+            if(worldCursor != null)
+            {
+                GetWorldCursorRef();
+                return;
+            }
 
             worldCursor.WorldPosition.Some(pos => {
                 debugVisual.SetActive(true);
