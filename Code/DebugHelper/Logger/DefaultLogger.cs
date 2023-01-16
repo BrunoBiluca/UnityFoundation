@@ -52,7 +52,9 @@ namespace UnityFoundation.Code.DebugHelper
         public void Error(Exception exception)
         {
             if(!CanLogError) return;
-            Handler.Error(exception.Message);
+
+            var errorMessage = $"{exception.Message}\n{exception.StackTrace}\n";
+            Handler.Error(errorMessage);
         }
     }
 }
