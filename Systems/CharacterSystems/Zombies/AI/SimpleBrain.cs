@@ -33,7 +33,7 @@ namespace UnityFoundation.Zombies
         }
     }
 
-    public class SimpleBrain : DecisionTree<SimpleBrainContext>, IAIBrain
+    public class SimpleBrain : BaseDecisionTree<SimpleBrainContext>, IAIBrain
     {
         private readonly SimpleBrainContext context;
         private readonly Settings settings;
@@ -65,9 +65,10 @@ namespace UnityFoundation.Zombies
             Transform body
         )
         {
-            context = new SimpleBrainContext();
             this.settings = settings;
-            context.Body = body;
+            context = new SimpleBrainContext {
+                Body = body
+            };
 
             DefaultDecisionTree();
         }
@@ -84,7 +85,7 @@ namespace UnityFoundation.Zombies
                 )
             );
 
-            SetRootHandler(resetStateHandler);
+            Root = resetStateHandler;
         }
 
         public void SetPlayer(GameObject player)
@@ -128,7 +129,7 @@ namespace UnityFoundation.Zombies
 
             try
             {
-                EvaluateDecisions(context);
+                Evaluate();
             }
             catch(MissingReferenceException)
             {
@@ -146,6 +147,11 @@ namespace UnityFoundation.Zombies
             context.IsEnabled = false;
             context.ResetStates();
             context.TargetPosition = Optional<Vector3>.None();
+        }
+
+        public override SimpleBrainContext InitilizeContext()
+        {
+            return context;
         }
 
         [Serializable]

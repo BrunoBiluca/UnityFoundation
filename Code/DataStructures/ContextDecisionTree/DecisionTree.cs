@@ -1,31 +1,19 @@
-﻿using System;
-
-namespace UnityFoundation.Code
+﻿namespace UnityFoundation.Code
 {
-    public abstract class DecisionTree<TContext>
+
+    public class DecisionTree<TContext> : BaseDecisionTree<TContext>
     {
-        private IDecisionHandler<TContext> rootHandler;
-        protected TContext Context { get; set; }
+        private readonly TContext initialContext;
 
-        protected void SetRootHandler(IDecisionHandler<TContext> handler)
+        public DecisionTree() { }
+        public DecisionTree(TContext context)
         {
-            rootHandler = handler;
+            initialContext = context;
         }
 
-        public void EvaluateDecisions(TContext context)
+        public override TContext InitilizeContext()
         {
-            if(rootHandler == null)
-                throw new InvalidOperationException("No root handler was setup.");
-
-            if(context == null)
-                throw new InvalidOperationException("No context was setup.");
-
-            rootHandler.Decide(context);
-        }
-
-        public void EvaluateDecisions()
-        {
-            EvaluateDecisions(Context);
+            return initialContext ?? default;
         }
     }
 }
