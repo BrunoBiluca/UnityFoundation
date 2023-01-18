@@ -3,7 +3,6 @@ using UnityFoundation.Code.DebugHelper;
 
 namespace UnityFoundation.Code.UnityAdapter
 {
-
     public abstract class BilucaMono : 
         ObjectSingleton<BilucaMonoInstance>, 
         IDestroyable,

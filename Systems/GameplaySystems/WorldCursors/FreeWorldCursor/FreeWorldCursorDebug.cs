@@ -13,7 +13,7 @@ namespace UnityFoundation.WorldCursors
         [SerializeField] private GameObject worldCursorObj;
         [field: SerializeField] private bool DebugMode { get; set; }
 
-        protected override void OnStart()
+        protected override void OnAwake()
         {
             GetWorldCursorRef();
             debugVisual = transform.Find("debug_visual").gameObject;
@@ -30,7 +30,7 @@ namespace UnityFoundation.WorldCursors
         public void Update()
         {
             if(!DebugMode) return;
-            if(worldCursor != null)
+            if(worldCursor == null)
             {
                 GetWorldCursorRef();
                 return;
@@ -38,7 +38,7 @@ namespace UnityFoundation.WorldCursors
 
             worldCursor.WorldPosition.Some(pos => {
                 debugVisual.SetActive(true);
-                transform.position = pos;
+                debugVisual.transform.position = pos;
             })
             .OrElse(() => debugVisual.SetActive(false));
         }

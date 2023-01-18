@@ -9,6 +9,8 @@ namespace UnityFoundation.Code
         event Action OnSelectedStateChange;
 
         bool IsSelected { get; }
+        object SelectedReference { get; }
+
         void SetSelected(bool state);
     }
 }

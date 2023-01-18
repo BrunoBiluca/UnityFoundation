@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UnityFoundation.HealthSystem
 {
-    public class HealthSystemMono : BilucaMono, IHealthSystem
+    public sealed class HealthSystemMono : BilucaMono, IHealthSystem
     {
         [SerializeField] private bool setupOnStart = false;
 
@@ -34,6 +34,20 @@ namespace UnityFoundation.HealthSystem
 
         private IHealthSystem healthSystem;
 
+        protected override void OnAwake()
+        {
+            healthSystem = new HealthSystem();
+            healthSystem.OnFullyHeal += FullyHealHandler;
+            healthSystem.OnTakeDamage += TakeDamageHandler;
+            healthSystem.OnDied += DieHandler;
+
+            OnObjectDestroyed += () => {
+                healthSystem.OnFullyHeal -= FullyHealHandler;
+                healthSystem.OnTakeDamage -= TakeDamageHandler;
+                healthSystem.OnDied -= DieHandler;
+            };
+        }
+
         public void Start()
         {
             if(setupOnStart)
@@ -47,13 +61,7 @@ namespace UnityFoundation.HealthSystem
 
         public void Setup(float baseHealth)
         {
-            healthSystem = new HealthSystem();
-            healthSystem.OnFullyHeal += FullyHealHandler;
-            healthSystem.OnTakeDamage += TakeDamageHandler;
-            healthSystem.OnDied += DieHandler;
-
             healthSystem.Setup(baseHealth);
-
         }
 
         private void FullyHealHandler()

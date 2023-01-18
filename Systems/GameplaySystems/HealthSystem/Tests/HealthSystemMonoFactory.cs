@@ -6,7 +6,9 @@ namespace UnityFoundation.HealthSystem.Tests
     {
         public IHealthSystem Create()
         {
-            return new GameObject("health").AddComponent<HealthSystemMono>();
+            var healthSystem = new GameObject("health").AddComponent<HealthSystemMono>();
+            healthSystem.Awake();
+            return healthSystem;
         }
     }
 }

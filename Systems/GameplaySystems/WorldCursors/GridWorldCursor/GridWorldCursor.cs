@@ -22,13 +22,17 @@ namespace UnityFoundation.WorldCursors
         public event Action OnClick;
         public event Action OnSecondaryClick;
 
+        protected override void OnAwake()
+        {
+            ScreenPosition = Optional<Vector2>.None();
+            WorldPosition = Optional<Vector3>.None();
+        }
+
         public void Setup(
             IRaycastHandler raycastHandler,
             IWorldGridXZ<T> worldGrid
         )
         {
-            ScreenPosition = Optional<Vector2>.None();
-            WorldPosition = Optional<Vector3>.None();
             this.raycastHandler = raycastHandler;
             this.worldGrid = worldGrid;
         }

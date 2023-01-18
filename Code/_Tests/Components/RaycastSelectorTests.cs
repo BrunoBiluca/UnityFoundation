@@ -54,7 +54,6 @@ namespace UnityFoundation.Code.Tests
 
             Assert.That(selected.IsPresent, Is.True);
             Assert.That(selector.CurrentUnit.IsPresent, Is.True);
-
         }
     }
 }
