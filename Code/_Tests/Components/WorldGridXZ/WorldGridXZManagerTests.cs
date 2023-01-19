@@ -94,7 +94,79 @@ namespace UnityFoundation.Code.Grid.Tests
             Assert.That(gridManager.IsCellAvailable(grid.Cells[0, 1]), Is.True);
             Assert.That(gridManager.IsCellAvailable(grid.Cells[1, 0]), Is.True);
             Assert.That(gridManager.IsCellAvailable(grid.Cells[1, 1]), Is.False);
+        }
 
+        [Test]
+        public void Should_have_available_cells_if_meets_any_condition()
+        {
+            var grid = new WorldGridXZ<string>(Vector3.zero, 2, 2, 1);
+            var gridManager = new WorldGridManager<string>(grid);
+
+            grid.Cells[0, 0].Value = "no";
+            grid.Cells[0, 1].Value = "test_1";
+            grid.Cells[1, 0].Value = "no";
+            grid.Cells[1, 1].Value = "test_2";
+
+            gridManager.ApplyValidator(
+                new OrValidation<string>(
+                    new CellValueValidation<string>(v => v == "test_1"),
+                    new CellValueValidation<string>(v => v == "test_2")
+                )
+            );
+
+            Assert.That(gridManager.IsCellAvailable(grid.Cells[0, 0]), Is.False);
+            Assert.That(gridManager.IsCellAvailable(grid.Cells[0, 1]), Is.True);
+            Assert.That(gridManager.IsCellAvailable(grid.Cells[1, 0]), Is.False);
+            Assert.That(gridManager.IsCellAvailable(grid.Cells[1, 1]), Is.True);
+        }
+
+        [Test]
+        public void Should_not_have_available_cells_if_not_meet_any_condition()
+        {
+            var grid = new WorldGridXZ<string>(Vector3.zero, 2, 2, 1);
+            var gridManager = new WorldGridManager<string>(grid);
+
+            grid.Cells[0, 0].Value = "no";
+            grid.Cells[0, 1].Value = "no";
+            grid.Cells[1, 0].Value = "no";
+            grid.Cells[1, 1].Value = "no";
+
+            gridManager.ApplyValidator(
+                new OrValidation<string>(
+                    new CellValueValidation<string>(v => v == "test_1"),
+                    new CellValueValidation<string>(v => v == "test_2")
+                )
+            );
+
+            Assert.That(gridManager.IsCellAvailable(grid.Cells[0, 0]), Is.False);
+            Assert.That(gridManager.IsCellAvailable(grid.Cells[0, 1]), Is.False);
+            Assert.That(gridManager.IsCellAvailable(grid.Cells[1, 0]), Is.False);
+            Assert.That(gridManager.IsCellAvailable(grid.Cells[1, 1]), Is.False);
+        }
+
+
+        [Test]
+        public void Should_have_available_cells_if_meets_all_condition()
+        {
+            var grid = new WorldGridXZ<string>(Vector3.zero, 2, 2, 1);
+            var gridManager = new WorldGridManager<string>(grid);
+
+            grid.Cells[0, 0].Value = "test";
+            grid.Cells[0, 1].Value = "test";
+            grid.Cells[1, 0].Value = "test_2";
+            grid.Cells[1, 1].Value = "test_1";
+
+            gridManager.ApplyValidator(
+                new AndValidation<string>(
+                    new CellValueValidation<string>(v => v.Contains("test")),
+                    new CellValueValidation<string>(v => v.Contains("2"))
+                )
+            );
+
+            Assert.That(gridManager.IsCellAvailable(grid.Cells[0, 0]), Is.False);
+            Assert.That(gridManager.IsCellAvailable(grid.Cells[0, 1]), Is.False);
+            Assert.That(gridManager.IsCellAvailable(grid.Cells[1, 0]), Is.True);
+            Assert.That(gridManager.IsCellAvailable(grid.Cells[1, 1]), Is.False);
         }
     }
 }
