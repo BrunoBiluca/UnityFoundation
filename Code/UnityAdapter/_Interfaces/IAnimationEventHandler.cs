@@ -4,4 +4,9 @@ namespace UnityFoundation.Code.Extensions
     {
         void AnimationEventHandler(string eventName);
     }
+
+    public interface IAnimationEventHandler<T>
+    {
+        void AnimationEventHandler(T value);
+    }
 }

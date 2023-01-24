@@ -23,7 +23,7 @@ public class SettingsPanelController : MonoBehaviour
         settingsBtn.onClick.AddListener(() => OpenSettingsPanel());
 
         if(panelStartClosed)
-            CloseSettingsPanel();
+            settingsPanel.SetActive(false);
     }
 
     public void OpenSettingsPanel()
