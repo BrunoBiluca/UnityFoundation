@@ -21,6 +21,17 @@ namespace UnityFoundation.Code.UnityAdapter
             set { audioSource.loop = value; }
         }
 
+        public AudioClip AudioClip { 
+            get => audioSource.clip; 
+            set => audioSource.clip = value; 
+        }
+        public bool Mute { 
+            get => audioSource.mute; 
+            set => audioSource.mute = value; 
+        }
+
+        public bool IsPlaying => audioSource.isPlaying;
+
         public void Play(AudioClip clip)
         {
             audioSource.clip = clip;

@@ -9,5 +9,8 @@ namespace UnityFoundation.Code.UnityAdapter
 
         public static ITransform Decorate(this Transform transform)
             => new TransformDecorator(transform);
+
+        public static IAudioSource Decorate(this AudioSource source) 
+            => new AudioSourceDec(source);
     }
 }

@@ -2,7 +2,7 @@ Sistema de Settings para o jogo.
 
 É um sistema genérico que pode ser utilizado em qualquer jogo apenas importando seus scripts e prefabs.
 
-![exemplo de menu de settiing com algumas opções](../../Docs/settings_panel_demo.png)
+![exemplo de menu de settiing com algumas opções](../../../Docs/settings_panel_demo.png)
 
 # Forma de funcionamento
 
@@ -17,6 +17,18 @@ Controllers: são as classe que gerenciam os recursos dentro do jogo
 
 - AudioEffectsController
 - MusicController
+
+# Diagrama
+
+```mermaid
+classDiagram
+
+class ISettingsSaver {
+  <<interface>>
+}
+
+
+```
 
 ## Futuro
 

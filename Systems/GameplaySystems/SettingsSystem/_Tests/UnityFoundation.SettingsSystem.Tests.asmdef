@@ -1,0 +1,27 @@
+{
+    "name": "UnityFoundation.SettingsSystem.Tests",
+    "rootNamespace": "UnityFoundation.SettingsSystem.Tests",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "UnityFoundation.SettingsSystem",
+        "UnityFoundation.Code",
+        "UnityFoundation.TestUtility"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Moq.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

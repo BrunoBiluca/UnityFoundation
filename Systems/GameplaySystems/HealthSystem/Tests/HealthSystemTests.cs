@@ -6,7 +6,7 @@ namespace UnityFoundation.HealthSystem.Tests
 {
     [TestFixture(typeof(HealthSystemFactory), TestName = "Testing HealthSystem")]
     [TestFixture(typeof(HealthSystemMonoFactory), TestName = "Testing HealthSystemMono")]
-    public class HealthSystemTests<T> : MonoBehaviour where T : IHealthSystemFactory, new()
+    public class HealthSystemTests<T> where T : IHealthSystemFactory, new()
     {
         private IHealthSystem healthSystem;
 
