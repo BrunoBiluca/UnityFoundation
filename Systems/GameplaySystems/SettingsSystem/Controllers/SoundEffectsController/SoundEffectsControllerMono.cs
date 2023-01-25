@@ -7,8 +7,10 @@ using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.SettingsSystem
 {
+
     [RequireComponent(typeof(AudioSource))]
-    public class SoundEffectsControllerMono : MonoBehaviour, IBilucaLoggable
+    public class SoundEffectsControllerMono
+        : MonoBehaviour, IBilucaLoggable, ISoundEffectsController
     {
         [Serializable]
         public class Settings
