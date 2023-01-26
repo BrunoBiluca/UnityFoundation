@@ -9,58 +9,72 @@ namespace UnityFoundation.Code
 
     public sealed class DependencyContainer : IDependencyContainer
     {
-        private readonly Dictionary<Type, Type> registeredTypes = new();
-        private readonly Dictionary<Type, object> registeredObjects = new();
+        private readonly Dictionary<Type, IRegisteredType> types = new();
+
+        // utilizados para chamar uma função de callback quando o objeto é criado
         private readonly Dictionary<Type, Action<object>> registeredActions = new();
 
-        public void Register<TInterface, TImplementation>() where TImplementation : TInterface
+        public void Register<TInterface, TConcrete>() where TConcrete : TInterface
         {
             var interfaceType = typeof(TInterface);
-            var implType = typeof(TImplementation);
+            var concreteType = typeof(TConcrete);
 
-            Register(interfaceType, implType);
-            Register(implType, implType);
-            RegisterIfHasDependencySetup(implType);
+            // base type
+            IRegisteredType registeredType = new DefaulConstructorType(this, concreteType);
+
+            // check dependency setup type
+            var dependencySetupInterfaces = concreteType
+                .GetInterfaces()
+                .Where(DependencySetupType.HasDependencySetup)
+                .ToArray();
+
+            if(dependencySetupInterfaces.Length > 0)
+            {
+                registeredType = new DependencySetupType(this, registeredType);
+                foreach(var iface in dependencySetupInterfaces)
+                    foreach(var genericArgument in iface.GetGenericArguments())
+                        Register(genericArgument, new DefaulConstructorType(this, genericArgument));
+            }
+
+            // check container provide
+            var containerProvide = concreteType.GetInterface(nameof(IContainerProvide));
+            if(containerProvide != null)
+                registeredType = new ProvideContainerType(this, registeredType);
+
+
+            // register types
+            Register(interfaceType, registeredType);
+            Register(concreteType, registeredType);
         }
 
-        private void RegisterIfHasDependencySetup(Type implType)
+        public void Register<TConcrete>()
         {
-            var interfaces = implType.GetInterfaces();
-
-            foreach(var iface in interfaces.Where(HasDependencySetup))
-                foreach(var genericArgument in iface.GetGenericArguments())
-                    Register(genericArgument, genericArgument);
+            Register<TConcrete, TConcrete>();
         }
 
-        private bool HasDependencySetup(Type t)
+        public void Register<TConcrete>(TConcrete instance)
         {
-            return t.IsGenericType
-              && (
-                  t.GetGenericTypeDefinition() == typeof(IDependencySetup<>)
-                  || t.GetGenericTypeDefinition() == typeof(IDependencySetup<,>)
-                  || t.GetGenericTypeDefinition() == typeof(IDependencySetup<,,>)
-                  || t.GetGenericTypeDefinition() == typeof(IDependencySetup<,,,>)
-              );
+            var concreteType = typeof(TConcrete);
+            Register(concreteType, new ConstantInstanceType(concreteType, instance));
         }
 
-        public void Register<TImplementation>()
+        public void RegisterSingleton<TInterface, TConcrete>()
         {
-            Register<TImplementation, TImplementation>();
+            var interfaceType = typeof(TInterface);
+            var concreteType = typeof(TConcrete);
+            Register(
+                interfaceType,
+                new SingletonInstanceType(new DefaulConstructorType(this, concreteType))
+            );
+        }
+        private void Register(Type key, IRegisteredType registeredType)
+        {
+            types.TryAdd(key, registeredType);
         }
 
-        public void Register<TInterface>(Action<TInterface> creationAction)
+        public void RegisterAction<TInterface>(Action<TInterface> creationAction)
         {
             registeredActions[typeof(TInterface)] = (obj) => creationAction((TInterface)obj);
-        }
-
-        public void Register<TInterface>(TInterface instance)
-        {
-            registeredObjects[typeof(TInterface)] = instance;
-        }
-
-        public TInterface Create<TInterface>()
-        {
-            return (TInterface)Create(typeof(TInterface));
         }
 
         public void Setup<T>(IDependencySetup<T> instance)
@@ -76,36 +90,21 @@ namespace UnityFoundation.Code
             instance.Setup(Create<T1>(), Create<T2>());
         }
 
-        public void Register(Type key, Type impl)
+        public TInterface Create<TInterface>()
         {
-            if(registeredObjects.ContainsKey(key))
-                return;
-            registeredTypes[key] = impl;
+            return (TInterface)Create(typeof(TInterface));
         }
 
-        private object Create(Type type)
+        public object Create(Type type)
         {
-            if(registeredObjects.ContainsKey(type))
-                return registeredObjects[type];
-
-            if(!registeredTypes.ContainsKey(type))
+            if(!types.ContainsKey(type))
                 throw new TypeNotRegisteredException(type);
 
-            var concreteType = registeredTypes[type];
-            var defaultConstructor = concreteType.GetConstructors()[0];
+            var registeredType = types[type];
+            var instance = registeredType.Instantiate();
 
-            //Verify if the default constructor requires params
-            var defaultParams = defaultConstructor.GetParameters();
-
-            //Instantiate all constructor parameters using recursion
-            var parameters = defaultParams
-                .Select(param => Create(param.ParameterType))
-                .ToArray();
-
-            var instance = defaultConstructor.Invoke(parameters);
-
+            // TODO: PostCreationActions pode ser setado no momento do registro
             PostCreationActions(type, ref instance);
-            InjectDependencySetup(concreteType, ref instance);
 
             return instance;
         }
@@ -118,28 +117,6 @@ namespace UnityFoundation.Code
                     continue;
 
                 createdAction.Value(instance);
-            }
-        }
-
-        private void InjectDependencySetup(Type concreteType, ref object instance)
-        {
-            var hasDependendySetup = concreteType
-                .GetInterfaces()
-                .Any(HasDependencySetup);
-
-            if(hasDependendySetup)
-            {
-                // TODO: iterar apenas pelos métodos que implementam a interaface IDependencySetup
-                var allSetupMethods = concreteType
-                    .GetMethods()
-                    .Where(m => m.Name.Contains("Setup"));
-                foreach(var method in allSetupMethods)
-                {
-                    var methodParameters = method.GetParameters()
-                        .Select(param => Create(param.ParameterType))
-                        .ToArray();
-                    method.Invoke(instance, methodParameters);
-                }
             }
         }
     }
