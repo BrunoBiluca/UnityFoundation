@@ -3,23 +3,26 @@ using System.Linq;
 
 namespace UnityFoundation.Code
 {
-    public sealed class DefaulConstructorType : IRegisteredType
+
+    public sealed class DefaultConstructorType : IRegisteredType
     {
         public Type ConcreteType { get; }
-        private readonly IDependencyContainer container;
 
-        public DefaulConstructorType(IDependencyContainer container, Type concreteType)
+        public DefaultConstructorType(Type concreteType)
         {
-            this.container = container;
             ConcreteType = concreteType;
         }
 
-        public object Instantiate()
+        public object Instantiate(IDependencyContainer container)
         {
+            var constructors = ConcreteType.GetConstructors();
+            if(constructors.Length == 0)
+                throw new TypeWithNoDefaultConstructorException(ConcreteType);
+
             var defaultConstructor = ConcreteType.GetConstructors()[0];
             var defaultParams = defaultConstructor.GetParameters();
             var parameters = defaultParams
-                .Select(param => container.Create(param.ParameterType))
+                .Select(param => container.Resolve(param.ParameterType))
                 .ToArray();
 
             return defaultConstructor.Invoke(parameters);

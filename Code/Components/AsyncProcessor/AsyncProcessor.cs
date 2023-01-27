@@ -9,11 +9,12 @@ namespace UnityFoundation.Code
     {
         // TOOD: funciona apenas para um callback por vez,
         // essa lógica deve permitir executar para múltiplos callbacks
-        private Action<float> callbackEveryFrame;
+        private Action<float> callbackEveryFrameWithTime;
+        private Action callbackEveryFrame;
 
         public void ExecuteEveryFrame(Action<float> callback)
         {
-            callbackEveryFrame = callback;
+            callbackEveryFrameWithTime = callback;
         }
 
         public void ProcessAsync(Action action, float delay)
@@ -23,19 +24,24 @@ namespace UnityFoundation.Code
 
         public void ResetCallbackEveryFrame()
         {
-            callbackEveryFrame = null;
+            callbackEveryFrameWithTime = null;
+        }
+
+        public void ExecuteEveryFrame(Action callback)
+        {
+            callbackEveryFrame = callback;
         }
 
         private IEnumerator Callback(Action action, float delay)
         {
             yield return new WaitForSecondsRealtime(delay);
-
             action();
         }
 
         public void Update()
         {
-            callbackEveryFrame?.Invoke(Time.deltaTime);
+            callbackEveryFrame?.Invoke();
+            callbackEveryFrameWithTime?.Invoke(Time.deltaTime);
         }
     }
 }

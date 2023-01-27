@@ -1,61 +1,78 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace UnityFoundation.Code
 {
-    public sealed class DependencySetupType : IRegisteredType
+    public static class DependencySetupValidation
     {
         public static bool HasDependencySetup(Type t)
         {
             return t.IsGenericType
               && (
-                  t.GetGenericTypeDefinition() == typeof(IDependencySetup<>)
+                t.GetGenericTypeDefinition() == typeof(IDependencySetup<>)
                   || t.GetGenericTypeDefinition() == typeof(IDependencySetup<,>)
                   || t.GetGenericTypeDefinition() == typeof(IDependencySetup<,,>)
                   || t.GetGenericTypeDefinition() == typeof(IDependencySetup<,,,>)
               );
         }
 
-        private readonly IDependencyContainer container;
+        public static IEnumerable<MethodInfo> GetMethods(Type t)
+        {
+            var interfaces = t.GetInterfaces().Where(HasDependencySetup);
+
+            foreach(var i in interfaces)
+            {
+                var methods = t.GetMethods()
+                    .Where(m => m.ToString() == i.GetMethod("Setup").ToString());
+
+                foreach(var method in methods)
+                    yield return method;
+            }
+        }
+    }
+
+    public sealed class DependencySetupType : IRegisteredType
+    {
+
         private readonly IRegisteredType registeredType;
+        private readonly bool setupOnce;
+        private bool wasSetup = false;
 
         public Type ConcreteType => registeredType.ConcreteType;
 
-        public DependencySetupType(
-            IDependencyContainer container,
-            IRegisteredType registeredType
-        )
+        public DependencySetupType(IRegisteredType registeredType, bool setupOnce = false)
         {
-            this.container = container;
             this.registeredType = registeredType;
+            this.setupOnce = setupOnce;
         }
 
-        public object Instantiate()
+        public object Instantiate(IDependencyContainer container)
         {
-            var instance = registeredType.Instantiate();
-            SetupDependencies(ref instance);
+            var instance = registeredType.Instantiate(container);
+
+            if(!setupOnce)
+                SetupDependencies(container, ref instance);
+
+            if(setupOnce && !wasSetup)
+            {
+                wasSetup = true;
+                SetupDependencies(container, ref instance);
+            }
+
             return instance;
         }
 
-        private void SetupDependencies(ref object instance)
+        private void SetupDependencies(IDependencyContainer container, ref object instance)
         {
-            var hasDependendySetup = ConcreteType
-                .GetInterfaces()
-                .Any(HasDependencySetup);
-
-            if(hasDependendySetup)
+            foreach(var method in DependencySetupValidation.GetMethods(ConcreteType))
             {
-                // TODO: iterar apenas pelos métodos que implementam a interface IDependencySetup
-                var allSetupMethods = ConcreteType
-                    .GetMethods()
-                    .Where(m => m.Name.Contains("Setup"));
-                foreach(var method in allSetupMethods)
-                {
-                    var methodParameters = method.GetParameters()
-                        .Select(param => container.Create(param.ParameterType))
-                        .ToArray();
-                    method.Invoke(instance, methodParameters);
-                }
+                var methodParameters = method.GetParameters()
+                    .Select(param => container.Resolve(param.ParameterType))
+                    .ToArray();
+                method.Invoke(instance, methodParameters);
             }
         }
     }

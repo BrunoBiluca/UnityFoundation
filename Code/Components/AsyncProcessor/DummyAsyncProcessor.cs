@@ -13,6 +13,11 @@ namespace UnityFoundation.Code
             throw new NotImplementedException();
         }
 
+        public void ExecuteEveryFrame(Action callback)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ProcessAsync(Action action, float startTime)
         {
             timePassed = 0f;

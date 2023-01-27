@@ -4,20 +4,18 @@ namespace UnityFoundation.Code
 {
     public sealed class ProvideContainerType : IRegisteredType
     {
-        private readonly IDependencyContainer container;
         private readonly IRegisteredType registeredType;
 
         public Type ConcreteType => registeredType.ConcreteType;
 
-        public ProvideContainerType(IDependencyContainer container, IRegisteredType registeredType)
+        public ProvideContainerType(IRegisteredType registeredType)
         {
-            this.container = container;
             this.registeredType = registeredType;
         }
 
-        public object Instantiate()
+        public object Instantiate(IDependencyContainer container)
         {
-            var instance = registeredType.Instantiate() as IContainerProvide;
+            var instance = registeredType.Instantiate(container) as IContainerProvide;
             instance.Container = container;
             return instance;
         }

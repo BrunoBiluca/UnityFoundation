@@ -2,21 +2,21 @@
 
 namespace UnityFoundation.Code
 {
-    public sealed class SingletonInstanceType : IRegisteredType
+    public sealed class SingletonType : IRegisteredType
     {
         public Type ConcreteType => registeredType.ConcreteType;
 
         private object instance;
         private readonly IRegisteredType registeredType;
 
-        public SingletonInstanceType(IRegisteredType registeredType)
+        public SingletonType(IRegisteredType registeredType)
         {
             this.registeredType = registeredType;
         }
 
-        public object Instantiate()
+        public object Instantiate(IDependencyContainer container)
         {
-            instance ??= registeredType.Instantiate();
+            instance ??= registeredType.Instantiate(container);
             return instance;
         }
     }

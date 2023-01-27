@@ -2,19 +2,19 @@
 
 namespace UnityFoundation.Code
 {
-    public sealed class ConstantInstanceType : IRegisteredType
+    public sealed class ConstantType : IRegisteredType
     {
         private readonly object instance;
 
         public Type ConcreteType { get; }
 
-        public ConstantInstanceType(Type concreteType, object instance)
+        public ConstantType(Type concreteType, object instance)
         {
             ConcreteType = concreteType;
             this.instance = instance;
         }
 
-        public object Instantiate()
+        public object Instantiate(IDependencyContainer container)
         {
             return instance;
         }

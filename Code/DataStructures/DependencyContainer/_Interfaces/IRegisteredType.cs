@@ -6,6 +6,6 @@ namespace UnityFoundation.Code
     {
         Type ConcreteType { get; }
 
-        public object Instantiate();
+        public object Instantiate(IDependencyContainer container);
     }
 }
