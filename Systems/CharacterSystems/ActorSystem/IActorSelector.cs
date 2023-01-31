@@ -4,7 +4,7 @@ namespace UnityFoundation.CharacterSystem.ActorSystem
 {
     public interface IActorSelector<TActor>
     {
-        public TActor CurrentUnitActor { get; }
+        public TActor CurrentUnit { get; }
 
         event Action OnUnitSelected;
         event Action OnUnitUnselected;

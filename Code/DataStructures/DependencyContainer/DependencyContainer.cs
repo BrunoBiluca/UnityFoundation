@@ -8,14 +8,13 @@ namespace UnityFoundation.Code
 {
     public sealed class DependencyContainer : IDependencyContainer
     {
-        private readonly Dictionary<Type, IRegisteredType> types = new();
-
-        // utilizados para chamar uma função de callback quando o objeto é criado
         private readonly Dictionary<Type, Action<object>> registeredActions = new();
+        private readonly RegistryTypes registry;
+        private object[] parameters;
 
-        public DependencyContainer(Dictionary<Type, IRegisteredType> registeredTypes)
+        public DependencyContainer(RegistryTypes registry)
         {
-            types = registeredTypes;
+            this.registry = registry;
         }
 
         public void RegisterAction<TInterface>(Action<TInterface> creationAction)
@@ -28,17 +27,53 @@ namespace UnityFoundation.Code
             return (TInterface)Resolve(typeof(TInterface));
         }
 
+        public TInterface Resolve<TInterface>(params object[] parameters)
+        {
+            this.parameters = parameters;
+            var instance = (TInterface)Resolve(typeof(TInterface));
+            this.parameters = null;
+            return instance;
+        }
+
+        public TInterface Resolve<TInterface>(Enum key)
+        {
+            return (TInterface)Resolve(typeof(TInterface), key);
+        }
+
         public object Resolve(Type type)
         {
-            if(!types.ContainsKey(type))
-                throw new TypeNotRegisteredException(type);
+            if(TryToResolveParameter(type, out object obj))
+                return obj;
 
-            var registeredType = types[type];
-            var instance = registeredType.Instantiate(this);
+            return Instantiate(registry.GetRegistered(type));
+        }
 
+        public object Resolve(Type type, Enum key)
+        {
+            return Instantiate(registry.GetRegistered(type, key));
+        }
+
+        private bool TryToResolveParameter(Type type, out object obj)
+        {
+            obj = null;
+            if(parameters == null)
+                return false;
+
+            foreach(var param in parameters)
+                if(param.GetType() == type)
+                {
+                    obj = param;
+                    return true;
+                }
+
+            return false;
+        }
+
+        private object Instantiate(IRegisteredType type)
+        {
+            var instance = type.Instantiate(this);
             // TODO: PostCreationActions pode ser setado no momento do registro
-            PostCreationActions(type, ref instance);
-
+            PostCreationActions(type.ConcreteType, ref instance);
             return instance;
         }
 

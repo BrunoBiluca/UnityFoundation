@@ -15,6 +15,8 @@ namespace UnityFoundation.Code
 
         // Instantiation
         TInterface Resolve<TInterface>();
+        TInterface Resolve<TInterface>(Enum key);
+        TInterface Resolve<TInterface>(params object[] parameters);
         object Resolve(Type type);
     }
 }

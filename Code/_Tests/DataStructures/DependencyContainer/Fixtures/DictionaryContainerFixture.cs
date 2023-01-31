@@ -6,110 +6,78 @@ namespace UnityFoundation.Code.Tests
 {
     public class DictionaryContainerFixture : IDependencyContainerFixture
     {
-        private Dictionary<Type, IRegisteredType> types = new();
+        private RegistryTypes registry = new();
 
         public IDependencyContainerFixture WithConstant<T>(T instance)
         {
-            types[typeof(T)] = new ConstantType(typeof(T), instance);
+            registry.Add(RegistryTypeBuilder.WithConstant(typeof(T), instance));
             return this;
         }
 
         public IDependencyContainerFixture SingleConstructor()
         {
-            types[typeof(SingleConstructor)] = new DefaultConstructorType(typeof(SingleConstructor));
+            registry.Add(
+                RegistryTypeBuilder.WithDefaultConstructor(typeof(SingleConstructor))
+            );
             return this;
         }
 
         public IDependencyContainerFixture WithDependencySetupInstance()
         {
-            var dependencySetup = new DependencySetup();
-            types[typeof(string)] = new ConstantType(typeof(string), "a");
-            types[typeof(int)] = new ConstantType(typeof(int), 1);
-            types[typeof(bool)] = new ConstantType(typeof(bool), true);
-            types[typeof(SetupParameters)] = new DefaultConstructorType(typeof(SetupParameters));
-            types[typeof(DependencySetup)] = new DependencySetupType(
-                new ConstantType(typeof(DependencySetup), dependencySetup)
+            registry.Add(RegistryTypeBuilder.WithConstant(typeof(string), "a"));
+            registry.Add(RegistryTypeBuilder.WithConstant(typeof(int), 1));
+            registry.Add(RegistryTypeBuilder.WithConstant(typeof(bool), true));
+            registry.Add(RegistryTypeBuilder.WithDefaultConstructor(typeof(SetupParameters)));
+            registry.Add(RegistryTypeBuilder
+                .WithConstant(typeof(DependencySetup), new DependencySetup())
+                .AddDependencySetup()
             );
             return this;
         }
 
         public IDependencyContainerFixture Full()
         {
-            types[typeof(SingleConstructor)] = new DefaultConstructorType(typeof(SingleConstructor));
-            types[typeof(IEmptyInterface)] = new DefaultConstructorType(typeof(NoConstructor));
-            types[typeof(NoConstructor)] = new DefaultConstructorType(typeof(NoConstructor));
-            types[typeof(string)] = new ConstantType(typeof(string), "a");
-            types[typeof(int)] = new ConstantType(typeof(int), 1);
-            types[typeof(bool)] = new ConstantType(typeof(bool), true);
-            types[typeof(SetupParameters)] = new DefaultConstructorType(typeof(SetupParameters));
-            types[typeof(DependencySetup)] = new DependencySetupType(
-                new DefaultConstructorType(typeof(DependencySetup))
+            registry.Add(RegistryTypeBuilder.WithDefaultConstructor(typeof(SingleConstructor)));
+            registry.Add(RegistryTypeBuilder
+                .WithDefaultConstructor(typeof(NoConstructor))
+                .AsInterface(typeof(IEmptyInterface))
             );
-            types[typeof(MultiDependencySetup)] = new DependencySetupType(
-                new DefaultConstructorType(typeof(MultiDependencySetup))
+            registry.Add(RegistryTypeBuilder.WithConstant(typeof(string), "a"));
+            registry.Add(RegistryTypeBuilder.WithConstant(typeof(int), 1));
+            registry.Add(RegistryTypeBuilder.WithConstant(typeof(bool), true));
+
+            registry.Add(RegistryTypeBuilder.WithDefaultConstructor(typeof(SetupParameters)));
+            registry.Add(RegistryTypeBuilder
+                .WithDefaultConstructor(typeof(DependencySetup))
+                .AddDependencySetup()
             );
-            types[typeof(DependencySetupRecursion)] = new DependencySetupType(
-                new DefaultConstructorType(typeof(DependencySetupRecursion))
+
+            registry.Add(RegistryTypeBuilder
+                .WithDefaultConstructor(typeof(MultiDependencySetup))
+                .AddDependencySetup()
             );
-            types[typeof(ISingletonInterface)] = new SingletonType(
-                new DefaultConstructorType(typeof(SingletonClass))
+
+            registry.Add(RegistryTypeBuilder
+                .WithDefaultConstructor(typeof(DependencySetupRecursion))
+                .AddDependencySetup()
             );
-            types[typeof(Factory)] = new ProvideContainerType(
-                new DefaultConstructorType(typeof(Factory))
+
+            registry.Add(RegistryTypeBuilder
+                .WithDefaultConstructor(typeof(SingletonClass))
+                .AsInterface(typeof(ISingletonInterface))
+                .AsSingleton()
             );
+
+            registry.Add(RegistryTypeBuilder
+                .WithDefaultConstructor(typeof(Factory)).AddProvideContainer()
+            );
+
             return this;
         }
 
         public IDependencyContainer Build()
         {
-            return new DependencyContainer(types);
-        }
-    }
-
-    public class BinderContainerFixture : IDependencyContainerFixture
-    {
-        private readonly DependencyBinder binder = new();
-
-        public IDependencyContainer Build()
-        {
-            return binder.Build();
-        }
-
-        public IDependencyContainerFixture Full()
-        {
-            binder.Register<SingleConstructor>();
-            binder.Register<IEmptyInterface, NoConstructor>();
-            binder.Register("a");
-            binder.Register(1);
-            binder.Register(true);
-            binder.Register<DependencySetup>();
-            binder.Register<MultiDependencySetup>();
-            binder.Register<DependencySetupRecursion>();
-            binder.RegisterSingleton<ISingletonInterface, SingletonClass>();
-            binder.Register<Factory>();
-            return this;
-        }
-
-        public IDependencyContainerFixture SingleConstructor()
-        {
-            binder.Register<SingleConstructor>();
-            return this;
-        }
-
-        public IDependencyContainerFixture WithConstant<T>(T instance)
-        {
-            binder.Register(instance);
-            return this;
-        }
-
-        public IDependencyContainerFixture WithDependencySetupInstance()
-        {
-            var dependencySetup = new DependencySetup();
-            binder.Register("a");
-            binder.Register(1);
-            binder.Register(true);
-            binder.Register(dependencySetup);
-            return this;
+            return new DependencyContainer(registry);
         }
     }
 }

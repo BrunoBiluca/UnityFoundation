@@ -4,52 +4,12 @@ namespace UnityFoundation.Code.Tests
 {
     public class DependencyBinderTests
     {
-        public class Parameters
-        {
-
-            public Parameters() { }
-
-            public Parameters(string a, int b, bool c)
-            {
-                A = a;
-                B = b;
-                C = c;
-            }
-
-            public string A { get; }
-            public int B { get; }
-            public bool C { get; }
-        }
-
-        public class DependencySetup : IDependencySetup<Parameters>
-        {
-            public string P1 { get; private set; }
-            public int P2 { get; private set; }
-            public bool P3 { get; private set; }
-
-            public void Setup(Parameters p1)
-            {
-                P1 = p1.A;
-                P2 = p1.B;
-                P3 = p1.C;
-            }
-        }
-
-        public class DependencySetupCounter : IDependencySetup<Parameters>
-        {
-            public int Counter { get; private set; } = 0;
-
-            public void Setup(Parameters p1)
-            {
-                Counter++;
-            }
-        }
-
         [Test]
         public void Should_resolve_last_registered_constant_instance()
         {
             var binder = new DependencyBinder();
             binder.Register<DependencySetup>();
+            binder.Register(new Parameters());
 
             var instance = binder.Build().Resolve<DependencySetup>();
 
@@ -92,6 +52,103 @@ namespace UnityFoundation.Code.Tests
             var instance = container.Resolve<DependencySetupCounter>();
 
             Assert.That(instance.Counter, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void Should_throw_exception_when_trying_to_resolve_instance_without_all_parameters()
+        {
+            var binder = new DependencyBinder();
+            binder.Register(123);
+            binder.Register<ResolveWithParameters>();
+            var container = binder.Build();
+
+            Assert.Throws<TypeNotRegisteredException>(
+                () => container.Resolve<ResolveWithParameters>("param_test")
+            );
+        }
+
+        [Test]
+        public void Should_resolve_instance_with_parameters()
+        {
+            var binder = new DependencyBinder();
+            binder.Register(123);
+            binder.Register<ResolveWithParameters>();
+            var container = binder.Build();
+
+            var instance = container.Resolve<ResolveWithParameters>("param_test", true);
+
+            Assert.That(instance.A, Is.EqualTo("param_test"));
+            Assert.That(instance.B, Is.EqualTo(123));
+            Assert.That(instance.C, Is.EqualTo(true));
+        }
+
+        [Test]
+        public void Should_resolve_instance_with_their_respective_parameters()
+        {
+            var binder = new DependencyBinder();
+            binder.Register(123);
+            binder.Register<ResolveWithParameters>();
+            var container = binder.Build();
+
+            var instance = container.Resolve<ResolveWithParameters>("param_test", true);
+
+            Assert.That(instance.A, Is.EqualTo("param_test"));
+            Assert.That(instance.B, Is.EqualTo(123));
+            Assert.That(instance.C, Is.EqualTo(true));
+
+            var instance2 = container.Resolve<ResolveWithParameters>("param_2", 456, false);
+            Assert.That(instance2.A, Is.EqualTo("param_2"));
+            Assert.That(instance2.B, Is.EqualTo(456));
+            Assert.That(instance2.C, Is.EqualTo(false));
+        }
+
+        [Test]
+        public void Should_resolve_instance_with_key()
+        {
+            var binder = new DependencyBinder();
+            binder.Register<IKeyInterface, Key1>(KeyInterfaces.KEY_1);
+            binder.Register<IKeyInterface, Key2>(KeyInterfaces.KEY_2);
+            var container = binder.Build();
+
+            Assert.That(container.Resolve<IKeyInterface>(KeyInterfaces.KEY_1), Is.TypeOf<Key1>());
+            Assert.That(container.Resolve<IKeyInterface>(KeyInterfaces.KEY_2), Is.TypeOf<Key2>());
+        }
+
+        public enum KeyInterfaces { KEY_1, KEY_2 }
+        public interface IKeyInterface { }
+        public class Key1 : IKeyInterface { }
+        public class Key2 : IKeyInterface { }
+
+        public class Parameters
+        {
+            public string A { get; }
+            public int B { get; }
+            public bool C { get; }
+            public Parameters() { }
+            public Parameters(string a, int b, bool c) { A = a; B = b; C = c; }
+        }
+
+        public class DependencySetup : IDependencySetup<Parameters>
+        {
+            public string P1 { get; private set; }
+            public int P2 { get; private set; }
+            public bool P3 { get; private set; }
+
+            public void Setup(Parameters p) { P1 = p.A; P2 = p.B; P3 = p.C; }
+        }
+
+        public class DependencySetupCounter : IDependencySetup<Parameters>
+        {
+            public int Counter { get; private set; } = 0;
+            public void Setup(Parameters p1) { Counter++; }
+        }
+
+        public class ResolveWithParameters
+        {
+            public string A { get; }
+            public int B { get; }
+            public bool C { get; }
+            public ResolveWithParameters(string a, int b, bool c) { A = a; B = b; C = c; }
         }
     }
 }

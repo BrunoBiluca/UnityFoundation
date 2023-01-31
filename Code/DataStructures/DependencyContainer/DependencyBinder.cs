@@ -1,100 +1,91 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 namespace UnityFoundation.Code
 {
-    public class DependencyBinder : IDependencyBinder
+    public sealed class DependencyBinder : IDependencyBinder
     {
-        private readonly Dictionary<Type, IRegisteredType> types = new();
+        private readonly RegistryTypes registeredTypes = new();
 
         public void Register<TInterface, TConcrete>() where TConcrete : TInterface
         {
-            var interfaceType = typeof(TInterface);
-            var concreteType = typeof(TConcrete);
-
-            // base type
-            IRegisteredType registeredType = new DefaultConstructorType(concreteType);
-
-            // register types
-            Register(interfaceType, registeredType);
-            Register(concreteType, registeredType);
+            var typeBuilder = RegistryTypeBuilder
+                .WithDefaultConstructor(typeof(TConcrete))
+                .AsInterface(typeof(TInterface));
+            Register(ref typeBuilder);
         }
 
         public void Register<TConcrete>()
         {
-            Register(typeof(TConcrete), new DefaultConstructorType(typeof(TConcrete)));
+            Register<TConcrete, TConcrete>();
         }
 
         public void Register<TConcrete>(TConcrete instance)
         {
-            var concreteType = typeof(TConcrete);
+            var typeBuilder = RegistryTypeBuilder.WithConstant(typeof(TConcrete), instance);
+            Register(ref typeBuilder);
+        }
 
-            RegisterSingleton(concreteType, new ConstantType(concreteType, instance));
+        public void Register<TInterface, TConcrete>(Enum key) where TConcrete : TInterface
+        {
+            var typeBuilder = RegistryTypeBuilder
+                .WithDefaultConstructor(typeof(TConcrete))
+                .AsInterface(typeof(TInterface))
+                .WithKey(key);
+            Register(ref typeBuilder);
         }
 
         public void RegisterSingleton<TInterface, TConcrete>()
         {
-            var interfaceType = typeof(TInterface);
-            var concreteType = typeof(TConcrete);
-            var registeredType = new SingletonType(new DefaultConstructorType(concreteType));
+            var typeBuilder = RegistryTypeBuilder
+                .WithDefaultConstructor(typeof(TConcrete))
+                .AsSingleton()
+                .AsInterface(typeof(TInterface));
 
-            RegisterSingleton(interfaceType, registeredType);
-            RegisterSingleton(concreteType, registeredType);
+            Register(ref typeBuilder);
         }
 
         public IDependencyContainer Build()
         {
-            return new DependencyContainer(types);
+            return new DependencyContainer(registeredTypes);
         }
 
-        private void CheckContainerProvider(
-            Type concreteType,
-            ref IRegisteredType registeredType
-        )
+        private void Register(ref RegistryTypeBuilder typeBuilder)
         {
-            var containerProvide = concreteType.GetInterface(nameof(IContainerProvide));
+            CheckDependencySetup(ref typeBuilder);
+            CheckContainerProvider(ref typeBuilder);
+
+            registeredTypes.Add(typeBuilder);
+        }
+
+        private void CheckContainerProvider(ref RegistryTypeBuilder typeBuilder)
+        {
+            var containerProvide = typeBuilder.ConcreteType.GetInterface(nameof(IContainerProvide));
             if(containerProvide != null)
-                registeredType = new ProvideContainerType(registeredType);
+                typeBuilder.AddProvideContainer();
         }
 
-        private void CheckDependencySetup(
-            Type concreteType,
-            ref IRegisteredType registeredType,
-            bool setupOnlyOnce = false
-        )
+        private void CheckDependencySetup(ref RegistryTypeBuilder typeBuilder)
         {
-            var dependencySetupInterfaces = concreteType
+            var dependencySetupInterfaces = typeBuilder.ConcreteType
                 .GetInterfaces()
                 .Where(DependencySetupValidation.HasDependencySetup)
                 .ToArray();
 
             if(dependencySetupInterfaces.Length > 0)
             {
-                registeredType = new DependencySetupType(registeredType, setupOnlyOnce);
+                typeBuilder.AddDependencySetup();
                 foreach(var iface in dependencySetupInterfaces)
                     foreach(var genericArgument in iface.GetGenericArguments())
-                        Register(genericArgument, new DefaultConstructorType(genericArgument));
+                    {
+                        var argumentTypeBuilder = RegistryTypeBuilder
+                            .WithDefaultConstructor(genericArgument);
+                        Register(ref argumentTypeBuilder);
+                    }
             }
         }
-
-        private void Register(Type concreteType, IRegisteredType registeredType)
-        {
-            CheckDependencySetup(concreteType, ref registeredType);
-            CheckContainerProvider(concreteType, ref registeredType);
-
-            types.TryAdd(concreteType, registeredType);
-        }
-
-        private void RegisterSingleton(Type concreteType, IRegisteredType registeredType)
-        {
-            CheckDependencySetup(concreteType, ref registeredType, setupOnlyOnce: true);
-            CheckContainerProvider(concreteType, ref registeredType);
-
-            types[concreteType] = registeredType;
-        }
-
     }
 }
