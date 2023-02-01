@@ -5,7 +5,6 @@ using static UnityFoundation.Code.Tests.DependencyContainerTestsCases;
 
 namespace UnityFoundation.Code.Tests
 {
-
     [TestFixture(typeof(DictionaryContainerFixture))]
     [TestFixture(typeof(BinderContainerFixture))]
     public class DependencyContainerTests<T> where T : IDependencyContainerFixture, new()

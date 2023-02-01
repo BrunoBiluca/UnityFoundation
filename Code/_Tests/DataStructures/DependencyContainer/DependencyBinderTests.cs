@@ -103,11 +103,37 @@ namespace UnityFoundation.Code.Tests
         }
 
         [Test]
+        public void Should_resolve_instance_with_any_type_of_interface_implementation()
+        {
+            var binder = new DependencyBinder();
+            binder.Register<ResolveWithParametersImplementation>();
+            var container = binder.Build();
+
+            var impl = container.Resolve<ResolveWithParametersImplementation>(new Key1());
+            Assert.That(impl.KeyImplementation, Is.TypeOf<Key1>());
+
+            var impl2 = container.Resolve<ResolveWithParametersImplementation>(new Key2());
+            Assert.That(impl2.KeyImplementation, Is.TypeOf<Key2>());
+        }
+
+        [Test]
         public void Should_resolve_instance_with_key()
         {
             var binder = new DependencyBinder();
             binder.Register<IKeyInterface, Key1>(KeyInterfaces.KEY_1);
             binder.Register<IKeyInterface, Key2>(KeyInterfaces.KEY_2);
+            var container = binder.Build();
+
+            Assert.That(container.Resolve<IKeyInterface>(KeyInterfaces.KEY_1), Is.TypeOf<Key1>());
+            Assert.That(container.Resolve<IKeyInterface>(KeyInterfaces.KEY_2), Is.TypeOf<Key2>());
+        }
+
+        [Test]
+        public void Should_resolve_instance_with_key_and_instance()
+        {
+            var binder = new DependencyBinder();
+            binder.Register<IKeyInterface>(new Key1(), KeyInterfaces.KEY_1);
+            binder.Register<IKeyInterface>(new Key2(), KeyInterfaces.KEY_2);
             var container = binder.Build();
 
             Assert.That(container.Resolve<IKeyInterface>(KeyInterfaces.KEY_1), Is.TypeOf<Key1>());
@@ -149,6 +175,16 @@ namespace UnityFoundation.Code.Tests
             public int B { get; }
             public bool C { get; }
             public ResolveWithParameters(string a, int b, bool c) { A = a; B = b; C = c; }
+        }
+
+        public class ResolveWithParametersImplementation
+        {
+            public ResolveWithParametersImplementation(IKeyInterface keyImplementation)
+            {
+                KeyImplementation = keyImplementation;
+            }
+
+            public IKeyInterface KeyImplementation { get; }
         }
     }
 }

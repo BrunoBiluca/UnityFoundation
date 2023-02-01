@@ -53,18 +53,20 @@ namespace UnityFoundation.Code
             return Instantiate(registry.GetRegistered(type, key));
         }
 
-        private bool TryToResolveParameter(Type type, out object obj)
+        private bool TryToResolveParameter(Type resolveType, out object obj)
         {
             obj = null;
             if(parameters == null)
                 return false;
 
             foreach(var param in parameters)
-                if(param.GetType() == type)
-                {
-                    obj = param;
-                    return true;
-                }
+            {
+                if(!resolveType.IsAssignableFrom(param.GetType()))
+                    continue;
+
+                obj = param;
+                return true;
+            }
 
             return false;
         }

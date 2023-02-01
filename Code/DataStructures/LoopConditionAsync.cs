@@ -3,27 +3,6 @@ using System.Threading.Tasks;
 
 namespace UnityFoundation.Code
 {
-    public interface ICondition
-    {
-        bool Resolve();
-    }
-
-    public class Condition : ICondition
-    {
-        public static Condition Create(Func<bool> callback)
-        {
-            return new Condition(callback);
-        }
-
-        private readonly Func<bool> callback;
-
-        public Condition(Func<bool> callback)
-        {
-            this.callback = callback;
-        }
-
-        public bool Resolve() => callback();
-    }
 
     public class LoopConditionAsync
     {

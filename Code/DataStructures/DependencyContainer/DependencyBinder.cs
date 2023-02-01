@@ -10,30 +10,24 @@ namespace UnityFoundation.Code
     {
         private readonly RegistryTypes registeredTypes = new();
 
-        public void Register<TInterface, TConcrete>() where TConcrete : TInterface
-        {
-            var typeBuilder = RegistryTypeBuilder
-                .WithDefaultConstructor(typeof(TConcrete))
-                .AsInterface(typeof(TInterface));
-            Register(ref typeBuilder);
-        }
-
-        public void Register<TConcrete>()
-        {
-            Register<TConcrete, TConcrete>();
-        }
-
-        public void Register<TConcrete>(TConcrete instance)
-        {
-            var typeBuilder = RegistryTypeBuilder.WithConstant(typeof(TConcrete), instance);
-            Register(ref typeBuilder);
-        }
-
-        public void Register<TInterface, TConcrete>(Enum key) where TConcrete : TInterface
+        public void Register<TInterface, TConcrete>(Enum key = null) where TConcrete : TInterface
         {
             var typeBuilder = RegistryTypeBuilder
                 .WithDefaultConstructor(typeof(TConcrete))
                 .AsInterface(typeof(TInterface))
+                .WithKey(key);
+            Register(ref typeBuilder);
+        }
+
+        public void Register<TConcrete>(Enum key = null)
+        {
+            Register<TConcrete, TConcrete>();
+        }
+
+        public void Register<TConcrete>(TConcrete instance, Enum key = null)
+        {
+            var typeBuilder = RegistryTypeBuilder
+                .WithConstant(typeof(TConcrete), instance)
                 .WithKey(key);
             Register(ref typeBuilder);
         }
