@@ -9,6 +9,7 @@ namespace UnityFoundation.Code
             where TImplementation : TInterface;
         void Register<TImplementation>(Enum key = null);
         void Register<TConcrete>(TConcrete instance, Enum key = null);
+        void RegisterModule(IDependencyModule module);
         void RegisterSingleton<TInterface, TConcrete>();
     }
 }

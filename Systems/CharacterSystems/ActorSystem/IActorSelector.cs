@@ -2,10 +2,13 @@
 
 namespace UnityFoundation.CharacterSystem.ActorSystem
 {
-    public interface IActorSelector<TActor>
+    public interface ICurrentActorSelected<TActor>
     {
         public TActor CurrentUnit { get; }
+    }
 
+    public interface IActorSelector<TActor> : ICurrentActorSelected<TActor>
+    {
         event Action OnUnitSelected;
         event Action OnUnitUnselected;
 

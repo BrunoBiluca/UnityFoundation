@@ -21,14 +21,22 @@ namespace UnityFoundation.Code
 
         public void Register<TConcrete>(Enum key = null)
         {
+            var registerType = typeof(TConcrete);
+            if(registerType.IsInterface)
+                throw new ArgumentException("Can't register interfaces only");
             Register<TConcrete, TConcrete>();
         }
 
         public void Register<TConcrete>(TConcrete instance, Enum key = null)
         {
             var typeBuilder = RegistryTypeBuilder
-                .WithConstant(typeof(TConcrete), instance)
+                .WithConstant(instance.GetType(), instance)
                 .WithKey(key);
+
+            var registerType = typeof(TConcrete);
+            if(registerType.IsInterface)
+                typeBuilder.AsInterface(registerType);
+
             Register(ref typeBuilder);
         }
 
@@ -40,6 +48,11 @@ namespace UnityFoundation.Code
                 .AsInterface(typeof(TInterface));
 
             Register(ref typeBuilder);
+        }
+
+        public void RegisterModule(IDependencyModule module)
+        {
+            module.Register(this);
         }
 
         public IDependencyContainer Build()

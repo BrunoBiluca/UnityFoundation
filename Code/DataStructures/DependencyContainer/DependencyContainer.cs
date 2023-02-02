@@ -10,7 +10,7 @@ namespace UnityFoundation.Code
     {
         private readonly Dictionary<Type, Action<object>> registeredActions = new();
         private readonly RegistryTypes registry;
-        private object[] parameters;
+        private List<object> parameters;
 
         public DependencyContainer(RegistryTypes registry)
         {
@@ -29,7 +29,15 @@ namespace UnityFoundation.Code
 
         public TInterface Resolve<TInterface>(params object[] parameters)
         {
-            this.parameters = parameters;
+            var type = typeof(TInterface);
+            for(int i = 0; i < parameters.Length; i++)
+            {
+                if(parameters[i] == null)
+                    throw new ArgumentNullException(
+                        $"When resolving {type} found a null parameter on <{i}> position");
+            }
+
+            this.parameters = parameters.ToList();
             var instance = (TInterface)Resolve(typeof(TInterface));
             this.parameters = null;
             return instance;
@@ -43,7 +51,11 @@ namespace UnityFoundation.Code
         public object Resolve(Type type)
         {
             if(TryToResolveParameter(type, out object obj))
+            {
+                parameters.Remove(obj);
                 return obj;
+            }
+
 
             return Instantiate(registry.GetRegistered(type));
         }

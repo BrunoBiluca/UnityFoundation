@@ -15,6 +15,7 @@ namespace UnityFoundation.CharacterSystem.ActorSystem
         public event Action OnActionFinished;
 
         private IAction currentAction;
+        private uint actionPointsCost;
 
         public APActor(IResourceManager actionPoints)
         {
@@ -48,6 +49,7 @@ namespace UnityFoundation.CharacterSystem.ActorSystem
             action.OnFinishAction += InvokeFinishAction;
 
             currentAction = action;
+
             action.Execute();
         }
 
@@ -59,7 +61,7 @@ namespace UnityFoundation.CharacterSystem.ActorSystem
         public void InvokeFinishAction()
         {
             Logger?.Log(nameof(currentAction.OnFinishAction));
-            ActionPoints.TrySubtract((uint)Intent.Get().ActionPointsCost);
+            ActionPoints.TrySubtract(actionPointsCost);
             OnActionFinished?.Invoke();
         }
 
@@ -71,6 +73,7 @@ namespace UnityFoundation.CharacterSystem.ActorSystem
                 );
 
             Intent = Optional<IAPIntent>.Some(intent);
+            actionPointsCost = (uint)intent.ActionPointsCost;
             if(intent.ExecuteImmediatly)
                 Execute();
         }

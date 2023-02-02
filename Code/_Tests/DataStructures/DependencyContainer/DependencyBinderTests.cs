@@ -4,6 +4,8 @@ namespace UnityFoundation.Code.Tests
 {
     public class DependencyBinderTests
     {
+        // TODO: implementar funcionalidade para instanciar um objeto por chave Enum, onde uma de suas dependencias também é classificada pela mesma chave. Dessa forma não é necessário propagar os enums pelo código e eles vão servir apenas de chaveamento no dependency container.
+
         [Test]
         public void Should_resolve_last_registered_constant_instance()
         {
@@ -140,6 +142,32 @@ namespace UnityFoundation.Code.Tests
             Assert.That(container.Resolve<IKeyInterface>(KeyInterfaces.KEY_2), Is.TypeOf<Key2>());
         }
 
+        [Test]
+        public void Should_resolve_constant_for_interface_with_container_provided()
+        {
+            var binder = new DependencyBinder();
+            binder.Register<IKeyInterface>(new ConstantWithContainer());
+            var container = binder.Build();
+
+            var instance = (ConstantWithContainer)container.Resolve<IKeyInterface>();
+            Assert.That(instance, Is.Not.Null);
+            Assert.That(instance.Container, Is.Not.Null);
+        }
+
+        [Test]
+        public void Should_resolve_instance_with_parameters_order()
+        {
+            var binder = new DependencyBinder();
+            binder.Register<SameTypeParametersConstructor>();
+            var container = binder.Build();
+
+            var instance = container.Resolve<SameTypeParametersConstructor>("a", "b", "c");
+
+            Assert.That(instance.A, Is.EqualTo("a"));
+            Assert.That(instance.B, Is.EqualTo("b"));
+            Assert.That(instance.C, Is.EqualTo("c"));
+        }
+
         public enum KeyInterfaces { KEY_1, KEY_2 }
         public interface IKeyInterface { }
         public class Key1 : IKeyInterface { }
@@ -185,6 +213,25 @@ namespace UnityFoundation.Code.Tests
             }
 
             public IKeyInterface KeyImplementation { get; }
+        }
+
+        public class ConstantWithContainer : IKeyInterface, IContainerProvide
+        {
+            public IDependencyContainer Container { get; set; }
+        }
+
+        public class SameTypeParametersConstructor
+        {
+            public SameTypeParametersConstructor(string a, string b, string c)
+            {
+                A = a;
+                B = b;
+                C = c;
+            }
+
+            public string A { get; }
+            public string B { get; }
+            public string C { get; }
         }
     }
 }

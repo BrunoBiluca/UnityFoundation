@@ -1,13 +1,5 @@
 ﻿namespace UnityFoundation.Code
 {
-    /// <summary>
-    /// Interface used as base for the other IDependencySetup. Defines the interface and method names.
-    /// </summary>
-    public interface IDependencySetup
-    {
-        void Setup();
-    }
-
     public interface IDependencySetup<T>
     {
         void Setup(T parameters);

@@ -24,13 +24,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9049053615807279754, guid: 8a449b94e5e0ab9479d0de9bad6ba9f4,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049053615807279754, guid: 8a449b94e5e0ab9479d0de9bad6ba9f4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049053615807279754, guid: 8a449b94e5e0ab9479d0de9bad6ba9f4,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.02
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9049053615807279754, guid: 8a449b94e5e0ab9479d0de9bad6ba9f4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.95
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9049053615807279754, guid: 8a449b94e5e0ab9479d0de9bad6ba9f4,
         type: 3}
@@ -75,7 +85,25 @@ PrefabInstance:
     - target: {fileID: 9049053615807279755, guid: 8a449b94e5e0ab9479d0de9bad6ba9f4,
         type: 3}
       propertyPath: m_Name
-      value: divided_healthbar_pf
+      value: health_bar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a449b94e5e0ab9479d0de9bad6ba9f4, type: 3}
+--- !u!1 &7978384764840239430 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9049053615807279755, guid: 8a449b94e5e0ab9479d0de9bad6ba9f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1381577032803603405}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6137745320946413098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7978384764840239430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 022fe45fc8dbc5a4bb452ecc55ef4144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
