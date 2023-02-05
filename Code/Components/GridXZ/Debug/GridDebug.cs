@@ -6,18 +6,18 @@ namespace UnityFoundation.Code.Grid
 {
     public sealed class GridDebug
     {
-        public static void DrawLines(IGridXZBase grid, float duration)
+        public static void DrawLines(GridXZConfig config, float duration)
         {
-            for(int x = 0; x < grid.Config.Width; x++)
-                for(int z = 0; z < grid.Config.Depth; z++)
-                    DrawGridCell(grid, x, z, duration);
+            for(int x = 0; x < config.Width; x++)
+                for(int z = 0; z < config.Depth; z++)
+                    DrawGridCell(config, x, z, duration);
 
-            DrawGridBorders(grid, duration);
+            DrawGridBorders(config, duration);
         }
 
-        private static void DrawGridCell(IGridXZBase grid, int x, int z, float duration)
+        private static void DrawGridCell(GridXZConfig config, int x, int z, float duration)
         {
-            var cellSize = grid.Config.CellSize;
+            var cellSize = config.CellSize;
             var gridCellWorldPos = new Vector3(x * cellSize, 0f, z * cellSize);
 
             Debug.DrawLine(
@@ -34,10 +34,10 @@ namespace UnityFoundation.Code.Grid
             );
         }
 
-        private static void DrawGridBorders(IGridXZBase grid, float duration)
+        private static void DrawGridBorders(GridXZConfig config, float duration)
         {
-            var depth = grid.Config.CellSize * grid.Config.Depth * Vector3.forward;
-            var width = grid.Config.CellSize * grid.Config.Width * Vector3.right;
+            var depth = config.CellSize * config.Depth * Vector3.forward;
+            var width = config.CellSize * config.Width * Vector3.right;
             Debug.DrawLine(
                 depth,
                 width + depth,

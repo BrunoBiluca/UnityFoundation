@@ -134,7 +134,11 @@ namespace UnityFoundation.Code.Algorithms
             );
         }
 
-        private IEnumerable<PathNode> OpenNeighbors(PathNode currentNode, NativeArray<PathNode> gridNodes, List<int> closedNodes)
+        private IEnumerable<PathNode> OpenNeighbors(
+            PathNode currentNode, 
+            NativeArray<PathNode> gridNodes, 
+            List<int> closedNodes
+        )
         {
             var neighbors = new List<Int2>() {
             new Int2(1, 0), // up

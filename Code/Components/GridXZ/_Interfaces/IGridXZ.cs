@@ -2,13 +2,8 @@
 
 namespace UnityFoundation.Code.Grid
 {
-    public interface IGridXZ<TValue> : IGridXZBase
+    public interface IGridXZ<TValue> : IGridXZCells<TValue>
     {
-        int Width { get; }
-        int Depth { get; }
-        int CellSize { get; }
-
-        GridCellXZ<TValue>[,] Cells { get; }
         GridCellXZ<TValue> GetCell(GridCellPositionScaledXZ position);
         bool IsInsideGrid(GridCellPositionScaledXZ position);
         bool CanSetGridValue(GridCellPositionScaledXZ position);

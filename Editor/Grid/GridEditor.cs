@@ -15,7 +15,7 @@ namespace UnityFoundation.Editor
             {
                 nextRefresh = EditorApplication.timeSinceStartup + refreshSceneTime;
                 var grid = target as IGridXZBase;
-                GridDebug.DrawLines(grid, (float)refreshSceneTime);
+                GridDebug.DrawLines(grid.Config, (float)refreshSceneTime);
             }
         }
     }

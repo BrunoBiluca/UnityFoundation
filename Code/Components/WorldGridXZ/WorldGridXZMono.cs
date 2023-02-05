@@ -3,11 +3,19 @@ using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.Code.Grid
 {
-    public abstract class WorldGridXZMono<T> : MonoBehaviour, IGridXZBase
+    public abstract class WorldGridXZMono<T> : MonoBehaviour, IGridXZCells<T>
     {
         public IWorldGridXZ<T> Grid { get; private set; }
 
         [field: SerializeField] public GridXZConfig Config { get; private set; }
+
+        public int Width => Grid.Width;
+
+        public int Depth => Grid.Depth;
+
+        public int CellSize => Grid.CellSize;
+
+        public GridCellXZ<T>[,] Cells => Grid.Cells;
 
         public void Awake()
         {

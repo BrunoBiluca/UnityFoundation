@@ -3,24 +3,16 @@ using UnityEngine;
 
 namespace UnityFoundation.Code.Grid
 {
-    public interface IGridXZBase
-    {
-        GridXZConfig Config { get; }
-    }
 
     // TODO: separar o que é valor T do que é implementação sem o valor da célula
     // dessa forma podemos ter IWorldGridXZ e IWorldGridXZ<>
     // onde o IWorldGridXZ normal não tem valor contido
-    public interface IWorldGridXZ<T> : IGridXZBase
+    public interface IWorldGridXZ<T> : IGridXZCells<T>
     {
         Vector3 InitialPosition { get; }
         Vector3 WidthPosition { get; }
         Vector3 DepthPosition { get; }
         Vector3 WidthAndDepthPosition { get; }
-        int CellSize { get; }
-        int Width { get; }
-        int Depth { get; }
-        GridCellXZ<T>[,] Cells { get; }
 
         GridCellXZ<T> GetCell(Vector3 worldPosition);
         void Fill(T value);

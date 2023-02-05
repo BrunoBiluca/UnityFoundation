@@ -49,7 +49,7 @@ namespace UnityFoundation.Code.Grid
                 for(int z = 0; z < debugGrid.Cells.GetLength(1); z++)
                     DrawGridCell(x, z);
 
-            GridDebug.DrawLines(debugGrid, Time.deltaTime);
+            GridDebug.DrawLines(debugGrid.Config, Time.deltaTime);
         }
 
         private void DrawGridCell(int x, int z)
