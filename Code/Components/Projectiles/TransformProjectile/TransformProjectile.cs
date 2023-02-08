@@ -4,7 +4,6 @@ using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.Code
 {
-
     public class TransformProjectile : IProjectile
     {
         private Vector3 target;

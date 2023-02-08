@@ -28,6 +28,16 @@ namespace UnityFoundation.WorldCursors
             WorldPosition = Optional<Vector3>.None();
         }
 
+        public virtual void Enable()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public virtual void Disable()
+        {
+            gameObject.SetActive(false);
+        }
+
         public void Setup(
             IRaycastHandler raycastHandler,
             IWorldGridXZ<T> worldGrid

@@ -13,5 +13,7 @@ namespace UnityFoundation.WorldCursors
         Optional<Vector2> ScreenPosition { get; }
 
         void Update();
+        void Enable();
+        void Disable();
     }
 }

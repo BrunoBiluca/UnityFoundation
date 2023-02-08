@@ -39,5 +39,15 @@ namespace UnityFoundation.WorldCursors
             if(Mouse.current.rightButton.wasPressedThisFrame)
                 OnSecondaryClick?.Invoke();
         }
+
+        public void Enable()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void Disable()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

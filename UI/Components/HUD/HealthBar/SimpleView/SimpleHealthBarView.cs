@@ -26,6 +26,7 @@ namespace UnityFoundation.UI.Components
             this.baseHealth = baseHealth;
             currHealth = baseHealth;
 
+            if(progressBar != null) Awake();
             progressBar.sizeDelta = new Vector2(0, 0);
         }
 
@@ -36,7 +37,7 @@ namespace UnityFoundation.UI.Components
             var healthRatio = 1f - currHealth / baseHealth;
 
             progressBar.sizeDelta = new Vector2(
-                - healthRatio * baseRect.rect.width,
+                -healthRatio * baseRect.rect.width,
                 progressBar.sizeDelta.y
             );
         }

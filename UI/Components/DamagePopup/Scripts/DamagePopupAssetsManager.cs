@@ -6,11 +6,12 @@ namespace Assets.UnityFoundation.DamagePopup.Scripts {
         private static DamagePopupAssetsManager instance;
         public static DamagePopupAssetsManager Instance {
             get {
-                if(instance == null) instance = FindObjectOfType<DamagePopupAssetsManager>();
+                if(instance == null) 
+                    instance = FindObjectOfType<DamagePopupAssetsManager>();
                 return instance;
             }
         }
 
-        public GameObject DamagePopup { get; private set; }
+        [field: SerializeField] public GameObject DamagePopupPrefab { get; private set; }
     }
 }

@@ -3,12 +3,13 @@ using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.Code
 {
-    public abstract class BaseProjectileFactory<TProjectile>
+    public class ProjectileFactory<TProjectile>
         : MonoBehaviour, IProjectileFactory
         where TProjectile : IProjectile, new()
     {
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private GameObject explosionPrefab;
+        [SerializeField] private float projectileSpeed;
 
         private GameObject projObj;
         private IProjectile proj;
@@ -20,7 +21,7 @@ namespace UnityFoundation.Code
 
             var config = new IProjectile.Settings() {
                 Transform = new TransformDecorator(projObj.transform),
-                Speed = ProjectileSpeed(),
+                Speed = projectileSpeed,
                 TargetPos = target
             };
 
@@ -46,7 +47,5 @@ namespace UnityFoundation.Code
 
             Destroy(projObj);
         }
-
-        protected abstract float ProjectileSpeed();
     }
 }

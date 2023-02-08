@@ -6,26 +6,28 @@ namespace UnityFoundation.HealthSystem
 {
     public class HealthSystem : IHealthSystem
     {
-        public float BaseHealth { get; private set; }
-
-        public float CurrentHealth { get; private set; }
-
         private ValueEvaluation<float> currentHealthEval;
 
+        public float BaseHealth { get; private set; }
+        public float CurrentHealth { get; private set; }
         public bool IsDead { get; private set; }
-
         public DamageableLayer Layer { get; private set; }
 
         public event Action OnFullyHeal;
         public event Action OnDied;
         public event Action OnTakeDamage;
+        public event Action<float> OnTakeDamageAmount;
 
         public void Damage(float amount, DamageableLayer layer = null)
         {
-            UpdateHealth(-Mathf.Abs(EvaluateDamage(amount)));
+            var damageAmount = EvaluateDamage(amount);
+            UpdateHealth(damageAmount);
 
             if(!IsDead)
+            {
                 OnTakeDamage?.Invoke();
+                OnTakeDamageAmount?.Invoke(damageAmount);
+            }
         }
 
         public void Heal(float amount)
@@ -45,22 +47,22 @@ namespace UnityFoundation.HealthSystem
 
             currentHealthEval = ValueEvaluation<float>.Create(() => CurrentHealth);
             currentHealthEval
-                .If((health) => health <= 0f)
-                .Do(() => {
-                    IsDead = true;
-                    OnDied?.Invoke();
-                });
+                .If((h) => h <= 0f)
+                .Do(() => { IsDead = true; OnDied?.Invoke(); });
 
             currentHealthEval
-                .If((health) => CurrentHealth == BaseHealth)
-                .Do(() => {
-                    OnFullyHeal?.Invoke();
-                });
+                .If((h) => h == BaseHealth)
+                .Do(() => OnFullyHeal?.Invoke());
+        }
+
+        public void SetDamageableLayer(DamageableLayer layer)
+        {
+            Layer = layer;
         }
 
         protected virtual float EvaluateDamage(float amount)
         {
-            return amount;
+            return -Mathf.Abs(amount);
         }
 
         private void UpdateHealth(float amount)
@@ -69,9 +71,7 @@ namespace UnityFoundation.HealthSystem
 
             CurrentHealth += amount;
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0f, BaseHealth);
-
             currentHealthEval.Eval();
         }
-
     }
 }

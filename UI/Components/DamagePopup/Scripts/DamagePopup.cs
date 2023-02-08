@@ -3,10 +3,9 @@ using UnityEngine;
 
 namespace Assets.UnityFoundation.DamagePopup.Scripts {
     public class DamagePopup : MonoBehaviour {
-
         public static DamagePopup Create(string text, Vector3 position) {
             var go = Instantiate(
-                DamagePopupAssetsManager.Instance.DamagePopup,
+                DamagePopupAssetsManager.Instance.DamagePopupPrefab,
                 new Vector3(position.x, position.y, -1),
                 Quaternion.identity
             );
@@ -17,7 +16,7 @@ namespace Assets.UnityFoundation.DamagePopup.Scripts {
 
         public static DamagePopup CreateCritical(string text, Vector3 position) {
             var go = Instantiate(
-                DamagePopupAssetsManager.Instance.DamagePopup,
+                DamagePopupAssetsManager.Instance.DamagePopupPrefab,
                 new Vector3(position.x, position.y, -1),
                 Quaternion.identity
             );
