@@ -3,19 +3,19 @@ using UnityFoundation.Code;
 
 namespace UnityFoundation.CharacterSystem.ActorSystem
 {
-    public interface IActionSelector<TAction> where TAction : IIntent
+    public interface IActionSelector<TIntent> where TIntent : IIntent
     {
-        public event Action<TAction> OnActionSelected;
+        public event Action<TIntent> OnActionSelected;
         public event Action OnActionUnselected;
 
-        public Optional<TAction> CurrentAction { get; }
+        public Optional<TIntent> CurrentAction { get; }
 
         /// <summary>
         /// Set an action to be excecuted
         /// </summary>
         /// <param name="action"></param>
         /// <exception cref="InvalidOperationException">The action can't be executed</exception>
-        public void SetAction(TAction action);
+        public void SetIntent(TIntent action);
         void UnselectAction();
     }
 }
