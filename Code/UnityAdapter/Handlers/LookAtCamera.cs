@@ -6,7 +6,7 @@ namespace UnityFoundation.Code.UnityAdapter
 {
     public class LookAtCamera : MonoBehaviour
     {
-        void Update()
+        public void Update()
         {
             transform.LookAt(Camera.main.transform);
         }

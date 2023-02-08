@@ -6,7 +6,7 @@ namespace Assets.UnityFoundation.DamagePopup.Scripts {
         public static DamagePopup Create(string text, Vector3 position) {
             var go = Instantiate(
                 DamagePopupAssetsManager.Instance.DamagePopupPrefab,
-                new Vector3(position.x, position.y, -1),
+                position,
                 Quaternion.identity
             );
             var damagePopup = go.GetComponent<DamagePopup>();
@@ -17,7 +17,7 @@ namespace Assets.UnityFoundation.DamagePopup.Scripts {
         public static DamagePopup CreateCritical(string text, Vector3 position) {
             var go = Instantiate(
                 DamagePopupAssetsManager.Instance.DamagePopupPrefab,
-                new Vector3(position.x, position.y, -1),
+                position,
                 Quaternion.identity
             );
             var damagePopup = go.GetComponent<DamagePopup>();
@@ -38,6 +38,11 @@ namespace Assets.UnityFoundation.DamagePopup.Scripts {
             textMesh.faceColor = color;
             fadeSpeed = 1f;
             movimentSpeed = new Vector2(.5f, .2f);
+        }
+
+        public void SetFontSize(float amount)
+        {
+            textMesh.fontSize = amount;
         }
 
         void Update() {
