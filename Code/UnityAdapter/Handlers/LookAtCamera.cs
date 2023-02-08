@@ -8,6 +8,7 @@ namespace UnityFoundation.Code.UnityAdapter
     {
         public void Update()
         {
+            if(Camera.main == null) return;
             transform.LookAt(Camera.main.transform);
         }
     }
