@@ -13,6 +13,7 @@ namespace UnityFoundation.Code.UnityAdapter
         void Rotate(Vector3 eulers);
         ITransform GetTransform();
         void LookAt(Vector3 position);
+        void SetRotation(Vector3 rotation);
         IEnumerable<ITransform> GetChildren();
         ITransform Find(string name);
         bool TryGetComponent<T>(out T component) where T : Component;

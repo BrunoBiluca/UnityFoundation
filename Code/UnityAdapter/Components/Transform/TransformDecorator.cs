@@ -67,5 +67,10 @@ namespace UnityFoundation.Code.UnityAdapter
         {
             return comp.Ref(t => t).TryGetComponent(out component);
         }
+
+        public void SetRotation(Vector3 rotation)
+        {
+            comp.Ref(t => t.eulerAngles = rotation);
+        }
     }
 }
