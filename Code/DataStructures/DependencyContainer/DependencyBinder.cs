@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using UnityEngine;
 
 namespace UnityFoundation.Code
 {
@@ -85,9 +86,12 @@ namespace UnityFoundation.Code
                 foreach(var iface in dependencySetupInterfaces)
                     foreach(var genericArgument in iface.GetGenericArguments())
                     {
-                        var argumentTypeBuilder = RegistryTypeBuilder
-                            .WithDefaultConstructor(genericArgument);
-                        Register(ref argumentTypeBuilder);
+                        if(genericArgument.IsClass)
+                        {
+                            var argumentTypeBuilder = RegistryTypeBuilder
+                                .WithDefaultConstructor(genericArgument);
+                            Register(ref argumentTypeBuilder);
+                        }
                     }
             }
         }

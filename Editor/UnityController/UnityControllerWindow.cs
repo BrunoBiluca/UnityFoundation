@@ -1,9 +1,11 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.Editor
 {
+    [Obsolete]
     public class UnityControllerWindow : EditorWindow
     {
         private const string windowName = "Unity Controller";

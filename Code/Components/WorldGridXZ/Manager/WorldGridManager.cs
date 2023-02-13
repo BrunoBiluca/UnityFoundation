@@ -25,6 +25,13 @@ namespace UnityFoundation.Code.Grid
                     yield return c;
         }
 
+        public virtual IEnumerable<GridCellXZ<T>> GetCells(IGridValidation<T>[] validations)
+        {
+            foreach(var c in Grid.Cells)
+                if(validations.All(v => v.IsAvailable(c)))
+                    yield return c;
+        }
+
         public bool IsCellAvailable(GridCellXZ<T> cell)
         {
             return gridValidations.All(v => v.IsAvailable(cell));

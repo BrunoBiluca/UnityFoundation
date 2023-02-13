@@ -59,10 +59,18 @@ namespace UnityFoundation.WorldCursors
         {
             ScreenPosition = Optional<Vector2>.Some(Mouse.current.position.ReadValue());
 
-            if(IgnoreClick()) return;
+            if(IgnoreClick())
+            {
+                ResetWorldPosition();
+                return;
+            }
 
             EvaluateWorldPosition();
+            EvaluateButtonPressed();
+        }
 
+        private void EvaluateButtonPressed()
+        {
             // TODO: configurar essas ações de acordo com a configuração do Input Actions
             if(Mouse.current.leftButton.wasPressedThisFrame)
                 OnClick?.Invoke();
@@ -78,7 +86,7 @@ namespace UnityFoundation.WorldCursors
 
             if(!worldPosition.IsPresentAndGet(out Vector3 pos))
             {
-                WorldPosition = Optional<Vector3>.None();
+                ResetWorldPosition();
                 return;
             }
 
@@ -88,13 +96,17 @@ namespace UnityFoundation.WorldCursors
             }
             catch(ArgumentOutOfRangeException)
             {
-                WorldPosition = Optional<Vector3>.None();
+                ResetWorldPosition();
             }
+        }
+
+        private void ResetWorldPosition()
+        {
+            WorldPosition = Optional<Vector3>.None();
         }
 
         private bool IgnoreClick()
         {
-            Optional<Vector3>.None();
             return EventSystem.current.IsPointerOverGameObject();
         }
     }

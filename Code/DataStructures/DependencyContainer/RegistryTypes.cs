@@ -36,7 +36,7 @@ namespace UnityFoundation.Code
             if(obj is not RegistryKey y)
                 return false;
 
-            return Type == y.Type && Enum.Equals(Key, y.Key);
+            return Type == y.Type && Equals(Key, y.Key);
         }
     }
 
