@@ -27,11 +27,14 @@ namespace UnityFoundation.Code
 
         public void Register<TConcrete>(TConcrete instance, Enum key = null)
         {
+            var registerType = typeof(TConcrete);
+            if(instance == null)
+                throw new ConstantNullException(registerType);
+
             var typeBuilder = RegistryTypeBuilder
-                .WithConstant(typeof(TConcrete), instance)
+                .WithConstant(instance.GetType(), instance)
                 .WithKey(key);
 
-            var registerType = typeof(TConcrete);
             if(registerType.IsInterface)
                 typeBuilder.AsInterface(registerType);
 
