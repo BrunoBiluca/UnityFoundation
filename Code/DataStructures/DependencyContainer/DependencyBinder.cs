@@ -28,7 +28,7 @@ namespace UnityFoundation.Code
         public void Register<TConcrete>(TConcrete instance, Enum key = null)
         {
             var typeBuilder = RegistryTypeBuilder
-                .WithConstant(instance.GetType(), instance)
+                .WithConstant(typeof(TConcrete), instance)
                 .WithKey(key);
 
             var registerType = typeof(TConcrete);

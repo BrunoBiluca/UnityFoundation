@@ -11,6 +11,9 @@ namespace UnityFoundation.Code
 
         public static RegistryTypeBuilder WithConstant(Type concreteType, object instance)
         {
+            if(instance == null)
+                throw new ConstantNullException(concreteType);
+
             return new RegistryTypeBuilder(new ConstantType(concreteType, instance)) {
                 ForceRegister = true,
                 SetupOnce = true

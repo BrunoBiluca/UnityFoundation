@@ -1,14 +1,12 @@
-using UnityFoundation.Code;
-
 namespace UnityFoundation.Code.UnityAdapter
 {
-    public class Viewer : IVisible
+    public class Visibility : IVisible
     {
         public IGameObject gameObject;
 
         public bool StartVisible { get; set; }
 
-        public Viewer(IGameObject gameObject)
+        public Visibility(IGameObject gameObject)
         {
             this.gameObject = gameObject;
 
