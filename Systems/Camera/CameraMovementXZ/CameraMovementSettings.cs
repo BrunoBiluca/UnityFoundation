@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,7 +54,7 @@ namespace UnityFoundation.CameraMovementXZ
         [Tooltip("Zoom's speed")]
         public float ZoomSpeed { get; private set; } = 5f;
 
-        
+
         [field: Header("X Rotation attributes")]
 
         [field: SerializeField]
@@ -68,5 +69,6 @@ namespace UnityFoundation.CameraMovementXZ
         public bool EnabledYRotation { get; set; } = true;
         [field: SerializeField]
         public float YRotationSpeed { get; set; } = 10f;
+        [field: SerializeField] public float FixedYRotation { get; set; } = 0f;
     }
 }

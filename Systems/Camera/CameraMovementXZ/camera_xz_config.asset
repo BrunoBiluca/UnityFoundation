@@ -33,3 +33,4 @@ MonoBehaviour:
     end: 50
   <EnabledYRotation>k__BackingField: 1
   <YRotationSpeed>k__BackingField: 30
+  <FixedYRotation>k__BackingField: 0

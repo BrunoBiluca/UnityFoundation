@@ -220,5 +220,26 @@ namespace UnityFoundation.Code.Tests
                 "Fail to validate end value"
             );
         }
+
+        [Test]
+        public void Should_interpolate_from_start_to_increased_angle()
+        {
+            var endAngle = 90f;
+            var lerp = new LerpAngle(0f);
+            lerp.IncreaseAngle(endAngle);
+
+            var iterations = 10;
+            var amount = endAngle / iterations;
+            for(int i = 0; i < iterations - 1; i++)
+            {
+                var currentAngle = lerp.EvalAngle(amount);
+                Assert.That(currentAngle, Is.Not.EqualTo(endAngle));
+                Assert.That(lerp.ReachedTargetAngle, Is.Not.True);
+            }
+
+            var lastAngle = lerp.EvalAngle(amount);
+            Assert.That(lastAngle, Is.EqualTo(endAngle));
+            Assert.That(lerp.ReachedTargetAngle, Is.True);
+        }
     }
 }

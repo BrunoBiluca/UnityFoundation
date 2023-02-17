@@ -24,11 +24,25 @@ namespace UnityFoundation.Code
 
         public bool RetainState { get; set; } = false;
 
+        public bool ReachedTargetAngle { get; set; }
+
         public LerpAngle(float startValue)
         {
             this.startValue = startValue;
+            currentValue = startValue;
             endValue = startValue;
             interpolationSpeed = 1f;
+        }
+
+        public LerpAngle SetInterpolationSpeed(float newInterpolationSpeed)
+        {
+            interpolationSpeed = newInterpolationSpeed;
+            return this;
+        }
+
+        public LerpAngle IncreaseAngle(float amount)
+        {
+            return SetEndValue(currentValue + amount);
         }
 
         public LerpAngle SetEndValue(float newEndValue)
@@ -40,6 +54,7 @@ namespace UnityFoundation.Code
 
             endValue = newEndValue;
             currentInterpolationAmount = 0f;
+            ReachedTargetAngle = false;
 
             if(CheckMinPath)
                 EvaluateMinPath();
@@ -67,12 +82,6 @@ namespace UnityFoundation.Code
                 startValue = mappedStartValue;
         }
 
-        public LerpAngle SetInterpolationSpeed(float newInterpolationSpeed)
-        {
-            interpolationSpeed = newInterpolationSpeed;
-            return this;
-        }
-
         public float EvalAngle(float value)
         {
             var amount = value / range;
@@ -83,6 +92,12 @@ namespace UnityFoundation.Code
                 endValue,
                 currentInterpolationAmount * interpolationSpeed
             );
+
+            if(currentValue.NearlyEqual(endValue, 0.001f))
+            {
+                currentValue = endValue;
+                ReachedTargetAngle = true;
+            }
 
             return currentValue;
         }
