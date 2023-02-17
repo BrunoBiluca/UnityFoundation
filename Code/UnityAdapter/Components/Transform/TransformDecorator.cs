@@ -18,9 +18,13 @@ namespace UnityFoundation.Code.UnityAdapter
             comp.OnInvalidState += () => OnInvalidState?.Invoke();
         }
 
-        public Vector3 Foward {
+        public Vector3 Forward {
             get => comp.Ref(t => t.forward);
             set => comp.Ref(t => t.forward = value);
+        }
+        public Vector3 Right {
+            get => comp.Ref(t => t.right);
+            set => comp.Ref(t => t.right = value);
         }
 
         public Vector3 Position {
@@ -71,6 +75,11 @@ namespace UnityFoundation.Code.UnityAdapter
         public void SetRotation(Vector3 rotation)
         {
             comp.Ref(t => t.eulerAngles = rotation);
+        }
+
+        public void RotateOnWorld(Vector3 rotation)
+        {
+            comp.Ref(t => t.Rotate(rotation, Space.World));
         }
     }
 }

@@ -60,7 +60,7 @@ namespace UnityFoundation.DiceSystem
             foreach(var side in sides)
             {
                 // side forward is facing the dice's center
-                var sideUp = side.GetTransform().Foward.normalized;
+                var sideUp = side.GetTransform().Forward.normalized;
                 var isFacingUp = Vector3.Dot(sideUp, Vector3.up) == -1;
                 if(isFacingUp)
                     return side;

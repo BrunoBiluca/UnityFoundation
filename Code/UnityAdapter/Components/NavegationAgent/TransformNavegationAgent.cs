@@ -50,8 +50,8 @@ namespace UnityFoundation.Code.UnityAdapter
             var moveDirection = destination - CurrentPosition;
             transform.Position += Speed * updateTime * moveDirection.normalized;
 
-            transform.Foward = Vector3.Lerp(
-                transform.Foward, moveDirection, updateTime * rotateSpeed
+            transform.Forward = Vector3.Lerp(
+                transform.Forward, moveDirection, updateTime * rotateSpeed
             );
 
             if(DistanceMagnitude() <= StoppingDistance)
