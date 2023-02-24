@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace UnityFoundation.Code.Tests
+namespace UnityFoundation.Code.Math.Tests
 {
     public class MathXTest
     {

@@ -2,29 +2,29 @@ using UnityEngine;
 
 namespace UnityFoundation.Code
 {
+    /// <summary>
+    /// Base linear interpolation feature.
+    /// </summary>
     public class Lerp
     {
         private float startValue;
         private float endValue;
         private float currentInterpolationAmount;
-        private float interpolationSpeed;
         private float range;
 
-        public float BaseValue => endValue;
-        public float InterpolationSpeed => interpolationSpeed;
+        public float InterpolationSpeed { get; set; } = 1f;
+        public bool Looping { get; set; } = false;
 
         public Lerp(float startValue)
         {
             this.startValue = startValue;
             endValue = startValue;
-            interpolationSpeed = 1f;
         }
 
         public Lerp SetEndValue(float newEndValue)
         {
             startValue = endValue;
             endValue = newEndValue;
-            currentInterpolationAmount = 0f;
 
             var direction = startValue * endValue;
             if(direction < 0f)
@@ -35,22 +35,32 @@ namespace UnityFoundation.Code
             return this;
         }
 
-        public Lerp SetInterpolationSpeed(float newInterpolationSpeed)
+        public void ResetInterpolation()
         {
-            interpolationSpeed = newInterpolationSpeed;
-            return this;
+            currentInterpolationAmount = 0f;
         }
 
-        public float Eval(float amount)
+        /// <summary>
+        /// Evaluate the interpolation amount by the percentage of the movement.
+        /// </summary>
+        /// <param name="addPercentage">Percentagem of the movement</param>
+        /// <returns>Current interpolation amount</returns>
+        public float Eval(float addPercentage)
         {
-            currentInterpolationAmount += amount;
-            return Mathf.Lerp(
-                startValue,
-                endValue,
-                currentInterpolationAmount * interpolationSpeed
-            );
+            currentInterpolationAmount += addPercentage * InterpolationSpeed;
+
+            if(Looping)
+                if(currentInterpolationAmount > 1f)
+                    ResetInterpolation();
+
+            return Mathf.Lerp(startValue, endValue, currentInterpolationAmount);
         }
 
+        /// <summary>
+        /// Evaluate the interpolation amount by the value between the start and end.
+        /// </summary>
+        /// <param name="value">Value between start and end</param>
+        /// <returns>Current interpolation amount</returns>
         public float EvalBy(float value)
         {
             var amount = value / range;

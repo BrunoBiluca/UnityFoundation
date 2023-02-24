@@ -22,7 +22,7 @@ namespace UnityFoundation.CarSystem
         {
             inputs = GetComponent<CarInputs>();
             rg = GetComponent<Rigidbody>();
-            wheelsInterpolation = new Lerp(0f).SetInterpolationSpeed(5f);
+            wheelsInterpolation = new Lerp(0f) { InterpolationSpeed = 5f };
         }
 
         void Update()
