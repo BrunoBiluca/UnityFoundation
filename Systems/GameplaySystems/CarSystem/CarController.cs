@@ -30,7 +30,7 @@ namespace UnityFoundation.CarSystem
         private void Start()
         {
             vCameraComposer = vCamera.GetCinemachineComponent<CinemachineComposer>();
-            cameraScreenX = new Lerp(vCameraComposer.m_ScreenX);
+            cameraScreenX = new Lerp(vCameraComposer.m_ScreenX, 0.5f);
         }
 
         private void Update()

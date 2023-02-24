@@ -22,7 +22,7 @@ namespace UnityFoundation.CameraMovementXZ
         public WorldFixedRotation(Settings config, float initialYRotation)
         {
             Config = config;
-            lerpYRotation = new LerpAngle(initialYRotation).SetInterpolationSpeed(Config.Speed);
+            lerpYRotation = new LerpAngle(initialYRotation) { InterpolationSpeed = Config.Speed };
         }
 
         public void SetYRotation(float value)
@@ -41,7 +41,7 @@ namespace UnityFoundation.CameraMovementXZ
             var positionY = lerpYRotation.EvalAngle(amount);
             transform.SetRotation(transform.Rotation.eulerAngles.WithY(positionY));
 
-            isEnabled = !lerpYRotation.ReachedTargetAngle;
+            isEnabled = !lerpYRotation.IsTargetReached;
         }
     }
 }

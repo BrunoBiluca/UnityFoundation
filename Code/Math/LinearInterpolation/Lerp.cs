@@ -10,28 +10,20 @@ namespace UnityFoundation.Code
         private float startValue;
         private float endValue;
         private float currentInterpolationAmount;
-        private float range;
 
         public float InterpolationSpeed { get; set; } = 1f;
         public bool Looping { get; set; } = false;
 
-        public Lerp(float startValue)
+        public Lerp(float startValue, float endValue)
         {
             this.startValue = startValue;
-            endValue = startValue;
+            this.endValue = endValue;
         }
 
         public Lerp SetEndValue(float newEndValue)
         {
             startValue = endValue;
             endValue = newEndValue;
-
-            var direction = startValue * endValue;
-            if(direction < 0f)
-                range = Mathf.Abs(startValue) + Mathf.Abs(endValue);
-            else
-                range = Mathf.Abs(Mathf.Abs(endValue) - Mathf.Abs(startValue));
-
             return this;
         }
 
@@ -54,17 +46,6 @@ namespace UnityFoundation.Code
                     ResetInterpolation();
 
             return Mathf.Lerp(startValue, endValue, currentInterpolationAmount);
-        }
-
-        /// <summary>
-        /// Evaluate the interpolation amount by the value between the start and end.
-        /// </summary>
-        /// <param name="value">Value between start and end</param>
-        /// <returns>Current interpolation amount</returns>
-        public float EvalBy(float value)
-        {
-            var amount = value / range;
-            return Eval(amount);
         }
     }
 }

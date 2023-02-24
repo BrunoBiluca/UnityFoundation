@@ -19,13 +19,14 @@ namespace UnityFoundation.Code
                 Random.Range(float.MinValue, float.MaxValue)
             );
         }
-    }
 
-    public static class Vector3Extensions
-    {
-        public static Vector3 WithY(this Vector3 vector, float value)
+        public static Vector3 Center(Vector3 a, Vector3 b)
         {
-            return new Vector3(vector.x, value, vector.z);
+            return new Vector3(
+                a.x + (b.x - a.x) / 2f,
+                a.y + (b.y - a.y) / 2f,
+                a.z + (b.z - a.z) / 2f
+            );
         }
     }
 }

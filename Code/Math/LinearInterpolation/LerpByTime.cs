@@ -2,6 +2,9 @@
 
 namespace UnityFoundation.Code
 {
+    /// <summary>
+    /// Linear interpolation between two values given an especific time
+    /// </summary>
     public class LerpByTime
     {
         public float StartValue { get; }
@@ -9,6 +12,8 @@ namespace UnityFoundation.Code
         public float CurrentValue { get; private set; }
         public float CurrentTime { get; private set; }
         public float Time { get; }
+
+        public bool Looping { get; set; } = false;
 
         public LerpByTime(float startValue, float endValue, float time)
         {
@@ -21,9 +26,14 @@ namespace UnityFoundation.Code
         public void Eval(float timeAmount)
         {
             CurrentTime += timeAmount;
+
+            if(Looping)
+                if(CurrentTime >= Time)
+                    CurrentTime = 0;
+
             CurrentValue = Mathf.Lerp(
-                StartValue, 
-                EndValue, 
+                StartValue,
+                EndValue,
                 CurrentTime / Time
             );
         }

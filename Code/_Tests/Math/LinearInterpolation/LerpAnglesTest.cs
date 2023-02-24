@@ -102,7 +102,7 @@ namespace UnityFoundation.Code.Math.Tests
         }
 
         [Test]
-        public void ShouldRetainStateOfInterpolationWhenChangeEndValue()
+        public void Should_retain_interpolation_amount_when_change_end_value()
         {
             var startValue = 0f;
             var middleValue = 10f;
@@ -165,12 +165,12 @@ namespace UnityFoundation.Code.Math.Tests
             {
                 var currentAngle = lerp.EvalAngle(amount);
                 Assert.That(currentAngle, Is.Not.EqualTo(endAngle));
-                Assert.That(lerp.ReachedTargetAngle, Is.Not.True);
+                Assert.That(lerp.IsTargetReached, Is.Not.True);
             }
 
             var lastAngle = lerp.EvalAngle(amount);
             Assert.That(lastAngle, Is.EqualTo(endAngle));
-            Assert.That(lerp.ReachedTargetAngle, Is.True);
+            Assert.That(lerp.IsTargetReached, Is.True);
         }
     }
 }

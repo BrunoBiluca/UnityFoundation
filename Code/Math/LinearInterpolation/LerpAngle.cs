@@ -2,6 +2,9 @@
 
 namespace UnityFoundation.Code
 {
+    /// <summary>
+    /// Linear intepolate an angle given start and end values.
+    /// </summary>
     public class LerpAngle
     {
         private float startValue;
@@ -9,35 +12,31 @@ namespace UnityFoundation.Code
 
         private float currentValue;
         private float currentInterpolationAmount;
-        private float interpolationSpeed;
         private float range;
 
         public float StartValue => startValue;
         public float EndValue => endValue;
-        public float InterpolationSpeed => interpolationSpeed;
+        public float InterpolationSpeed { get; set; } = 1f;
 
         /// <summary>
         /// When enabled evaluate the end value as the closest angle 
         /// in the 360 degrees circle from the start value
         /// </summary>
         public bool CheckMinPath { get; set; } = true;
-
+        /// <summary>
+        /// Update linear interpolation state. Start value is updated to current value.
+        /// </summary>
         public bool RetainState { get; set; } = false;
+        public bool Looping { get; set; } = false;
 
-        public bool ReachedTargetAngle { get; set; }
+        public bool IsTargetReached { get; private set; }
+
 
         public LerpAngle(float startValue)
         {
             this.startValue = startValue;
             currentValue = startValue;
             endValue = startValue;
-            interpolationSpeed = 1f;
-        }
-
-        public LerpAngle SetInterpolationSpeed(float newInterpolationSpeed)
-        {
-            interpolationSpeed = newInterpolationSpeed;
-            return this;
         }
 
         public LerpAngle IncreaseAngle(float amount)
@@ -54,7 +53,7 @@ namespace UnityFoundation.Code
 
             endValue = newEndValue;
             currentInterpolationAmount = 0f;
-            ReachedTargetAngle = false;
+            IsTargetReached = false;
 
             if(CheckMinPath)
                 EvaluateMinPath();
@@ -85,19 +84,18 @@ namespace UnityFoundation.Code
         public float EvalAngle(float value)
         {
             var amount = value / range;
-            currentInterpolationAmount += amount;
+            currentInterpolationAmount += amount * InterpolationSpeed;
 
-            currentValue = Mathf.Lerp(
-                startValue,
-                endValue,
-                currentInterpolationAmount * interpolationSpeed
-            );
+            currentValue = Mathf.Lerp(startValue, endValue, currentInterpolationAmount);
 
             if(currentValue.NearlyEqual(endValue, 0.001f))
             {
                 currentValue = endValue;
-                ReachedTargetAngle = true;
+                IsTargetReached = true;
             }
+
+            if(Looping && currentInterpolationAmount >= 1f)
+                currentInterpolationAmount = 0f;
 
             return currentValue;
         }
