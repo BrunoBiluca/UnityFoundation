@@ -19,10 +19,10 @@ namespace UnityFoundation.Code
         public IProjectile Create(Vector3 start, Vector3 target)
         {
             projObj = Instantiate(projectilePrefab, start, Quaternion.identity);
-            proj = new TProjectile();
+            proj = InstantiateProjectile();
 
             var config = new IProjectile.Settings() {
-                Transform = new TransformDecorator(projObj.transform),
+                Transform = projObj.transform.Decorate(),
                 Speed = projectileSpeed,
                 TargetPos = target
             };
@@ -58,5 +58,7 @@ namespace UnityFoundation.Code
             else
                 Destroy(projObj);
         }
+
+        protected virtual TProjectile InstantiateProjectile() => new();
     }
 }
