@@ -152,5 +152,10 @@ namespace UnityFoundation.HealthSystem
             else if(NormalizedBarSize <= .1f)
                 barSprite.color = lowBarColor;
         }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
