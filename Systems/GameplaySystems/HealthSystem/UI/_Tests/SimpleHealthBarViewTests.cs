@@ -3,11 +3,11 @@ using UnityEditor;
 using UnityEngine;
 using UnityFoundation.Code;
 
-namespace UnityFoundation.UI.Components.Tests
+namespace UnityFoundation.HealthSystem.Tests
 {
     public class SimpleHealthBarViewTests
     {
-        string healthBarPath = "Assets/UnityFoundation/UI/Components/HUD/HealthBar/SimpleView/simple_healthbar.prefab";
+        string healthBarPath = "Assets/UnityFoundation/Systems/GameplaySystems/HealthSystem/UI/HealthBar/SimpleView/simple_healthbar.prefab";
 
         private SimpleHealthBarView bar;
 

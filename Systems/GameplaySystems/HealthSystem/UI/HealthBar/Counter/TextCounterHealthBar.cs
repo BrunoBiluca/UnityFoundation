@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace UnityFoundation.UI.Components
+namespace UnityFoundation.HealthSystem
 {
     public class TextCounterHealthBar : MonoBehaviour, IHealthBar
     {

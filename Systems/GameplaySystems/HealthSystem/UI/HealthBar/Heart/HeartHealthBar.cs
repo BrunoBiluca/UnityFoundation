@@ -2,7 +2,7 @@ using UnityFoundation.Code;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UnityFoundation.UI.Components
+namespace UnityFoundation.HealthSystem
 {
     public class HeartHealthBar : MonoBehaviour, IHealthBar
     {
