@@ -19,7 +19,7 @@ namespace UnityFoundation.Code
             }
         }
 
-        [field: SerializeField] public bool DestroyOnLoad { get; set; } = true;
+        [field: SerializeField] public virtual bool DestroyOnLoad { get; set; } = true;
 
         public void Awake()
         {
