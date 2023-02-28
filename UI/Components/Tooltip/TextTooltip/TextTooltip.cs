@@ -18,5 +18,10 @@ namespace UnityFoundation.UI
 
             text.text = Content;
         }
+
+        public void SetContentText(string text)
+        {
+            Content = text;
+        }
     }
 }
