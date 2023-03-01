@@ -28,6 +28,7 @@ namespace UnityFoundation.HealthSystem
         public event Action OnFullyHeal;
         public event Action OnDied;
         public event Action OnTakeDamage;
+        public event Action<float> OnTakeDamageAmount;
 
         private DamageableLayerManager damageableLayerManager;
         private Func<bool> guardDamageCallback;
@@ -39,13 +40,20 @@ namespace UnityFoundation.HealthSystem
             healthSystem = new HealthSystem();
             healthSystem.OnFullyHeal += FullyHealHandler;
             healthSystem.OnTakeDamage += TakeDamageHandler;
+            healthSystem.OnTakeDamageAmount += TakeDamageAmountHandler;
             healthSystem.OnDied += DieHandler;
 
             OnObjectDestroyed += () => {
                 healthSystem.OnFullyHeal -= FullyHealHandler;
                 healthSystem.OnTakeDamage -= TakeDamageHandler;
+                healthSystem.OnTakeDamageAmount -= TakeDamageAmountHandler;
                 healthSystem.OnDied -= DieHandler;
             };
+        }
+
+        private void TakeDamageAmountHandler(float amount)
+        {
+            OnTakeDamageAmount?.Invoke(amount);
         }
 
         public void Start()

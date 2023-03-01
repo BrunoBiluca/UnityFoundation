@@ -5,6 +5,7 @@ namespace UnityFoundation.HealthSystem
     public interface IDamageable
     {
         event Action OnTakeDamage;
+        event Action<float> OnTakeDamageAmount;
 
         DamageableLayer Layer { get; }
 
