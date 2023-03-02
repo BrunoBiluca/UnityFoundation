@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UnityFoundation.Code.Grid
 {
@@ -29,8 +28,8 @@ namespace UnityFoundation.Code.Grid
         public Vector2 GetGridPostion(Vector3 position)
         {
             var gridPosition = new Vector2(
-                (int)Math.Floor(position.x / cellSize),
-                (int)Math.Floor(position.y / cellSize)
+                (int)Mathf.Floor(position.x / cellSize),
+                (int)Mathf.Floor(position.y / cellSize)
             );
 
             return gridPosition;

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
+using Math = UnityEngine;
 
 namespace UnityFoundation.Code.Algorithms
 {
@@ -196,22 +197,22 @@ namespace UnityFoundation.Code.Algorithms
 
         private int CalculateDistanceCost(Int2 startPosition, Int2 endPosition)
         {
-            var distanceX = Math.Abs(endPosition.X - startPosition.X);
-            var distanceY = Math.Abs(endPosition.Y - startPosition.Y);
+            var distanceX = Mathf.Abs(endPosition.X - startPosition.X);
+            var distanceY = Mathf.Abs(endPosition.Y - startPosition.Y);
 
-            var distanceStraight = Math.Abs(distanceX - distanceY);
+            var distanceStraight = Mathf.Abs(distanceX - distanceY);
 
-            return MOVE_DIAGONAL_COST * Math.Min(distanceX, distanceY) + MOVE_STRAIGHT_COST * distanceStraight;
+            return MOVE_DIAGONAL_COST * Mathf.Min(distanceX, distanceY) + MOVE_STRAIGHT_COST * distanceStraight;
         }
 
         private int CalculateDistanceCost(PathNode startNode, PathNode endNode)
         {
-            var distanceX = Math.Abs(endNode.x - startNode.x);
-            var distanceY = Math.Abs(endNode.y - startNode.y);
+            var distanceX = Mathf.Abs(endNode.x - startNode.x);
+            var distanceY = Mathf.Abs(endNode.y - startNode.y);
 
-            var distanceStraight = Math.Abs(distanceX - distanceY);
+            var distanceStraight = Mathf.Abs(distanceX - distanceY);
 
-            return MOVE_DIAGONAL_COST * Math.Min(distanceX, distanceY) + MOVE_STRAIGHT_COST * distanceStraight;
+            return MOVE_DIAGONAL_COST * Mathf.Min(distanceX, distanceY) + MOVE_STRAIGHT_COST * distanceStraight;
         }
 
         public string GetStringRepresentation()
