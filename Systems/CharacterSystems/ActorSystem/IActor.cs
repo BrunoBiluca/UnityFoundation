@@ -7,6 +7,7 @@ namespace UnityFoundation.CharacterSystem.ActorSystem
     {
         event Action OnCantExecuteAction;
         event Action OnActionFinished;
+        event Action OnActionExecuted;
 
         void Execute();
         void Set(TIntent action);

@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using UnityFoundation.Code;
-using UnityFoundation.Code.UnityAdapter;
+using UnityFoundation.Editor;
 
 namespace UnityFoundation.SettingsSystem.Editor
 {

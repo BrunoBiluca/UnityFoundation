@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace UnityFoundation.Code.UnityAdapter
+namespace UnityFoundation.Editor
 {
     public class FoldoutGroup
     {

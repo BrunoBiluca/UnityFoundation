@@ -13,6 +13,7 @@ namespace UnityFoundation.CharacterSystem.ActorSystem
 
         public event Action OnCantExecuteAction;
         public event Action OnActionFinished;
+        public event Action OnActionExecuted;
 
         private IAction currentAction;
         private uint actionPointsCost;
@@ -50,6 +51,7 @@ namespace UnityFoundation.CharacterSystem.ActorSystem
 
             currentAction = action;
 
+            OnActionExecuted?.Invoke();
             action.Execute();
         }
 

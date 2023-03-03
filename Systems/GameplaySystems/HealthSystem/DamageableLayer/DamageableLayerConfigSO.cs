@@ -16,6 +16,17 @@ namespace UnityFoundation.HealthSystem
 
         public List<DamageableLayerRelationship> relationships;
 
+        public void OnAfterDeserialize()
+        {
+        }
+
+        public void OnBeforeSerialize()
+        {
+#if UNITY_EDITOR
+            SerializeRelationships();
+#endif
+        }
+
 #if UNITY_EDITOR
         public void Awake()
         {
@@ -23,11 +34,7 @@ namespace UnityFoundation.HealthSystem
             layers.Add(CreateInstance<DamageableLayer>());
         }
 
-        public void OnAfterDeserialize()
-        {
-        }
-
-        public void OnBeforeSerialize()
+        public void SerializeRelationships()
         {
             if(string.IsNullOrEmpty(AssetDatabase.GetAssetPath(this)))
                 return;
