@@ -7,7 +7,7 @@ namespace UnityFoundation.Code.Grid
     {
         public IWorldGridXZ<T> Grid { get; private set; }
 
-        [field: SerializeField] public GridXZConfig Config { get; private set; }
+        [field: SerializeField] public GridXZConfig Config { get; set; }
 
         public int Width => Grid.Width;
 

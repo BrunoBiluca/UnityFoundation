@@ -11,5 +11,13 @@ namespace UnityFoundation.Code.Grid
 
             return x + z <= range;
         }
+
+        public static int Range<T>(this GridCellXZ<T> a, GridCellXZ<T> b)
+        {
+            var x = Mathf.Abs(a.Position.X - b.Position.X);
+            var z = Mathf.Abs(a.Position.Z - b.Position.Z);
+
+            return x + z;
+        }
     }
 }
