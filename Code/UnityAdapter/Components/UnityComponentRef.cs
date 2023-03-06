@@ -9,12 +9,17 @@ namespace UnityFoundation.Code.UnityAdapter
     /// When the referenced component is destroyed trigger an OnInvalidState event.
     /// </summary>
     /// <typeparam name="T">Unity component</typeparam>
-    public class UnityComponentRef<T> : IComponentState where T : Component
+    public class UnityComponentRef<T>
+        : IComponentState
+        , IBilucaLoggable
+        where T : Component
     {
         private readonly T reference;
-        private string referenceName;
+        private readonly string referenceName;
 
         public event Action OnInvalidState;
+
+        public IBilucaLogger Logger { get; set; }
 
         public bool IsValid { get; private set; }
 
@@ -27,8 +32,16 @@ namespace UnityFoundation.Code.UnityAdapter
 
         public void Ref(Action<T> call)
         {
+            if(!IsValid) return;
+
             try
             {
+                if(reference == null)
+                {
+                    SetInvalidState();
+                    return;
+                }
+
                 call(reference);
             }
             catch(MissingReferenceException)
@@ -39,8 +52,16 @@ namespace UnityFoundation.Code.UnityAdapter
 
         public TResult Ref<TResult>(Func<T, TResult> call)
         {
+            if(!IsValid) return default;
+
             try
             {
+                if(reference == null)
+                {
+                    SetInvalidState();
+                    return default;
+                }
+
                 return call(reference);
             }
             catch(MissingReferenceException)
@@ -52,7 +73,7 @@ namespace UnityFoundation.Code.UnityAdapter
 
         private void SetInvalidState()
         {
-            UnityDebug.I.LogHighlight(referenceName, "Reference state is invalid");
+            Logger?.LogHighlight(referenceName, "Reference state is invalid");
             IsValid = false;
             OnInvalidState?.Invoke();
         }
