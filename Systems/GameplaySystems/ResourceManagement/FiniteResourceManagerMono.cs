@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace UnityFoundation.ResourceManagement
@@ -5,6 +6,8 @@ namespace UnityFoundation.ResourceManagement
     public class FiniteResourceManagerMono : MonoBehaviour, IResourceManager
     {
         private IResourceManager storage;
+
+        public event Action<IResourceManager> OnResourceChanged;
 
         public FiniteResourceManagerMono Setup(IResourceManager storage)
         {

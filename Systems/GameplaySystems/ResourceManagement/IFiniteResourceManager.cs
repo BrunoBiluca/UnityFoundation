@@ -1,4 +1,6 @@
-﻿namespace UnityFoundation.ResourceManagement
+﻿using System;
+
+namespace UnityFoundation.ResourceManagement
 {
     // TODO: definir a diferenção entre os métodos GetAmount e TrySubstract
     // ambos métodos fazem a mesma coisa de formas diferentes.
@@ -10,6 +12,8 @@
         uint MaxAmount { get; }
         bool IsFull { get; }
         bool IsEmpty { get; }
+
+        event Action<IResourceManager> OnResourceChanged;
 
         void FullReffil();
         void Emptify();

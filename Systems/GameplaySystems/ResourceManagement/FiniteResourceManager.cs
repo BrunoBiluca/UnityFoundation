@@ -15,6 +15,8 @@ namespace UnityFoundation.ResourceManagement
 
         public bool IsFull => maxAmount == currentAmount;
 
+        public event Action<IResourceManager> OnResourceChanged;
+
         public FiniteResourceManager(uint maxAmount, bool startFull = false)
         {
             this.maxAmount = maxAmount;
@@ -59,6 +61,7 @@ namespace UnityFoundation.ResourceManagement
         private void Subtract(uint amount)
         {
             currentAmount -= amount;
+            OnResourceChanged?.Invoke(this);
         }
 
         public void Emptify()
