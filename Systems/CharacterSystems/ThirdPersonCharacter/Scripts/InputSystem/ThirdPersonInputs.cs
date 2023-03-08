@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-namespace Assets.UnityFoundation.Systems.Character3D
+
+namespace UnityFoundation.ThirdPersonCharacter
 {
 
     public class ThirdPersonInputs : MonoBehaviour

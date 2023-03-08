@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b434be301c5176d4bb4d57bfe0d1cabf, type: 3}
+  m_Name: sample_third_person_controller_settings
+  m_EditorClassIdentifier: 
+  <PlayerConfig>k__BackingField:
+    MoveSpeed: 2
+    SprintSpeed: 5.335
+    RotationSmoothTime: 0.12
+    SpeedChangeRate: 10
+    JumpHeight: 1.2
+    Gravity: -15
+    JumpTimeout: 0.5
+    FallTimeout: 0.15
+  <GroundedConfig>k__BackingField:
+    Grounded: 1
+    GroundedOffset: -0.14
+    GroundedRadius: 0.28
+    GroundLayers:
+      serializedVersion: 2
+      m_Bits: 1
+  <CameraConfig>k__BackingField:
+    Sensitivity: 1
+    CinemachineCameraTarget: {fileID: 0}
+    TopClamp: 70
+    BottomClamp: -30
+    CameraAngleOverride: 0
+    LockCameraPosition: 0

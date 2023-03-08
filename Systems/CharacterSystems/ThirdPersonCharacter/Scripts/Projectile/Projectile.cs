@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace UnityFoundation.ThirdPersonCharacter
@@ -9,6 +10,8 @@ namespace UnityFoundation.ThirdPersonCharacter
         private Rigidbody rb;
         private CapsuleCollider capsuleCollider;
         private Settings config;
+
+        [SerializeField] private ProjectileSettingsSO settings;
 
         public Projectile Setup(Settings config)
         {
@@ -23,6 +26,9 @@ namespace UnityFoundation.ThirdPersonCharacter
             rb.useGravity = false;
             capsuleCollider = GetComponent<CapsuleCollider>();
             capsuleCollider.isTrigger = true;
+
+            if(settings != null)
+                config = settings.Config;
         }
 
         public void Update()
@@ -35,6 +41,7 @@ namespace UnityFoundation.ThirdPersonCharacter
             Destroy(gameObject);
         }
 
+        [Serializable]
         public class Settings
         {
             public float Speed;

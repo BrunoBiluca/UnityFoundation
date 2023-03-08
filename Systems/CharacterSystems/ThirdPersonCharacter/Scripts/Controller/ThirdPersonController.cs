@@ -1,81 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-/* Note: animations are called via the controller for both the character and capsule using animator null checks
- */
-namespace Assets.UnityFoundation.Systems.Character3D
+namespace UnityFoundation.ThirdPersonCharacter
 {
-
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(PlayerInput))]
-    public class ThirdPersonController : MonoBehaviour
+    public partial class ThirdPersonController : MonoBehaviour
     {
-        [Header("Player")]
+        [SerializeField] private ThirdPersonControllerSettingsSO config;
 
-        [Tooltip("Move speed of the character in m/s")]
-        public float MoveSpeed = 2.0f;
-
-        [Tooltip("Sprint speed of the character in m/s")]
-        public float SprintSpeed = 5.335f;
-
-        [Tooltip("How fast the character turns to face movement direction")]
-        [Range(0.0f, 0.3f)]
-        public float RotationSmoothTime = 0.12f;
-
-        [Tooltip("Acceleration and deceleration")]
-        public float SpeedChangeRate = 10.0f;
-
-        [Tooltip("Camera movement speed")]
-        [SerializeField] private float sensitivily = 1f;
-        public float Sensitivity {
-            get => sensitivily;
-            set => sensitivily = value;
-        }
-
-        [Space(10)]
-        [Tooltip("The height the player can jump")]
-        public float JumpHeight = 1.2f;
-        [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
-        public float Gravity = -15.0f;
-
-        [Space(10)]
-        [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
-        public float JumpTimeout = 0.50f;
-        [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
-        public float FallTimeout = 0.15f;
-
-        [Header("Player Grounded")]
-        [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
-        public bool Grounded = true;
-        [Tooltip("Useful for rough ground")]
-        public float GroundedOffset = -0.14f;
-        [Tooltip("The radius of the grounded check. Should match the radius of the CharacterController")]
-        public float GroundedRadius = 0.28f;
-        [Tooltip("What layers the character uses as ground")]
-        public LayerMask GroundLayers;
-
-        [Header("Cinemachine")]
-
-        [Tooltip(
-            "The follow target set in the Cinemachine " +
-            "Virtual Camera that the camera will follow"
-        )]
+        [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
         public GameObject CinemachineCameraTarget;
 
-        [Tooltip("How far in degrees can you move the camera up")]
-        public float TopClamp = 70.0f;
+        public PlayerSettings PlayerConfig { get; private set; }
 
-        [Tooltip("How far in degrees can you move the camera down")]
-        public float BottomClamp = -30.0f;
+        public GroundedSettings GroundedConfig { get; private set; }
 
-        [Tooltip(
-            "Additional degress to override the camera. "
-            + "Useful for fine tuning camera position when locked"
-        )]
-        public float CameraAngleOverride = 0.0f;
-
-        [Tooltip("For locking the camera position on all axis")]
-        public bool LockCameraPosition = false;
+        public CameraSettings CameraConfig { get; private set; }
 
         // cinemachine
         private float _cinemachineTargetYaw;
@@ -113,10 +54,16 @@ namespace Assets.UnityFoundation.Systems.Character3D
 
         private void Awake()
         {
-            // get a reference to our main camera
             if(_mainCamera == null)
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            }
+
+            if(config != null)
+            {
+                PlayerConfig = config.PlayerConfig;
+                GroundedConfig = config.GroundedConfig;
+                CameraConfig = config.CameraConfig;
             }
         }
 
@@ -129,8 +76,8 @@ namespace Assets.UnityFoundation.Systems.Character3D
             AssignAnimationIDs();
 
             // reset our timeouts on start
-            _jumpTimeoutDelta = JumpTimeout;
-            _fallTimeoutDelta = FallTimeout;
+            _jumpTimeoutDelta = PlayerConfig.JumpTimeout;
+            _fallTimeoutDelta = PlayerConfig.FallTimeout;
         }
 
         private void Update()
@@ -160,40 +107,40 @@ namespace Assets.UnityFoundation.Systems.Character3D
         {
             var spherePosition = new Vector3(
                 transform.position.x,
-                transform.position.y - GroundedOffset,
+                transform.position.y - GroundedConfig.GroundedOffset,
                 transform.position.z
             );
 
-            Grounded = Physics.CheckSphere(
+            GroundedConfig.Grounded = Physics.CheckSphere(
                 spherePosition,
-                GroundedRadius,
-                GroundLayers,
+                GroundedConfig.GroundedRadius,
+                GroundedConfig.GroundLayers,
                 QueryTriggerInteraction.Ignore
             );
 
             if(_hasAnimator)
-                _animator.SetBool(_animIDGrounded, Grounded);
+                _animator.SetBool(_animIDGrounded, GroundedConfig.Grounded);
         }
 
         private void CameraRotation()
         {
             var cameraMoved = _input.look.sqrMagnitude >= _threshold
-                && !LockCameraPosition;
+                && !CameraConfig.LockCameraPosition;
             if(cameraMoved)
             {
-                _cinemachineTargetYaw += _input.look.x * sensitivily * Time.deltaTime;
-                _cinemachineTargetPitch += _input.look.y * sensitivily * Time.deltaTime;
+                _cinemachineTargetYaw += _input.look.x * CameraConfig.Sensitivity * Time.deltaTime;
+                _cinemachineTargetPitch += _input.look.y * CameraConfig.Sensitivity * Time.deltaTime;
             }
 
             _cinemachineTargetYaw = ClampAngle(
                 _cinemachineTargetYaw, float.MinValue, float.MaxValue
             );
             _cinemachineTargetPitch = ClampAngle(
-                _cinemachineTargetPitch, BottomClamp, TopClamp
+                _cinemachineTargetPitch, CameraConfig.BottomClamp, CameraConfig.TopClamp
             );
 
             CinemachineCameraTarget.transform.rotation = Quaternion.Euler(
-                _cinemachineTargetPitch + CameraAngleOverride,
+                _cinemachineTargetPitch + CameraConfig.CameraAngleOverride,
                 _cinemachineTargetYaw, 0.0f
             );
         }
@@ -201,7 +148,7 @@ namespace Assets.UnityFoundation.Systems.Character3D
         private void Move()
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
-            float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+            var targetSpeed = _input.sprint ? PlayerConfig.SprintSpeed : PlayerConfig.MoveSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -210,17 +157,17 @@ namespace Assets.UnityFoundation.Systems.Character3D
             if(_input.move == Vector2.zero) targetSpeed = 0.0f;
 
             // a reference to the players current horizontal velocity
-            float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+            var currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
-            float speedOffset = 0.1f;
-            float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+            var speedOffset = 0.1f;
+            var inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
             // accelerate or decelerate to target speed
             if(currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
             {
                 // creates curved result rather than a linear one giving a more organic speed change
                 // note T in Lerp is clamped, so we don't need to clamp our speed
-                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
+                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * PlayerConfig.SpeedChangeRate);
 
                 // round speed to 3 decimal places
                 _speed = Mathf.Round(_speed * 1000f) / 1000f;
@@ -229,7 +176,7 @@ namespace Assets.UnityFoundation.Systems.Character3D
             {
                 _speed = targetSpeed;
             }
-            _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
+            _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * PlayerConfig.SpeedChangeRate);
 
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
@@ -246,7 +193,7 @@ namespace Assets.UnityFoundation.Systems.Character3D
                     transform.eulerAngles.y,
                     _targetRotation,
                     ref _rotationVelocity,
-                    RotationSmoothTime
+                    PlayerConfig.RotationSmoothTime
                 );
 
                 if(RotateOnMove)
@@ -269,10 +216,10 @@ namespace Assets.UnityFoundation.Systems.Character3D
 
         private void JumpAndGravity()
         {
-            if(Grounded)
+            if(GroundedConfig.Grounded)
             {
                 // reset the fall timeout timer
-                _fallTimeoutDelta = FallTimeout;
+                _fallTimeoutDelta = PlayerConfig.FallTimeout;
 
                 // update animator if using character
                 if(_hasAnimator)
@@ -291,7 +238,7 @@ namespace Assets.UnityFoundation.Systems.Character3D
                 if(_input.jump && _jumpTimeoutDelta <= 0.0f)
                 {
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
-                    _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                    _verticalVelocity = Mathf.Sqrt(PlayerConfig.JumpHeight * -2f * PlayerConfig.Gravity);
 
                     // update animator if using character
                     if(_hasAnimator)
@@ -309,7 +256,7 @@ namespace Assets.UnityFoundation.Systems.Character3D
             else
             {
                 // reset the jump timeout timer
-                _jumpTimeoutDelta = JumpTimeout;
+                _jumpTimeoutDelta = PlayerConfig.JumpTimeout;
 
                 // fall timeout
                 if(_fallTimeoutDelta >= 0.0f)
@@ -332,7 +279,7 @@ namespace Assets.UnityFoundation.Systems.Character3D
             // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
             if(_verticalVelocity < _terminalVelocity)
             {
-                _verticalVelocity += Gravity * Time.deltaTime;
+                _verticalVelocity += PlayerConfig.Gravity * Time.deltaTime;
             }
         }
 
@@ -345,20 +292,19 @@ namespace Assets.UnityFoundation.Systems.Character3D
 
         private void OnDrawGizmosSelected()
         {
-            Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-            Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+            var transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+            var transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
-            if(Grounded) Gizmos.color = transparentGreen;
+            if(GroundedConfig.Grounded) Gizmos.color = transparentGreen;
             else Gizmos.color = transparentRed;
 
-            // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
             Gizmos.DrawSphere(
                 new Vector3(
                     transform.position.x,
-                    transform.position.y - GroundedOffset,
+                    transform.position.y - GroundedConfig.GroundedOffset,
                     transform.position.z
                 ),
-                GroundedRadius
+                GroundedConfig.GroundedRadius
             );
         }
     }

@@ -2,7 +2,7 @@ using Cinemachine;
 using UnityEngine;
 using UnityFoundation.Code;
 
-namespace Assets.UnityFoundation.Systems.Character3D
+namespace UnityFoundation.ThirdPersonCharacter
 {
     public class ThirdPersonShooterController : MonoBehaviour
     {
@@ -40,7 +40,7 @@ namespace Assets.UnityFoundation.Systems.Character3D
 
             if(input.aim)
             {
-                thirdPersonController.Sensitivity = aimSensitivity;
+                thirdPersonController.CameraConfig.Sensitivity = aimSensitivity;
                 thirdPersonController.RotateOnMove = false;
 
                 var worldAimTarget = worldPosition;
@@ -60,7 +60,7 @@ namespace Assets.UnityFoundation.Systems.Character3D
             }
             else
             {
-                thirdPersonController.Sensitivity = normalSensitivity;
+                thirdPersonController.CameraConfig.Sensitivity = normalSensitivity;
                 thirdPersonController.RotateOnMove = true;
                 animator.SetLayerWeight(
                     1,
