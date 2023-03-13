@@ -2,7 +2,6 @@
 
 namespace UnityFoundation.Code.UnityAdapter
 {
-
     public abstract class ObjectSingleton<T> : MonoBehaviour
     {
         public T Obj { get; private set; }

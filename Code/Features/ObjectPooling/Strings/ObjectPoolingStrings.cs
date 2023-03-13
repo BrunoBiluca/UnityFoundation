@@ -1,4 +1,4 @@
-namespace Assets.UnityFoundation.Systems.ObjectPooling
+namespace UnityFoundation.Code.Features
 {
     public static class ObjectPoolingStrings
     {

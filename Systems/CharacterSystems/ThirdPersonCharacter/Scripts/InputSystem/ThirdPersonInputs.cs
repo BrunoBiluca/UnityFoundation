@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 
 namespace UnityFoundation.ThirdPersonCharacter
 {
-
     public class ThirdPersonInputs : MonoBehaviour
     {
         [Header("Character Input Values")]

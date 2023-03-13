@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Assets.UnityFoundation.Systems.ObjectPooling
+namespace UnityFoundation.Code.Features
 {
     [Serializable]
     public class DestroyPooledObjectException : Exception

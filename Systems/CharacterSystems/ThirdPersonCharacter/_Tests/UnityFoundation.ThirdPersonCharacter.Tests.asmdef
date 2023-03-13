@@ -2,9 +2,10 @@
     "name": "UnityFoundation.ThirdPersonCharacter.Tests",
     "rootNamespace": "",
     "references": [
+        "UnityFoundation.Code",
+        "UnityFoundation.ThirdPersonCharacter",
         "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner",
-        "UnityFoundation.ThirdPersonCharacter"
+        "UnityEditor.TestRunner"
     ],
     "includePlatforms": [
         "Editor"

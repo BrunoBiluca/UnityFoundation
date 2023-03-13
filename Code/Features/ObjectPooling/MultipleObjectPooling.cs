@@ -1,10 +1,8 @@
-using UnityFoundation.Code;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static Assets.UnityFoundation.Systems.ObjectPooling.ObjectPoolingStrings;
 
-namespace Assets.UnityFoundation.Systems.ObjectPooling
+namespace UnityFoundation.Code.Features
 {
     [Serializable]
     public class ObjectPoolingDictionary : SerializableDictionary<string, GameObject> { }
@@ -30,13 +28,10 @@ namespace Assets.UnityFoundation.Systems.ObjectPooling
             {
                 for(int i = 0; i < poolSize; i++)
                 {
-                    var pooledObject = Instantiate(obj.Value)
-                        .GetComponent<PooledObject>();
+                    var pooledObject = Instantiate(obj.Value).GetComponent<PooledObject>();
 
                     if(pooledObject == null)
-                        throw new MissingComponentException(
-                            MISSING_POOLED_OBJECT_COMPONENT_MSG(obj.Key)
-                        );
+                        throw new MissingPooledObjectComponentException(obj.Key);
 
                     pooledObject.GetComponent<PooledObject>()
                         .Setup(DestroyOnLoad)
