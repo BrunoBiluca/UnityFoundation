@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6532537761344339807}
   - component: {fileID: -8742090385395665463}
   - component: {fileID: 4570804413315941810}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pooled_projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

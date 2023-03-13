@@ -12,5 +12,6 @@ namespace UnityFoundation.ThirdPersonCharacter
         [SerializeField] public float aimSensitivity = 0.1f;
         [SerializeField] public float aimSpeed = 10f;
         [SerializeField] public float rotateCharacterSpeed = 10f;
+        [SerializeField] public LayerMask aimLayerMask;
     }
 }

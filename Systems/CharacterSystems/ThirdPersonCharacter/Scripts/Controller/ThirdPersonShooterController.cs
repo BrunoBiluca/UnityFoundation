@@ -1,7 +1,7 @@
 using Cinemachine;
 using UnityEngine;
-using UnityFoundation.Code;
 using UnityFoundation.Code.Features;
+using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.ThirdPersonCharacter
 {
@@ -10,7 +10,6 @@ namespace UnityFoundation.ThirdPersonCharacter
         [field: SerializeField] public ThridPersonShooterSettings Config { get; private set; }
 
         [SerializeField] CinemachineVirtualCamera aimCamera;
-
         [SerializeField] Transform debugAimObject;
         [SerializeField] Transform projectileSpawner;
 
@@ -18,6 +17,8 @@ namespace UnityFoundation.ThirdPersonCharacter
         private ThirdPersonInputs input;
         private Animator animator;
 
+        private ICamera mainCamera;
+        private IRaycastHandler raycaster;
         private IObjectPooling projectilePool;
 
         private void Start()
@@ -25,6 +26,9 @@ namespace UnityFoundation.ThirdPersonCharacter
             thirdPersonController = GetComponent<ThirdPersonController>();
             input = GetComponent<ThirdPersonInputs>();
             animator = GetComponent<Animator>();
+
+            mainCamera = Camera.main.Decorate();
+            raycaster = new RaycastHandler(mainCamera);
 
             Setup(GetComponent<IObjectPooling>());
         }
@@ -37,9 +41,11 @@ namespace UnityFoundation.ThirdPersonCharacter
 
         private void Update()
         {
-            var worldPosition = CameraUtils.GetWorldPosition3D(
-                CameraUtils.ScreenCenter()
-            );
+            var screenToworldPosition = raycaster
+                .GetWorldPosition(mainCamera.ScreenCenter(), Config.aimLayerMask);
+
+            if(!screenToworldPosition.IsPresentAndGet(out Vector3 worldPosition))
+                return;
 
             if(debugAimObject != null)
                 debugAimObject.position = worldPosition;

@@ -6,6 +6,7 @@ namespace UnityFoundation.Code.UnityAdapter
 {
     public interface ICamera
     {
+        Vector2 ScreenCenter();
         Ray ScreenPointToRay(Vector2 position);
     }
 }

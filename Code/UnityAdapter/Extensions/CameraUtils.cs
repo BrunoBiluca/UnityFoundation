@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace UnityFoundation.Code
 {
+    [Obsolete]
     public static class CameraUtils
     {
         private static Camera mainCamera;

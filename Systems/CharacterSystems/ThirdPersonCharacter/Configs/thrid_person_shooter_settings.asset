@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: thrid_person_shooter_settings
   m_EditorClassIdentifier: 
   normalSensitivity: 0.8
-  aimSensitivity: 0.1
+  aimSensitivity: 0.3
   aimSpeed: 10
   rotateCharacterSpeed: 10
+  aimLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
