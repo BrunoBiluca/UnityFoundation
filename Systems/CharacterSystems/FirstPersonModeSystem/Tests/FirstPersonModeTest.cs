@@ -3,7 +3,6 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityFoundation.Code;
 using UnityFoundation.Code.UnityAdapter;
-using UnityFoundation.Physics3D.CheckGround;
 
 namespace UnityFoundation.FirstPersonModeSystem.Tests
 {

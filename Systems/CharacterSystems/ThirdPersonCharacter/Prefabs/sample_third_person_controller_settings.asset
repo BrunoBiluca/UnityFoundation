@@ -22,15 +22,13 @@ MonoBehaviour:
     JumpTimeout: 0.5
     FallTimeout: 0.15
   <GroundedConfig>k__BackingField:
-    Grounded: 1
-    GroundedOffset: -0.14
+    GroundedOffset: 0.1
     GroundedRadius: 0.28
     GroundLayers:
       serializedVersion: 2
       m_Bits: 1
   <CameraConfig>k__BackingField:
-    Sensitivity: 1
-    CinemachineCameraTarget: {fileID: 0}
+    Sensitivity: 0.8
     TopClamp: 70
     BottomClamp: -30
     CameraAngleOverride: 0

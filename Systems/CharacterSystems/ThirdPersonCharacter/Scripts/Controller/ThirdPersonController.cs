@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityFoundation.Code;
+using UnityFoundation.Code.UnityAdapter;
 
 namespace UnityFoundation.ThirdPersonCharacter
 {
@@ -49,6 +51,9 @@ namespace UnityFoundation.ThirdPersonCharacter
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
+        private SphereGroundChecker groundChecker;
+        private DebugSphereGroundChecker groundCheckerDebug;
+        public bool IsGrounded;
 
         public bool RotateOnMove { get; set; } = false;
 
@@ -62,7 +67,15 @@ namespace UnityFoundation.ThirdPersonCharacter
             if(config != null)
             {
                 PlayerConfig = config.PlayerConfig;
+
                 GroundedConfig = config.GroundedConfig;
+                groundChecker = new SphereGroundChecker(transform.Decorate()) {
+                    GroundLayers = GroundedConfig.GroundLayers,
+                    GroundOffset = GroundedConfig.GroundedOffset,
+                    GroundRadius = GroundedConfig.GroundedRadius
+                };
+                groundCheckerDebug = new DebugSphereGroundChecker(groundChecker);
+
                 CameraConfig = config.CameraConfig;
             }
         }
@@ -85,7 +98,13 @@ namespace UnityFoundation.ThirdPersonCharacter
             _hasAnimator = TryGetComponent(out _animator);
 
             JumpAndGravity();
-            GroundedCheck();
+
+            IsGrounded = groundChecker.CheckGround();
+            groundCheckerDebug.Draw();
+
+            if(_hasAnimator)
+                _animator.SetBool(_animIDGrounded, groundChecker.IsGrounded);
+
             Move();
         }
 
@@ -101,25 +120,6 @@ namespace UnityFoundation.ThirdPersonCharacter
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
-        }
-
-        private void GroundedCheck()
-        {
-            var spherePosition = new Vector3(
-                transform.position.x,
-                transform.position.y - GroundedConfig.GroundedOffset,
-                transform.position.z
-            );
-
-            GroundedConfig.Grounded = Physics.CheckSphere(
-                spherePosition,
-                GroundedConfig.GroundedRadius,
-                GroundedConfig.GroundLayers,
-                QueryTriggerInteraction.Ignore
-            );
-
-            if(_hasAnimator)
-                _animator.SetBool(_animIDGrounded, GroundedConfig.Grounded);
         }
 
         private void CameraRotation()
@@ -216,65 +216,11 @@ namespace UnityFoundation.ThirdPersonCharacter
 
         private void JumpAndGravity()
         {
-            if(GroundedConfig.Grounded)
-            {
-                // reset the fall timeout timer
-                _fallTimeoutDelta = PlayerConfig.FallTimeout;
 
-                // update animator if using character
-                if(_hasAnimator)
-                {
-                    _animator.SetBool(_animIDJump, false);
-                    _animator.SetBool(_animIDFreeFall, false);
-                }
-
-                // stop our velocity dropping infinitely when grounded
-                if(_verticalVelocity < 0.0f)
-                {
-                    _verticalVelocity = -2f;
-                }
-
-                // Jump
-                if(_input.jump && _jumpTimeoutDelta <= 0.0f)
-                {
-                    // the square root of H * -2 * G = how much velocity needed to reach desired height
-                    _verticalVelocity = Mathf.Sqrt(PlayerConfig.JumpHeight * -2f * PlayerConfig.Gravity);
-
-                    // update animator if using character
-                    if(_hasAnimator)
-                    {
-                        _animator.SetBool(_animIDJump, true);
-                    }
-                }
-
-                // jump timeout
-                if(_jumpTimeoutDelta >= 0.0f)
-                {
-                    _jumpTimeoutDelta -= Time.deltaTime;
-                }
-            }
+            if(groundChecker.IsGrounded)
+                CharacterOnGroundHandler();
             else
-            {
-                // reset the jump timeout timer
-                _jumpTimeoutDelta = PlayerConfig.JumpTimeout;
-
-                // fall timeout
-                if(_fallTimeoutDelta >= 0.0f)
-                {
-                    _fallTimeoutDelta -= Time.deltaTime;
-                }
-                else
-                {
-                    // update animator if using character
-                    if(_hasAnimator)
-                    {
-                        _animator.SetBool(_animIDFreeFall, true);
-                    }
-                }
-
-                // if we are not grounded, do not jump
-                _input.jump = false;
-            }
+                CharacterInTheAirHandler();
 
             // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
             if(_verticalVelocity < _terminalVelocity)
@@ -283,29 +229,72 @@ namespace UnityFoundation.ThirdPersonCharacter
             }
         }
 
+        private void CharacterInTheAirHandler()
+        {
+            // reset the jump timeout timer
+            _jumpTimeoutDelta = PlayerConfig.JumpTimeout;
+
+            // fall timeout
+            if(_fallTimeoutDelta >= 0.0f)
+            {
+                _fallTimeoutDelta -= Time.deltaTime;
+            }
+            else
+            {
+                // update animator if using character
+                if(_hasAnimator)
+                {
+                    _animator.SetBool(_animIDFreeFall, true);
+                }
+            }
+
+            // if we are not grounded, do not jump
+            _input.jump = false;
+        }
+
+        private void CharacterOnGroundHandler()
+        {
+            // reset the fall timeout timer
+            _fallTimeoutDelta = PlayerConfig.FallTimeout;
+
+            // update animator if using character
+            if(_hasAnimator)
+            {
+                _animator.SetBool(_animIDJump, false);
+                _animator.SetBool(_animIDFreeFall, false);
+            }
+
+            // stop our velocity dropping infinitely when grounded
+            if(_verticalVelocity < 0.0f)
+            {
+                _verticalVelocity = -2f;
+            }
+
+            // Jump
+            if(_input.jump && _jumpTimeoutDelta <= 0.0f)
+            {
+                // the square root of H * -2 * G = how much velocity needed to reach desired height
+                _verticalVelocity = Mathf.Sqrt(PlayerConfig.JumpHeight * -2f * PlayerConfig.Gravity);
+
+                // update animator if using character
+                if(_hasAnimator)
+                {
+                    _animator.SetBool(_animIDJump, true);
+                }
+            }
+
+            // jump timeout
+            if(_jumpTimeoutDelta >= 0.0f)
+            {
+                _jumpTimeoutDelta -= Time.deltaTime;
+            }
+        }
+
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
         {
             if(lfAngle < -360f) lfAngle += 360f;
             if(lfAngle > 360f) lfAngle -= 360f;
             return Mathf.Clamp(lfAngle, lfMin, lfMax);
-        }
-
-        private void OnDrawGizmosSelected()
-        {
-            var transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-            var transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
-
-            if(GroundedConfig.Grounded) Gizmos.color = transparentGreen;
-            else Gizmos.color = transparentRed;
-
-            Gizmos.DrawSphere(
-                new Vector3(
-                    transform.position.x,
-                    transform.position.y - GroundedConfig.GroundedOffset,
-                    transform.position.z
-                ),
-                GroundedConfig.GroundedRadius
-            );
         }
     }
 }

@@ -12,5 +12,8 @@ namespace UnityFoundation.Code.UnityAdapter
 
         public static IAudioSource Decorate(this AudioSource source) 
             => new AudioSourceDec(source);
+
+        public static ICollider Decorate(this CapsuleCollider collider)
+            => new CapsuleColliderDecorator(collider);
     }
 }

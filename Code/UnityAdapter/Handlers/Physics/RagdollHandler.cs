@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityFoundation.Code.UnityAdapter;
 
-namespace UnityFoundation.Physics3D
+namespace UnityFoundation.Code.UnityAdapter
 {
     public class RagdollHandler : MonoBehaviour
     {

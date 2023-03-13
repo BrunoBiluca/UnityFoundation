@@ -3,7 +3,6 @@ using System;
 using UnityEngine;
 using UnityFoundation.Code.Timer;
 using UnityFoundation.Code.UnityAdapter;
-using UnityFoundation.Physics3D.CheckGround;
 
 namespace UnityFoundation.FirstPersonModeSystem
 {

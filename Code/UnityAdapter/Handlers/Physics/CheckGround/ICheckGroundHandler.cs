@@ -1,16 +1,17 @@
 ﻿using System;
 using UnityFoundation.Code.Timer;
 
-namespace UnityFoundation.Physics3D.CheckGround
+namespace UnityFoundation.Code.UnityAdapter
 {
     public interface ICheckGroundHandler
     {
         bool IsGrounded { get; }
+        ICollider Collider { get; }
+        float GroundOffset { get; }
 
         event Action OnLanded;
 
         bool CheckGround();
-        ICheckGroundHandler DebugMode(bool active);
         void Disable(ITimer timer);
     }
 }

@@ -27,6 +27,11 @@ namespace UnityFoundation.Code.UnityAdapter
             set => comp.Ref(t => t.right = value);
         }
 
+        public Vector3 Down {
+            get => comp.Ref(t => t.Down());
+            set => throw new NotSupportedException();
+        }
+
         public Vector3 Position {
             get => comp.Ref(t => t.position);
             set => comp.Ref(t => t.position = value);
