@@ -2,7 +2,6 @@ namespace UnityFoundation.Code
 {
     public static class IntMathExtensions
     {
-
         public static int Clamp(this int value, int min, int max)
         {
             if(value < min)
@@ -13,6 +12,5 @@ namespace UnityFoundation.Code
 
             return value;
         }
-
     }
 }
