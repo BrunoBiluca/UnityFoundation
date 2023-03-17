@@ -97,6 +97,7 @@ namespace UnityFoundation.Code.Grid
 
             return true;
         }
+
         public void ClearValue(int x, int z)
         {
             ClearValue(new GridCellPositionScaledXZ(x, z));
