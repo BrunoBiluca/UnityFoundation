@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityFoundation.Code;
 using UnityFoundation.Code.Features;
 
 namespace UnityFoundation.ThirdPersonCharacter
@@ -13,7 +14,7 @@ namespace UnityFoundation.ThirdPersonCharacter
         private Settings config;
 
         [SerializeField] private ProjectileSettingsSO settings;
-        private TrailRenderer trail;
+        private Optional<TrailRenderer> trail = Optional<TrailRenderer>.None();
 
         public Projectile Setup(Settings config)
         {
@@ -29,7 +30,9 @@ namespace UnityFoundation.ThirdPersonCharacter
             capsuleCollider = GetComponent<CapsuleCollider>();
             capsuleCollider.isTrigger = true;
 
-            trail = GetComponent<TrailRenderer>();
+            var trailRenderer = GetComponent<TrailRenderer>();
+            if(trailRenderer != null)
+                trail = Optional<TrailRenderer>.Some(trailRenderer);
 
             if(settings != null)
                 config = settings.Config;
@@ -37,8 +40,10 @@ namespace UnityFoundation.ThirdPersonCharacter
 
         protected override void OnActivate()
         {
-            trail.emitting = true;
-            trail.Clear();
+            trail.Some(t => {
+                t.emitting = true;
+                t.Clear();
+            });
         }
 
         public void Update()
@@ -48,7 +53,7 @@ namespace UnityFoundation.ThirdPersonCharacter
 
         public void OnTriggerEnter(Collider other)
         {
-            trail.emitting = false;
+            trail.Some(t => t.emitting = false);
             Destroy();
         }
 

@@ -26,7 +26,7 @@ namespace UnityFoundation.ThirdPersonCharacter.Tests
 
             yield return new WaitForSeconds(waitForSeconds);
 
-            Assert.IsTrue(projectile != null);
+            Assert.That(projectile.IsActive, Is.True);
 
             Object.DestroyImmediate(projectile.gameObject);
             Object.DestroyImmediate(collider.gameObject);
@@ -62,7 +62,7 @@ namespace UnityFoundation.ThirdPersonCharacter.Tests
 
             yield return new WaitForSeconds(waitForSeconds);
 
-            Assert.IsTrue(projectile == null);
+            Assert.That(projectile.IsActive, Is.False);
 
             Object.DestroyImmediate(collider.gameObject);
 
