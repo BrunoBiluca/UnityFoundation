@@ -13,6 +13,11 @@ namespace UnityFoundation.Code.UnityAdapter
             this.dummyValues = dummyValues;
         }
 
+        public int Next(int maxValue)
+        {
+            throw new NotImplementedException();
+        }
+
         public int Range(int inclusiveMin, int exclusiveMax)
         {
             if(valueIndex >= dummyValues.Length)
