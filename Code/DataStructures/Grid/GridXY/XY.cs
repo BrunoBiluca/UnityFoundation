@@ -11,9 +11,16 @@
             Y = y;
         }
 
-        public override string ToString()
+        public override bool Equals(object obj)
         {
-            return $"({X}, {Y})";
+            if(obj is not XY xy)
+                return false;
+
+            return xy.X == X && xy.Y == Y;
         }
+
+        public override string ToString() =>  $"({X}, {Y})";
+
+        public override int GetHashCode() =>  X + Y;
     }
 }
