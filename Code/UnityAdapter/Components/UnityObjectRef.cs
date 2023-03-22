@@ -9,10 +9,10 @@ namespace UnityFoundation.Code.UnityAdapter
     /// When the referenced component is destroyed trigger an OnInvalidState event.
     /// </summary>
     /// <typeparam name="T">Unity component</typeparam>
-    public class UnityComponentRef<T>
+    public class UnityObjectRef<T>
         : IComponentState
         , IBilucaLoggable
-        where T : Component
+        where T : UnityEngine.Object
     {
         private readonly T reference;
         private readonly string referenceName;
@@ -23,7 +23,7 @@ namespace UnityFoundation.Code.UnityAdapter
 
         public bool IsValid { get; private set; }
 
-        public UnityComponentRef(T reference)
+        public UnityObjectRef(T reference)
         {
             this.reference = reference;
             referenceName = reference.name;

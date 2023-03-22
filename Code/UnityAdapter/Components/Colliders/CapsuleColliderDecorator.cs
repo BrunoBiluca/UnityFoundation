@@ -4,11 +4,11 @@ namespace UnityFoundation.Code.UnityAdapter
 {
     public class CapsuleColliderDecorator : ICollider
     {
-        private readonly UnityComponentRef<CapsuleCollider> comp;
+        private readonly UnityObjectRef<CapsuleCollider> comp;
 
         public CapsuleColliderDecorator(CapsuleCollider collider)
         {
-            comp = new UnityComponentRef<CapsuleCollider>(collider);
+            comp = new UnityObjectRef<CapsuleCollider>(collider);
             Transform = collider.transform.Decorate();
         }
 

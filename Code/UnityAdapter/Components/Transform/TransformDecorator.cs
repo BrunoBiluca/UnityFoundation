@@ -6,7 +6,7 @@ namespace UnityFoundation.Code.UnityAdapter
 {
     public class TransformDecorator : ITransform
     {
-        private readonly UnityComponentRef<Transform> comp;
+        private readonly UnityObjectRef<Transform> comp;
 
         public bool IsValid => comp.IsValid;
 
@@ -14,7 +14,7 @@ namespace UnityFoundation.Code.UnityAdapter
 
         public TransformDecorator(Transform transform)
         {
-            comp = new UnityComponentRef<Transform>(transform);
+            comp = new UnityObjectRef<Transform>(transform);
             comp.OnInvalidState += () => OnInvalidState?.Invoke();
         }
 
