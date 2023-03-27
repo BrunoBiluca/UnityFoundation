@@ -10,7 +10,7 @@ namespace UnityFoundation.CarSystem
         [SerializeField] private Transform rearWheelLeft;
         [SerializeField] private Transform rearWheelRight;
 
-        private Lerp wheelsInterpolation;
+        private LerpByValue wheelsInterpolation;
 
         private CarInputs inputs;
 
@@ -22,7 +22,7 @@ namespace UnityFoundation.CarSystem
         {
             inputs = GetComponent<CarInputs>();
             rg = GetComponent<Rigidbody>();
-            wheelsInterpolation = new Lerp(0f, 0f) { InterpolationSpeed = 5f };
+            wheelsInterpolation = new LerpByValue(0f, 0f) { InterpolationSpeed = 5f };
         }
 
         void Update()

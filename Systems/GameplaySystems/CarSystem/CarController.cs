@@ -12,7 +12,7 @@ namespace UnityFoundation.CarSystem
 
         [SerializeField] private CinemachineVirtualCamera vCamera;
         private CinemachineComposer vCameraComposer;
-        private Lerp cameraScreenX;
+        private LerpByValue cameraScreenX;
 
         private Rigidbody rb;
         private BoxCollider boxCollider;
@@ -30,7 +30,7 @@ namespace UnityFoundation.CarSystem
         private void Start()
         {
             vCameraComposer = vCamera.GetCinemachineComponent<CinemachineComposer>();
-            cameraScreenX = new Lerp(vCameraComposer.m_ScreenX, 0.5f);
+            cameraScreenX = new LerpByValue(vCameraComposer.m_ScreenX, 0.5f);
         }
 
         private void Update()

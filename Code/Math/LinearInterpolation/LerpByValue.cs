@@ -4,9 +4,9 @@ namespace UnityFoundation.Code
 {
     public class LerpByValue
     {
-        private readonly float startValue;
-        private readonly float endValue;
-        private readonly float range;
+        private float startValue;
+        private float endValue;
+        private float range;
         private float currentInterpolationAmount;
 
         public float InterpolationSpeed { get; set; } = 1f;
@@ -16,12 +16,15 @@ namespace UnityFoundation.Code
         {
             this.startValue = startValue;
             this.endValue = endValue;
+            range = MathX.Distance(startValue, endValue);
+        }
 
-            var direction = startValue * endValue;
-            if(direction < 0f)
-                range = Mathf.Abs(startValue) + Mathf.Abs(endValue);
-            else
-                range = Mathf.Abs(Mathf.Abs(endValue) - Mathf.Abs(startValue));
+        public LerpByValue SetEndValue(float newEndValue)
+        {
+            startValue = endValue;
+            endValue = newEndValue;
+            range = MathX.Distance(startValue, endValue);
+            return this;
         }
 
         public void ResetInterpolation()
