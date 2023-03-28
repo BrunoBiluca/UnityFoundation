@@ -4,7 +4,7 @@ namespace UnityFoundation.Code
 {
     public partial class Optional<T>
     {
-        private readonly T value;
+        private T value;
 
         public Optional()
         {
@@ -30,6 +30,14 @@ namespace UnityFoundation.Code
             if(!IsPresent) return this;
 
             action(value);
+            return this;
+        }
+
+        public Optional<T> Some(Func<T, T> func)
+        {
+            if(!IsPresent) return this;
+
+            value = func(value);
             return this;
         }
 

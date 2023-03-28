@@ -13,7 +13,7 @@ namespace UnityFoundation.SettingsSystem
 
         public void OnEnable()
         {
-            Value ??= Instantiate();
+            CreateIfNotExists();
         }
 
         protected abstract T Instantiate();
@@ -33,6 +33,11 @@ namespace UnityFoundation.SettingsSystem
 
             value = Value;
             return true;
+        }
+
+        public void CreateIfNotExists()
+        {
+            Value ??= Instantiate(); 
         }
     }
 }
