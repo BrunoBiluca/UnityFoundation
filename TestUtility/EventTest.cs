@@ -30,6 +30,7 @@ namespace UnityFoundation.TestUtility
 
     public class EventTest<T> : EventTest
     {
+        public T Parameter { get; private set; }
         public new static EventTest<T> Create(object sender, string eventName)
         {
             return new EventTest<T>(sender, eventName);
@@ -42,6 +43,7 @@ namespace UnityFoundation.TestUtility
 
         private void HandleTrigger(T obj)
         {
+            Parameter = obj;
             base.HandleTrigger();
         }
     }
