@@ -41,6 +41,12 @@ namespace UnityFoundation.Code
             return this;
         }
 
+        public Optional<T> SomeCopy(Func<T, T> func)
+        {
+            if(!IsPresent) return this;
+            return Some(func(value));
+        }
+
         public T OrElse(Action action)
         {
             if(IsPresent) return value;
