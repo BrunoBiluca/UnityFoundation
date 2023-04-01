@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Linq;
 
 namespace UnityFoundation.Code.Tests
 {
@@ -20,6 +21,16 @@ namespace UnityFoundation.Code.Tests
             grid.UpdateValue(coord, value => value.str = "updated");
 
             Assert.That(grid.GetValue(coord).str, Is.EqualTo("updated"));
+        }
+
+        [Test]
+        public void Should_return_all_grid_values()
+        {
+            var grid = new BaseGrid<GridXZLimits, GridCell<TestValue>, XZ, TestValue>(
+                new GridXZLimits(2, 2)
+            );
+
+            Assert.That(grid.GetValues().Count(), Is.EqualTo(4));
         }
     }
 }

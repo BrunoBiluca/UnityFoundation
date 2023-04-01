@@ -39,7 +39,7 @@ namespace UnityFoundation.Code
         private TGridCell GetCell(TPosition coordinate)
         {
             if(!IsInsideGrid(coordinate))
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException($"Coordinate {coordinate} is not inside grid");
 
             return cells[limits.GetIndex(coordinate)];
         }
@@ -52,6 +52,12 @@ namespace UnityFoundation.Code
         public void Clear(TPosition coordinate)
         {
             GetCell(coordinate).Clear();
+        }
+
+        public IEnumerable<TValue> GetValues()
+        {
+            foreach(var cell in cells.Values)
+                yield return cell.GetValue();
         }
     }
 }
