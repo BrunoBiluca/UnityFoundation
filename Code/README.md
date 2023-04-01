@@ -23,7 +23,6 @@ Principais funcionalidades:
  ┣ 📂 Features                   # Códigos diversos para reutilização
  ┣ 📂 Math                       # Códigos matemáticos diversos
  ┣ 📂 UnityAdapter               # Adapter utilizado para Unity
- ┣ 📂 Web                        # Código auxiliar para requisições web
  ┗ 📜readme.md
 ```
 
@@ -168,8 +167,36 @@ Debug.Log(value);
 #### Promise
 
 ### Object Pooling
+⚒️ `/Features/ObjectPooling`
 
-### Path finder
+Object Pooling é uma técnica muito utilizada no desenvolvimento de games. Ela resolve o problema da instanciação de objetos, que é uma operação muito custosa, de forma que essas instâncias forma um grupo de objetos que podem ser reutilizados em vez de recriados a todo momento.
+
+O sistema de Object Pooling implementado é separado em duas classes
+
+- PooledObject, uma extensão do ``MonoBehaviour` que implementa o comportamento do objeto desejado
+- ObjectPooling, classe responsável por gerenciar os objetos instanciados.
+
+Funcionalidades
+
+- PoolSize, número máximo de instâncias do objeto desejado
+- CanGrown, configurar para permitir criar objetos quando não existe um objeto disponível para ser reutilizado.
+
+Forma de uso
+
+```csharp
+var pooledObject = new GameObject("pooled_object").AddComponent<PooledObject>();
+var objectPooling = new GameObject("object_pooling").AddComponent<ObjectPooling>();
+
+objectPooling.Setup(new ObjectPoolingSettings() {
+    ObjectPrefab = pooledObject.gameObject,
+    PoolSize = 3,
+    CanGrown = false
+});
+
+objectPooling.InstantiateObjects();
+```
+
+### Pathfinder
 
 ### Timer
 

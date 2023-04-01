@@ -2,16 +2,16 @@
 
 namespace UnityFoundation.Code
 {
-    public class Condition : ICondition
+    public class ConditionEvaluation : ICondition
     {
-        public static Condition Create(Func<bool> callback)
+        public static ConditionEvaluation Create(Func<bool> callback)
         {
-            return new Condition(callback);
+            return new ConditionEvaluation(callback);
         }
 
         private readonly Func<bool> callback;
 
-        public Condition(Func<bool> callback)
+        public ConditionEvaluation(Func<bool> callback)
         {
             this.callback = callback;
         }

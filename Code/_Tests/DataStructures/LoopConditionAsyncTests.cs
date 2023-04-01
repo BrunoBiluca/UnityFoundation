@@ -18,7 +18,7 @@ namespace UnityFoundation.Code.Tests
         {
             var action = new ActionTestHelper();
 
-            var alwaysFalse = Condition.Create(() => false);
+            var alwaysFalse = ConditionEvaluation.Create(() => false);
             await LoopConditionAsync.While(alwaysFalse).Loop(action.Action);
 
             Assert.That(action.WasExecuted, Is.False);

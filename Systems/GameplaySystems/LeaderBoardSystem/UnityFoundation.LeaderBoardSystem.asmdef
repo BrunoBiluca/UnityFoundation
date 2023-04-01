@@ -2,7 +2,8 @@
     "name": "UnityFoundation.LeaderBoardSystem",
     "rootNamespace": "",
     "references": [
-        "GUID:d7d703d7ba19f3c45b01309621aede27"
+        "GUID:d7d703d7ba19f3c45b01309621aede27",
+        "GUID:945326723f29dfe4e83ae73cf49a967e"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

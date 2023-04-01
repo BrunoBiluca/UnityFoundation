@@ -15,7 +15,7 @@ namespace UnityFoundation.Code
 
         public static LoopConditionAsync While(Func<bool> callback, int delay = 25)
         {
-            return new LoopConditionAsync(Condition.Create(callback)) {
+            return new LoopConditionAsync(ConditionEvaluation.Create(callback)) {
                 Delay = delay
             };
         }
