@@ -18,6 +18,17 @@ From the root of the project folder run the following command
 - Input System
 - Text Mesh Pro (TMP)
 
+Dependencies `manifest.json`
+
+```
+  "com.unity.cinemachine": "2.8.9",
+  "com.unity.inputsystem": "1.4.4",
+  "com.unity.test-framework": "2.0.1-exp.1",
+  "com.unity.testtools.codecoverage": "1.1.1",
+  "com.unity.nuget.newtonsoft-json": "3.0.2",
+  "com.unity.textmeshpro": "3.0.6",
+```
+
 ### C# packages
 
 Create a folder called `Packages` on Assets folder. Drop all dlls.
