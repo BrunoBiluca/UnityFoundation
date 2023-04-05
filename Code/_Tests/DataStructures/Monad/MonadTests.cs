@@ -36,5 +36,24 @@ namespace UnityFoundation.Code.Tests
 
             Assert.That(result, Is.EqualTo("42 + 1"));
         }
+
+        [Test]
+        public void Map_with_condition_behaviour()
+        {
+            var result = Monad<int>
+                .Init(2)
+                .MapIf(v => v == 2, v => v + 1)
+                .Map(v => v + 1)
+                .Returns();
+
+            Assert.That(result, Is.EqualTo(4));
+
+            var result2 = Monad<int>
+                .Init(2)
+                .MapIf(v => v == 3, v => v + 1)
+                .Returns();
+
+            Assert.That(result2, Is.EqualTo(2));
+        }
     }
 }

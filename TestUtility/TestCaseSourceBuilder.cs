@@ -79,6 +79,21 @@ namespace UnityFoundation.TestUtility
             return Test(testName, args.ToArray());
         }
 
+        public TestCaseSourceBuilder Test(
+            string name,
+            string argumentName1, object argument1,
+            string argumentName2, object argument2,
+            string argumentName3, object argument3
+        )
+        {
+            var testName = name;
+            var args = new List<object>() { argument1, argument2, argument3 };
+            testName += $" {argumentName1} {argument1}";
+            testName += $" {argumentName2} {argument2}";
+            testName += $" {argumentName3} {argument3}";
+            return Test(testName, args.ToArray());
+        }
+
         private string CreateTestName(string testName)
         {
             var name = "";

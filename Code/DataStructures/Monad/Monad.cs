@@ -22,6 +22,14 @@ namespace UnityFoundation.Code
             return this;
         }
 
+        public Monad<T> MapIf(Func<T, bool> condition, Func<T, T> transformation)
+        {
+            if(condition(value))
+                value = transformation(value);
+            return this;
+        }
+
+
         public Monad<OT> Chain<OT>(Func<T, OT> chain)
         {
             return new Monad<OT>(chain(value));
