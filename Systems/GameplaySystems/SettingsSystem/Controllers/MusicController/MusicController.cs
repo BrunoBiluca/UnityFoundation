@@ -26,14 +26,13 @@ namespace UnityFoundation.SettingsSystem
             this.audioSettings = audioSettings;
             this.musicSettings = musicSettings;
 
+            UpdateAudioSourceSettings();
             audioSettings.OnSettingsChanged += HandleSettingsChange;
         }
 
         private void HandleSettingsChange()
         {
-            Debug.Log("HandleSettingsChange");
-            AudioSource.Volume = audioSettings.Volume;
-
+            UpdateAudioSourceSettings();
             Play();
         }
 
@@ -53,7 +52,15 @@ namespace UnityFoundation.SettingsSystem
 
         public void Stop()
         {
+            AudioSource.Stop();
             audioSettings.OnSettingsChanged -= HandleSettingsChange;
+        }
+
+        private void UpdateAudioSourceSettings()
+        {
+            AudioSource.AudioClip = musicSettings.AudioClip;
+            AudioSource.Mute = audioSettings.IsMute;
+            AudioSource.Volume = audioSettings.Volume;
         }
     }
 }
