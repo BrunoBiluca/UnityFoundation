@@ -168,7 +168,5 @@ namespace UnityFoundation.Code.Tests
             Assert.That(instance.P2, Is.EqualTo(1));
             Assert.That(instance.P3, Is.EqualTo(true));
         }
-
-        // TODO: utilizar pos actions quando registrado um tipo que é IDependencySetup
     }
 }

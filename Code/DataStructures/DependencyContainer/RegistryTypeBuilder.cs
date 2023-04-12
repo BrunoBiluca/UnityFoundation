@@ -20,6 +20,11 @@ namespace UnityFoundation.Code
             };
         }
 
+        public static RegistryTypeBuilder WithFactoryConstructor(Type factoryType, Type concreteType)
+        {
+            return new RegistryTypeBuilder(new FactoryInstantiator(factoryType, concreteType));
+        }
+
         private RegistryTypeBuilder(IRegisteredType startType)
         {
             current = startType;
