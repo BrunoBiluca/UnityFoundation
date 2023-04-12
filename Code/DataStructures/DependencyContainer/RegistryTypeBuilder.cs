@@ -58,6 +58,12 @@ namespace UnityFoundation.Code
             return this;
         }
 
+        public RegistryTypeBuilder AddDependencySetupByReflection()
+        {
+            current = new DependencySetupTypeByReflection(current);
+            return this;
+        }
+
         public RegistryTypeBuilder WithKey(Enum key)
         {
             Key = key;

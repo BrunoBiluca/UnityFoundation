@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace UnityFoundation.Code.Tests
 {
-    public class DependencySetupTests
+    public class DependencySetupValidationTests
     {
         public class NoDependencySetup { }
 

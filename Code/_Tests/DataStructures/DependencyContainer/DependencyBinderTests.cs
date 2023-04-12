@@ -4,8 +4,6 @@ namespace UnityFoundation.Code.Tests
 {
     public class DependencyBinderTests
     {
-        // TODO: implementar funcionalidade para instanciar um objeto por chave Enum, onde uma de suas dependencias também é classificada pela mesma chave. Dessa forma não é necessário propagar os enums pelo código e eles vão servir apenas de chaveamento no dependency container.
-
         [Test]
         public void Should_resolve_last_registered_constant_instance()
         {

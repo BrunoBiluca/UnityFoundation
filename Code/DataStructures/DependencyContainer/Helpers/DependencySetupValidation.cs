@@ -22,14 +22,12 @@ namespace UnityFoundation.Code
         {
             var interfaces = t.GetInterfaces().Where(HasDependencySetup);
 
-            foreach(var i in interfaces)
-            {
-                var methods = t.GetMethods()
-                    .Where(m => m.ToString() == i.GetMethod("Setup").ToString());
+            return interfaces.SelectMany(i => GetSetupMethod(t, i.GetMethod("Setup").ToString()));
+        }
 
-                foreach(var method in methods)
-                    yield return method;
-            }
+        public static IEnumerable<MethodInfo> GetSetupMethod(Type t, string methodName)
+        {
+            return t.GetMethods().Where(m => m.ToString() == methodName);
         }
     }
 }

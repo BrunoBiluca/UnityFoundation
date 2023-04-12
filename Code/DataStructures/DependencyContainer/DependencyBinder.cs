@@ -56,6 +56,15 @@ namespace UnityFoundation.Code
             module.Register(this);
         }
 
+        public void RegisterSetup<TConcrete>(TConcrete instance)
+        {
+            var typeBuilder = RegistryTypeBuilder
+                .WithConstant(typeof(TConcrete), instance)
+                .AddDependencySetupByReflection();
+
+            Register(ref typeBuilder);
+        }
+
         public IDependencyContainer Build()
         {
             return new DependencyContainer(registeredTypes);
