@@ -62,7 +62,7 @@ namespace UnityFoundation.Code.Tests
             binder.Register<ResolveWithParameters>();
             var container = binder.Build();
 
-            Assert.Throws<TypeNotRegisteredException>(
+            Assert.Throws<ParameterNotRegisteredException>(
                 () => container.Resolve<ResolveWithParameters>("param_test")
             );
         }

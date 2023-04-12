@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 
 namespace UnityFoundation.Code
 {
@@ -20,12 +22,24 @@ namespace UnityFoundation.Code
                 throw new TypeWithNoDefaultConstructorException(ConcreteType);
 
             var defaultConstructor = ConcreteType.GetConstructors()[0];
-            var defaultParams = defaultConstructor.GetParameters();
-            var parameters = defaultParams
-                .Select(param => container.Resolve(param.ParameterType))
-                .ToArray();
-
+            var parameters = GetParameters(container, defaultConstructor);
             return defaultConstructor.Invoke(parameters);
+        }
+
+        public object[] GetParameters(IDependencyContainer container, ConstructorInfo constructor)
+        {
+            var defaultParams = constructor.GetParameters();
+
+            try
+            {
+                return defaultParams
+                    .Select(param => container.Resolve(param.ParameterType))
+                    .ToArray();
+            }
+            catch(TypeNotRegisteredException ex)
+            {
+                throw new ParameterNotRegisteredException(ConcreteType, ex.Type);
+            }
         }
     }
 }

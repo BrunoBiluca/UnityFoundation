@@ -54,7 +54,6 @@ namespace UnityFoundation.Code
                 return obj;
             }
 
-
             return Instantiate(registry.GetRegistered(type));
         }
 

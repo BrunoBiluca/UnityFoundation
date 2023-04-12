@@ -8,6 +8,9 @@ namespace UnityFoundation.Code
         public TypeNotRegisteredException(Type type)
             : base(msg.Replace("<type>", type.ToString()))
         {
+            Type = type;
         }
+
+        public Type Type { get; }
     }
 }
