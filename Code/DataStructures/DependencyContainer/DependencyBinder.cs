@@ -41,12 +41,12 @@ namespace UnityFoundation.Code
             Register(ref typeBuilder);
         }
 
-        public void RegisterFactory<TFactory, TInterface>()
+        public void RegisterFactory<TFactory, TInterface>(bool isSingleton = false)
         {
             Register<TFactory>();
 
             var typeBuilder = RegistryTypeBuilder
-                .WithFactoryConstructor(typeof(TFactory), typeof(TInterface));
+                .WithFactoryConstructor(typeof(TFactory), typeof(TInterface), isSingleton);
 
             Register(ref typeBuilder);
         }

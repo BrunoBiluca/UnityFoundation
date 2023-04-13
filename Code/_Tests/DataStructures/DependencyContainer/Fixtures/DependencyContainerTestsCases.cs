@@ -96,5 +96,13 @@
                 return Container.Resolve<string>();
             }
         }
+
+        public class FactoryInstantiationNull : IDependencyFactory
+        {
+            public object Instantiate()
+            {
+                return null;
+            }
+        }
     }
 }

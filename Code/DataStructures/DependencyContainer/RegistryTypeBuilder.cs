@@ -20,9 +20,12 @@ namespace UnityFoundation.Code
             };
         }
 
-        public static RegistryTypeBuilder WithFactoryConstructor(Type factoryType, Type concreteType)
+        public static RegistryTypeBuilder WithFactoryConstructor(
+            Type factoryType, Type concreteType, bool isSingleton)
         {
-            return new RegistryTypeBuilder(new FactoryInstantiator(factoryType, concreteType));
+            return new RegistryTypeBuilder(new FactoryInstantiator(factoryType, concreteType) {
+                IsSingleton = isSingleton
+            });
         }
 
         private RegistryTypeBuilder(IRegisteredType startType)

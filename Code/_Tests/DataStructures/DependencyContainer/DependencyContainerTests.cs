@@ -95,7 +95,7 @@ namespace UnityFoundation.Code.Tests
             Assert.That(c.P2, Is.EqualTo(1));
             Assert.That(c.P3, Is.EqualTo(true));
         }
-        
+
         [Test]
         public void Should_setup_calling_only_method_that_implements_dependency_setup_interface()
         {

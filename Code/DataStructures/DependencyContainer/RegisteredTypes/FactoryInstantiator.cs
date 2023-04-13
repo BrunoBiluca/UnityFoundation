@@ -8,6 +8,9 @@ namespace UnityFoundation.Code
 
         public Type ConcreteType { get; }
 
+        public bool IsSingleton { get; set; }
+        public object instance;
+
         public FactoryInstantiator(Type factoryType, Type concreteType)
         {
             this.factoryType = factoryType;
@@ -17,7 +20,12 @@ namespace UnityFoundation.Code
         public object Instantiate(IDependencyContainer container)
         {
             var factory = container.Resolve(factoryType) as IDependencyFactory;
-            return factory.Instantiate();
+
+            if(IsSingleton && instance != null)
+                return instance;
+
+            instance = factory.Instantiate();
+            return instance;
         }
     }
 }
