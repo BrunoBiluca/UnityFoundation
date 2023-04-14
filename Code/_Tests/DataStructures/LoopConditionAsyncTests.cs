@@ -19,7 +19,7 @@ namespace UnityFoundation.Code.Tests
             var action = new ActionTestHelper();
 
             var alwaysFalse = ConditionEvaluation.Create(() => false);
-            await LoopConditionAsync.While(alwaysFalse).Loop(action.Action);
+            await AsyncCondition.While(alwaysFalse).Loop(action.Action);
 
             Assert.That(action.WasExecuted, Is.False);
         }
@@ -35,7 +35,7 @@ namespace UnityFoundation.Code.Tests
                 .Returns(true)
                 .Returns(false);
 
-            await LoopConditionAsync.While(condition.Object).Loop(action.Action);
+            await AsyncCondition.While(condition.Object).Loop(action.Action);
 
             Assert.That(action.WasExecuted, Is.True);
             Assert.That(action.TimesExecuted, Is.EqualTo(1));
@@ -55,7 +55,7 @@ namespace UnityFoundation.Code.Tests
                 .Returns(true)
                 .Returns(false);
 
-            await LoopConditionAsync.While(condition.Object).Loop(action.Action);
+            await AsyncCondition.While(condition.Object).Loop(action.Action);
 
             Assert.That(action.WasExecuted, Is.True);
             Assert.That(action.TimesExecuted, Is.EqualTo(4));

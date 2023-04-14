@@ -4,29 +4,29 @@ using System.Threading.Tasks;
 namespace UnityFoundation.Code
 {
 
-    public class LoopConditionAsync
+    public class AsyncCondition
     {
-        public static LoopConditionAsync While(ICondition condition, int delay = 25)
+        public static AsyncCondition While(ICondition condition, int delay = 25)
         {
-            return new LoopConditionAsync(condition) {
+            return new AsyncCondition(condition) {
                 Delay = delay
             };
         }
 
-        public static LoopConditionAsync While(Func<bool> callback, int delay = 25)
+        public static AsyncCondition While(Func<bool> callback, int delay = 25)
         {
-            return new LoopConditionAsync(ConditionEvaluation.Create(callback)) {
+            return new AsyncCondition(ConditionEvaluation.Create(callback)) {
                 Delay = delay
             };
         }
 
         private readonly ICondition conditionCallback;
 
-        private LoopConditionAsync() { }
+        private AsyncCondition() { }
 
         public int Delay { get; set; } = 25;
 
-        private LoopConditionAsync(ICondition conditionCallback)
+        private AsyncCondition(ICondition conditionCallback)
         {
             this.conditionCallback = conditionCallback;
         }
