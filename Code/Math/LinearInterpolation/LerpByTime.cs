@@ -13,6 +13,7 @@ namespace UnityFoundation.Code
         public float CurrentTime { get; private set; }
         public float Time { get; }
 
+        public bool Ended => CurrentTime >= Time;
         public bool Looping { get; set; } = false;
 
         public LerpByTime(float startValue, float endValue, float time)
