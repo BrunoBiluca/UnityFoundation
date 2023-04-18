@@ -1,5 +1,8 @@
-﻿namespace UnityFoundation.Code
+﻿using System;
+
+namespace UnityFoundation.Code
 {
+    [Serializable]
     public class XY
     {
         public int X { get; }
@@ -19,8 +22,8 @@
             return xy.X == X && xy.Y == Y;
         }
 
-        public override string ToString() =>  $"({X}, {Y})";
+        public override string ToString() => $"({X}, {Y})";
 
-        public override int GetHashCode() =>  X + Y;
+        public override int GetHashCode() => X + Y;
     }
 }

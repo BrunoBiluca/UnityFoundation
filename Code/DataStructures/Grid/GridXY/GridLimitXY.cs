@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace UnityFoundation.Code
 {
+    [Serializable]
     public class GridLimitXY : IGridLimits<XY>
     {
         public int Width { get; }
@@ -16,6 +18,11 @@ namespace UnityFoundation.Code
         public int GetIndex(XY coordinate)
         {
             return coordinate.X * Width + coordinate.Y;
+        }
+
+        public XY GetCoordinate(int index)
+        {
+            return new(index / Width, index % Width);
         }
 
         public IEnumerable<int> GetIndexes()

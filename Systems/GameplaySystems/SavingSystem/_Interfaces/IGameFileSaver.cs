@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace UnityFoundation.SavingSystem
+﻿namespace UnityFoundation.SavingSystem
 {
     public interface IGameFileSaver
     {
