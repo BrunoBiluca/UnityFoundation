@@ -11,9 +11,19 @@ namespace UnityFoundation.SavingSystem
             files = new Dictionary<string, object>();
         }
 
+        public bool SaveFileExists(string fileName)
+        {
+            return files.ContainsKey(fileName);
+        }
+
+        public void Clear(string saveFile)
+        {
+            files.Remove(saveFile);
+        }
+
         public T Load<T>(string fileName)
         {
-            if(!files.ContainsKey(fileName))
+            if(!SaveFileExists(fileName))
                 return default;
 
             return (T)files[fileName];

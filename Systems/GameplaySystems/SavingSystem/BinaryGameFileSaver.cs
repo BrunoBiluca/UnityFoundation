@@ -9,11 +9,16 @@ namespace UnityFoundation.SavingSystem
     {
         public IBilucaLogger Logger { get; set; }
 
+        public bool SaveFileExists(string fileName)
+        {
+            return File.Exists(FormatFilePath(fileName));
+        }
+
         public string Save<T>(string fileName, T obj)
         {
             var binaryFormatter = new BinaryFormatter();
             string path = FormatFilePath(fileName);
-            
+
             using var file = File.Create(path);
             binaryFormatter.Serialize(file, obj);
 
@@ -29,6 +34,11 @@ namespace UnityFoundation.SavingSystem
             using var file = File.Open(FormatFilePath(fileName), FileMode.Open);
 
             return (T)new BinaryFormatter().Deserialize(file);
+        }
+
+        public void Clear(string saveFile)
+        {
+            File.Delete(FormatFilePath(saveFile));
         }
 
         private string FormatFilePath(string fileName)
