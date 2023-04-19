@@ -54,6 +54,12 @@ namespace UnityFoundation.Code
             GetCell(coordinate).Clear();
         }
 
+        public void Clear()
+        {
+            foreach(var cell in cells.Values)
+                cell.Clear();
+        }
+
         public IEnumerable<TValue> GetValues()
         {
             foreach(var cell in cells.Values)

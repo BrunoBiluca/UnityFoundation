@@ -8,6 +8,7 @@ namespace UnityFoundation.Code
     {
         public int Width { get; }
         public int Height { get; }
+        public int Positions => Width * Height;
 
         public GridLimitXY(int width, int height)
         {

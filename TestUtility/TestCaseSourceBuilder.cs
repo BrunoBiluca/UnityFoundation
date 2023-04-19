@@ -94,6 +94,11 @@ namespace UnityFoundation.TestUtility
             return Test(testName, args.ToArray());
         }
 
+        public TestCaseSourceBuilder Test(string name, Func<object> initializationCallback)
+        {
+            return Test(name, initializationCallback());
+        }
+
         private string CreateTestName(string testName)
         {
             var name = "";
