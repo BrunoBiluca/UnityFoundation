@@ -1,0 +1,23 @@
+{
+    "name": "UnityFoundation.UI.Tests",
+    "rootNamespace": "UnityFoundation.UI.Tests",
+    "references": [
+        "GUID:3a82ac62804c49645a2ec888d684eb00",
+        "GUID:56de67b70740b014a8b08bb241006e29",
+        "GUID:d7d703d7ba19f3c45b01309621aede27"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Moq.dll",
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

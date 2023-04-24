@@ -63,7 +63,7 @@ namespace UnityFoundation.Code.Web
             string url, string body, Action<string> onSuccess, Action<string> onError
         )
         {
-            using var request = UnityWebRequest.PostWwwForm(url, body);
+            using var request = UnityWebRequest.Post(url, body);
 
             request.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(body));
             request.SetRequestHeader("Content-Type", "application/json");
