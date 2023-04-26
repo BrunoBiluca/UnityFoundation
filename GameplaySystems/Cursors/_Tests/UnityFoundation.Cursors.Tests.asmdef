@@ -1,0 +1,27 @@
+{
+    "name": "UnityFoundation.Cursors.Tests",
+    "rootNamespace": "UnityFoundation.Cursors.Tests",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "UnityFoundation.Cursors",
+        "UnityFoundation.Code",
+        "UnityFoundation.TestUtility"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Moq.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
