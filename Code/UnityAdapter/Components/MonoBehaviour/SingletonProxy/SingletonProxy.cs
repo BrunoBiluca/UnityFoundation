@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game
+namespace UnityFoundation.Code
 {
     public class SingletonProxy<T> : MonoBehaviour where T : Component
     {
