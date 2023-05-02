@@ -19,7 +19,7 @@ namespace UnityFoundation.TestUtility
         {
             var assetPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
 
-            if(assetPrefab != null)
+            if(assetPrefab == null)
                 throw new AssetNotFound(path);
 
             return new(UnityEngine.Object.Instantiate(assetPrefab));
