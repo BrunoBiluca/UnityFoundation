@@ -27,9 +27,38 @@ A classe que estende a BaseView pode implementar um série de funções que ser�
 
 ## Decorando com uma View
 
-Também é possível adicionar esse comportamento a qualquer entidade por meio do ``SimpleView``.
+Também é possível adicionar esse comportamento a qualquer `GameObject` por meio do ``SimpleView``.
 
-A `SimpleView` é uma classe que extende o comportamento da `BaseView`, porém pode ser adicionada a um GameObject.
+A `SimpleView` é uma classe que extende o comportamento da `BaseView`, porém pode ser adicionada a um GameObject sem nenhum outro tipo de configuração adicional.
+
+## Utilizando um ComponentizedView
+
+Uma view pode determinar os componentes que a compõe. Para isso uma classe pode extender de `ComponentizedView` e registrar os componentes necessários.
+
+```csharp
+public class SampleView : ComponentizedView
+{
+    private int counter;
+    private string counterText= "Componente da Tela Asmodeus\n\nContagem de aberturas: <count>";
+
+    protected override IEnumerable<ViewComponent> RegisterComponents()
+    {
+        yield return new("count", UpdateCounter);
+    }
+
+    public void UpdateCounter(GameObject go)
+    {
+        var text = counterText.Replace("<count>", (counter++).ToString());
+        go.GetComponent<TextMeshProUGUI>().text = text;
+    }
+}
+```
+
+Esse exemplo irá configurar o componente que será exibido da seguinte forma no inspector.
+
+![](_Doc/componentized_view_inspector.png)
+
+Assim o desenvolvedor pode configurar os componentes utilizados na exibição dessa view de forma visual e muito simples. Esses componentes serão gereciados como os demais.
 
 ## Grupos de Views
 
