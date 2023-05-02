@@ -1,9 +1,8 @@
 using System;
 using UnityEngine;
 using UnityFoundation.Code.UnityAdapter;
-using UnityFoundation.UI.ViewSystem;
 
-namespace UnityFoundation.UI
+namespace UnityFoundation.UI.ViewSystem
 {
     [Serializable]
     public class ViewComponent : IVisible

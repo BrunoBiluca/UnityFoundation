@@ -64,6 +64,11 @@ namespace UnityFoundation.UI.ViewSystem
             if(wasAwaken) return;
 
             InitView();
+        }
+
+        public void Start()
+        {
+            if(!Application.isPlaying) return;
 
             if(StartVisible) Show();
             else Hide();
@@ -76,10 +81,29 @@ namespace UnityFoundation.UI.ViewSystem
             OnAwake();
         }
 
+        /// <summary>
+        /// Runs before any Awake logic (PlayMode and EditMode)
+        /// </summary>
         protected virtual void PreAwake() { }
+
+        /// <summary>
+        /// Runs after all Awake logic
+        /// </summary>
         protected virtual void OnAwake() { }
+
+        /// <summary>
+        /// Runs when turn from Invisible to Visible
+        /// </summary>
         protected virtual void OnShow() { }
+
+        /// <summary>
+        /// Runs when turn from Visible to Invisible
+        /// </summary>
         protected virtual void OnHide() { }
+
+        /// <summary>
+        /// Runs the first time when is Visible
+        /// </summary>
         protected virtual void OnFirstShow() { }
     }
 }
