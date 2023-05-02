@@ -57,6 +57,10 @@ namespace UnityFoundation.UI.ViewSystem
 
         public void Awake()
         {
+            PreAwake();
+
+            if(!Application.isPlaying) return;
+
             if(wasAwaken) return;
 
             InitView();
@@ -72,6 +76,7 @@ namespace UnityFoundation.UI.ViewSystem
             OnAwake();
         }
 
+        protected virtual void PreAwake() { }
         protected virtual void OnAwake() { }
         protected virtual void OnShow() { }
         protected virtual void OnHide() { }
