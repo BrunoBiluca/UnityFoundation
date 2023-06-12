@@ -5,7 +5,7 @@ namespace UnityFoundation.UI.ViewSystem
     public class CallOnce
     {
         private readonly Action callback;
-        private bool wasCalled;
+        public bool WasCalled { get; private set; }
 
         public CallOnce(Action callback)
         {
@@ -14,8 +14,8 @@ namespace UnityFoundation.UI.ViewSystem
 
         public void Call()
         {
-            if(wasCalled) return;
-            wasCalled = true;
+            if(WasCalled) return;
+            WasCalled = true;
             callback();
         }
     }

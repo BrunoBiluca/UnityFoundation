@@ -69,6 +69,7 @@ namespace UnityFoundation.UI.ViewSystem
         public void Start()
         {
             if(!Application.isPlaying) return;
+            if(firstShowCall.WasCalled) return;
 
             if(StartVisible) Show();
             else Hide();
